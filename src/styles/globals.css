@@ -75,8 +75,5 @@ h4,
 h5,
 h6 {
   font-family: "Manrope", sans-serif;
+  line-height: 1.2;
 }
-/* 
-echo "VERCEL_GIT_COMMIT_REF: $VERCEL_GIT_COMMIT_REF"
-
-*/
