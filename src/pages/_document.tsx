@@ -11,14 +11,13 @@ import { styletron } from "../styletron";
 
 // class MyDocument extends Document<{ stylesheets: Sheet[] }> {
 class MyDocument extends Document<{ stylesheets: any[] }> {
-
   // Material UI worked with this
   // react-onclickouside shouldn't be used with this
   // Need to make the base ui work
   static async getInitialProps(ctx) {
     const mateiralUiStyleSheets = new ServerStyleSheets();
     const basewebStyleSheets = (styletron as Server).getStylesheets() || [];
-    
+
     const originalRenderPage = ctx.renderPage;
 
     // Run the React rendering logic synchronously
@@ -27,9 +26,13 @@ class MyDocument extends Document<{ stylesheets: any[] }> {
         // Useful for wrapping the whole react tree
         enhanceApp: (App: any) =>
           function EnhanceApp(props) {
-            return (<StyletronProvider value={styletron}>
-              {mateiralUiStyleSheets.collect(<App {...props} displayName='App' />)}
-            </StyletronProvider>);
+            return (
+              <StyletronProvider value={styletron}>
+                {mateiralUiStyleSheets.collect(
+                  <App {...props} displayName="App" />
+                )}
+              </StyletronProvider>
+            );
             // return <App {...props} displayName="App" />
           },
         // Useful for wrapping in a per-page basis
@@ -60,9 +63,9 @@ class MyDocument extends Document<{ stylesheets: any[] }> {
       ...initialProps,
       stylesheets: basewebStyleSheets,
       styles: [
-        ...React.Children.toArray(initialProps.styles), 
-        mateiralUiStyleSheets.getStyleElement()
-      ]
+        ...React.Children.toArray(initialProps.styles),
+        mateiralUiStyleSheets.getStyleElement(),
+      ],
     };
   }
 
@@ -72,7 +75,6 @@ class MyDocument extends Document<{ stylesheets: any[] }> {
   // }
 
   render() {
-
     return (
       <Html>
         <Head>
@@ -86,8 +88,18 @@ class MyDocument extends Document<{ stylesheets: any[] }> {
             />
           ))}
           {/* https://nextjs.org/docs/messages/no-stylesheets-in-head-component */}
-          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-          <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
+          <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          />
+          <link
+            href="https://fonts.cdnfonts.com/css/satoshi"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

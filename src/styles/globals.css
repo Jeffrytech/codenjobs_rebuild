@@ -1,3 +1,54 @@
+@font-face {
+  src: url("/fonts/Studio_Feixen_Sans_Variable.woff2")
+    format("woff2-variations");
+  font-family: "Studio Feixen";
+  font-style: normal;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+* {
+  margin: 0;
+}
+html,
+body {
+  height: 100%;
+}
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+#root,
+#__next {
+  isolation: isolate;
+}
+
 html,
 body {
   background: #fff;
@@ -11,8 +62,7 @@ body {
   overflow-x: hidden;
   overflow-y: auto;
 
-  font-family: Helvetica, arial !important;
-
+  font-family: "Satoshi", sans-serif;
   -webkit-overflow-scrolling: touch;
 
   /* * {
@@ -23,4 +73,14 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Studio Feixen", sans-serif;
+  font-variation-settings: "wght" 200, "wdth" 0;
 }
