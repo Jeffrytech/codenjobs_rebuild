@@ -1,0 +1,984 @@
+{
+  "version": "0.1.0",
+  "name": "job",
+  "instructions": [
+    {
+      "name": "createJobContract",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "priceInUsd",
+          "type": "u64"
+        },
+        {
+          "name": "priceInSolana",
+          "type": "u64"
+        },
+        {
+          "name": "priceInCodeToken",
+          "type": "u64"
+        },
+        {
+          "name": "discountForCodeToken",
+          "type": "u8"
+        },
+        {
+          "name": "codeTokenProgram",
+          "type": "publicKey"
+        },
+        {
+          "name": "priceUpdater",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "closeJobContract",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "updateTokenProgram",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newTokenProgram",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updatePriceInUsd",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newPriceInUsd",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updatePriceInSolana",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceUpdater",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newPriceInSolana",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updatePriceInCodeToken",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceUpdater",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newPriceInCodeToken",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "updatePrices",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "priceUpdater",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "optionalNewPriceInSolana",
+          "type": {
+            "option": "u64"
+          }
+        },
+        {
+          "name": "optionalNewPriceInCodeToken",
+          "type": {
+            "option": "u64"
+          }
+        }
+      ]
+    },
+    {
+      "name": "updateDiscountForCodeToken",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newDiscountForCodeToken",
+          "type": "u8"
+        }
+      ]
+    },
+    {
+      "name": "updateAuthority",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newAuthority",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updatePriceUpdater",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newPriceUpdater",
+          "type": "publicKey"
+        }
+      ]
+    },
+    {
+      "name": "updateInMaintenance",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "newInMaintenance",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "payJobPost",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "jobId",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "payJobPostWithSplToken",
+      "accounts": [
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "mint",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "userToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "jobPostToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "jobId",
+          "type": "string"
+        },
+        {
+          "name": "paymentMethod",
+          "type": {
+            "defined": "PaymentMethod"
+          }
+        }
+      ]
+    },
+    {
+      "name": "paidToConfirmedJobPost",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "reviewToConfirmedJobPost",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "holdJobPost",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "editJobPost",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "refundJobPostWithSolana",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "useJobPostStatus",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "refundJobPostWithSplToken",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "userToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "jobPostToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "useJobPostStatus",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "closeJobPostWithSolana",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "useJobPostStatus",
+          "type": "bool"
+        },
+        {
+          "name": "useJobPostPaidAt",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "closeJobPostWithSplToken",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authorityToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "jobPostToken",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "tokenProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "useJobPostStatus",
+          "type": "bool"
+        },
+        {
+          "name": "useJobPostPaidAt",
+          "type": "bool"
+        }
+      ]
+    },
+    {
+      "name": "updateJobPostStatus",
+      "accounts": [
+        {
+          "name": "job",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "jobPost",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "user",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
+        {
+          "name": "newJobStatus",
+          "type": {
+            "defined": "JobStatus"
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Job",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "authority",
+            "type": "publicKey"
+          },
+          {
+            "name": "priceUpdater",
+            "type": "publicKey"
+          },
+          {
+            "name": "priceInUsd",
+            "type": "u64"
+          },
+          {
+            "name": "priceInSolana",
+            "type": "u64"
+          },
+          {
+            "name": "priceInCodeToken",
+            "type": "u64"
+          },
+          {
+            "name": "discountForCodeToken",
+            "type": "u8"
+          },
+          {
+            "name": "inMaintenance",
+            "type": "bool"
+          },
+          {
+            "name": "posts",
+            "type": {
+              "vec": "publicKey"
+            }
+          },
+          {
+            "name": "codeTokenProgram",
+            "type": "publicKey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "JobPost",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "user",
+            "type": "publicKey"
+          },
+          {
+            "name": "username",
+            "type": "string"
+          },
+          {
+            "name": "jobId",
+            "type": "string"
+          },
+          {
+            "name": "jobStatus",
+            "type": {
+              "defined": "JobStatus"
+            }
+          },
+          {
+            "name": "bump",
+            "type": "u8"
+          },
+          {
+            "name": "pricePaidInSolana",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "pricePaidInCodeToken",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "paymentMethod",
+            "type": {
+              "defined": "PaymentMethod"
+            }
+          },
+          {
+            "name": "paidAt",
+            "type": "i64"
+          },
+          {
+            "name": "tokenAccount",
+            "type": {
+              "option": "publicKey"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "JobStatus",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Paid"
+          },
+          {
+            "name": "Confirmed"
+          },
+          {
+            "name": "Hold"
+          },
+          {
+            "name": "Review"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PaymentMethod",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Solana"
+          },
+          {
+            "name": "CODE"
+          }
+        ]
+      }
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "Authority",
+      "msg": "The authority shouldn't call this"
+    },
+    {
+      "code": 6001,
+      "name": "NotAuthority",
+      "msg": "You are not the authority"
+    },
+    {
+      "code": 6002,
+      "name": "NotPriceUpdater",
+      "msg": "You are not the price updater"
+    },
+    {
+      "code": 6003,
+      "name": "UnauthorizedUser",
+      "msg": "You are not the authorized user"
+    },
+    {
+      "code": 6004,
+      "name": "JobPostPrice",
+      "msg": "Job post price should be more than rent-exempt"
+    },
+    {
+      "code": 6005,
+      "name": "JobPostListFull",
+      "msg": "The job post list is full"
+    },
+    {
+      "code": 6006,
+      "name": "JobPostListIsNotVacant",
+      "msg": "The job post list is not vacant"
+    },
+    {
+      "code": 6007,
+      "name": "JobPostNotFound",
+      "msg": "Job post is not in the job post list"
+    },
+    {
+      "code": 6008,
+      "name": "NoJobPostBumpInTheContext",
+      "msg": "The bump for the job post is not in the context"
+    },
+    {
+      "code": 6009,
+      "name": "UsernameLegnth",
+      "msg": "Username shoulnd't be more than 18 characters"
+    },
+    {
+      "code": 6010,
+      "name": "UuidLegnth",
+      "msg": "Uuid should have 36 characters"
+    },
+    {
+      "code": 6011,
+      "name": "JobStatusNotPaid",
+      "msg": "Job post is not in the paid status"
+    },
+    {
+      "code": 6012,
+      "name": "JobStatusNotHold",
+      "msg": "Job post is not in the hold status"
+    },
+    {
+      "code": 6013,
+      "name": "JobStatusNotConfirmed",
+      "msg": "Job post is not in the confirmed status"
+    },
+    {
+      "code": 6014,
+      "name": "JobStatusNotReview",
+      "msg": "Job post is not in the review status"
+    },
+    {
+      "code": 6015,
+      "name": "JobStatusSame",
+      "msg": "Job post status to update is same to the previous one"
+    },
+    {
+      "code": 6016,
+      "name": "JobStatusNotFound",
+      "msg": "Job post status to update is not found"
+    },
+    {
+      "code": 6017,
+      "name": "UserCloseJobPost",
+      "msg": "Users can close a job post until two weeks after the payment"
+    },
+    {
+      "code": 6018,
+      "name": "AuthorityCloseJobPost",
+      "msg": "The authority can close a job post after four weeks after the payment"
+    },
+    {
+      "code": 6019,
+      "name": "NotEnoughSOL",
+      "msg": "Not enough SOL to pay"
+    },
+    {
+      "code": 6020,
+      "name": "SolanaTransferFailure",
+      "msg": "Solana transfer failure"
+    },
+    {
+      "code": 6021,
+      "name": "SPLTokenTransferFailure",
+      "msg": "SPL token transfer failure"
+    },
+    {
+      "code": 6022,
+      "name": "NotCODE",
+      "msg": "The SPL token was not the USDC"
+    },
+    {
+      "code": 6023,
+      "name": "SPLNotListed",
+      "msg": "The SPL token is not listed"
+    },
+    {
+      "code": 6024,
+      "name": "NotEnoughTokens",
+      "msg": "There were not enough tokens in the user token account"
+    },
+    {
+      "code": 6025,
+      "name": "NotForFunctionsWithSolana",
+      "msg": "Use SPL tokens relevant functions instead"
+    },
+    {
+      "code": 6026,
+      "name": "NotForFunctionsWithSPLToken",
+      "msg": "Use Solana relevant functions instead"
+    },
+    {
+      "code": 6027,
+      "name": "InvalidJobPostTokenAccount",
+      "msg": "Invalid job post token account"
+    },
+    {
+      "code": 6028,
+      "name": "NotPaidInSolana",
+      "msg": "It was not paid in Solana"
+    },
+    {
+      "code": 6029,
+      "name": "NotPaidInCodeToken",
+      "msg": "It was not paid in CODE"
+    },
+    {
+      "code": 6030,
+      "name": "IncorrectDiscountValue",
+      "msg": "Incorrect discount value"
+    },
+    {
+      "code": 6031,
+      "name": "InMaintenance",
+      "msg": "The contract is in maintenance"
+    }
+  ]
+}

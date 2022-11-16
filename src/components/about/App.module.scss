@@ -1,0 +1,338 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  overflow-x: hidden;
+  background: url(./assets//background.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+
+  .top {
+    // margin-top: 6.25rem;
+    // margin-top: 5rem;
+    // margin-top: 5rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    
+    margin-left: 5rem;
+    width: 100%;
+    opacity: 0;
+    animation: appearIn 0.2s forwards ease-out 0.1s;
+
+    p {
+      opacity: 0;
+      animation: appearIn 1s forwards ease-out 0.4s;
+    }
+
+    .top_bottom {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 5rem;
+      opacity: 0;
+      animation: appearIn 0.1s forwards ease-in-out 0.7s;
+
+      .top_bottom_right {
+        width: 25rem;
+        margin-right: 5rem;
+        position: relative;
+        padding: 1rem;
+        padding-right: 1.5rem;
+        padding-top: 0rem;
+
+        img {
+          width: 1rem;
+          height: 1rem;
+          padding-top: 1px;
+          margin: 0;
+        }
+
+        .image_with_header {
+          display: flex;
+          align-items: flex-start;
+          justify-content: flex-start;
+
+          h4 {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #7f7f7f;
+          }
+        }
+
+        h3 {
+          width: 35rem;
+          font-size: 1rem;
+          font-weight: 400;
+          color: #7f7f7f;
+        }
+
+        .circle_top {
+          background-color: #26bfa1;
+          position: absolute;
+          right: 1rem;
+          top: -2rem;
+          z-index: -1;
+          transition: all linear 0.1s;
+        }
+      }
+    }
+  }
+
+  .faq_wrapper {
+    width: 100%;
+    margin: 3rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .faq_questions {
+      width: 70%;
+    }
+    button {
+      cursor: pointer;
+      padding: 1rem 1.5rem;
+      border-radius: 1.5rem;
+      text-transform: uppercase;
+      background-color: black;
+      color: white;
+      border: none;
+      font-weight: 600;
+    }
+  }
+
+  .message {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 2rem 0;
+
+    .message_inner {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .message_with_circle {
+        padding: 0 4rem;
+        display: flex;
+        position: relative;
+
+        .circle_mid {
+          background-color: #10a0f7;
+          position: absolute;
+          z-index: 0;
+          transition: all linear 0.1s;
+        }
+      }
+    }
+  }
+
+  .blog_post_wrapper {
+    width: 80%;
+
+    margin: 2rem 0;
+    // margin: 4rem 0;
+
+    .blog_post_controls {
+      border-bottom: 2px solid black;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      // padding: 1rem 1rem 0.5rem 0;
+
+      h2 {
+        font-size: 3.5rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        font-family: berlin, Arial, serif;
+      }
+
+      button {
+        background-color: black;
+        color: white;
+        border: none;
+        padding: 1rem 1.5rem;
+        border-radius: 1.2rem;
+        text-transform: uppercase;
+        font-weight: 700;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 0.7;
+          transition: all 0.2s;
+        }
+      }
+    }
+  }
+
+  .action {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 4rem;
+
+    .texts {
+      h1 {
+        text-align: start;
+      }
+    }
+
+    .sign_circle {
+      align-self: flex-end;
+      padding: 3rem 5rem 3rem 1rem;
+      position: relative;
+      z-index: 2;
+
+      .circle_lower {
+        background-color: #26bfa1;
+        position: absolute;
+        z-index: -1;
+      }
+    }
+  }
+
+  .footer {
+    width: 100%;
+    margin-bottom: 4rem;
+    // margin-bottom: 8rem;
+
+    h2 {
+      font-size: 3.5rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding-left: 9rem;
+
+      span {
+        background-color: #26bfa1;
+        padding: 0.3rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    ul {
+      margin: 2rem 6rem;
+      li {
+        font-size: 1.8rem;
+        font-weight: 400;
+        color: #7f7f7f;
+        list-style-type: square;
+      }
+    }
+  }
+}
+
+.code {
+  cursor: pointer;
+            
+  &:hover {
+    opacity: 0.7;
+    transition: all 0.2s;
+  }
+}
+
+.faqlink {
+  cursor: pointer;
+  color: rgb(17, 160, 245);
+  
+  &:hover {
+    opacity: 0.7;
+    transition: all 0.2s;
+  }
+}
+
+@keyframes appearIn {
+  to {
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1370px) {
+  .App {
+    .top {
+      margin-left: 3rem;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .App {
+    .top {
+      // margin-left: 1rem;
+      margin-left: 2rem;
+      // margin-top: 3rem;
+
+      .top_bottom {
+        width: 100%;
+        margin-top: 1rem;
+        justify-content: flex-end;
+        padding: 0;
+
+        .top_bottom_right {
+          width: 70%;
+          margin: 0;
+        }
+      }
+    }
+    .faq_wrapper {
+      .faq_questions {
+        width: 80%;
+      }
+    }
+
+    .message .message_inner {
+      .message_with_circle {
+        width: 70%;
+        padding-right: 4rem;
+      }
+    }
+
+    .message p {
+      max-width: 90%;
+    }
+
+    .blog_post_wrapper {
+      width: 95%;
+      .blog_post_controls {
+        h2 {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .action {
+      width: 100%;
+      padding-left: 1rem;
+
+      .sign_circle {
+        padding: 1rem 2rem;
+        margin-right: 1rem;
+      }
+    }
+
+    .footer {
+      width: 100%;
+      h2 {
+        font-size: 2rem;
+        padding-left: 1rem;
+        margin-right: 1rem;
+      }
+
+      ul {
+        margin-left: 2.1rem;
+        width: 80%;
+
+        li {
+          font-size: 0.8rem;
+        }
+      }
+    }
+  }
+}

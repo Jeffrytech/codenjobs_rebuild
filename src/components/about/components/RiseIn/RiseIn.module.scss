@@ -1,0 +1,54 @@
+.RiseIn {
+  padding: 0;
+  overflow-y: hidden;
+  background: transparent;
+  z-index: 2;
+
+  h1 {
+    margin: 0;
+    font-size: 6rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    transform: rotateZ(-3deg) translateY(7rem);
+   
+  }
+}
+
+.showNow {
+  animation: riseIn 0.4s ease-out forwards 0.2s;
+}
+
+@keyframes riseIn {
+  0% {
+    transform: rotateZ(-3deg) translateY(7rem);
+  }
+
+  100% {
+    transform: rotateZ(0deg) translateY(0);
+  }
+}
+
+@media screen and (max-width: 1370px) {
+  .RiseIn {
+    h1 {
+      transform: rotateZ(3deg) translateY(7rem);
+      font-size: 5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .RiseIn {
+    h1 {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .RiseIn {
+    h1 {
+      font-size: 1.3rem;
+    }
+  }
+}

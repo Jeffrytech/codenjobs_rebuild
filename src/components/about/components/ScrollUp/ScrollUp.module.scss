@@ -1,0 +1,56 @@
+.scroll_up {
+  height: 4rem;
+  overflow-y: hidden;
+  cursor: pointer;
+  z-index: 2;
+
+  h2 {
+    font-size: 3.5rem;
+    font-weight: 800;
+    transition: all ease-in-out 0.4s;
+
+    margin: 0;
+  }
+}
+
+.scroll_up:hover h2 {
+  animation: scrollUp ease-in-out 0.4s forwards;
+}
+
+@keyframes scrollUp {
+  to {
+    transform: translateY(-4.1rem);
+  }
+}
+
+
+
+@media screen and (max-width: 1370px) {
+  .scroll_up {
+    height: 3.5rem;
+    h2 {
+      font-size: 3rem;
+    }
+  }
+
+  @keyframes scrollUp {
+    to {
+      transform: translateY(-3.6rem);
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .scroll_up {
+    height: 2.3rem;
+    h2 {
+      font-size: 2rem;
+    }
+  }
+
+  @keyframes scrollUp {
+    to {
+      transform: translateY(-2.1rem);
+    }
+  }
+}

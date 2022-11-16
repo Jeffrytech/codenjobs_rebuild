@@ -1,0 +1,113 @@
+/* https://stackoverflow.com/questions/66356329/how-to-add-styling-for-elements-in-react-markdown */
+/* This worked */
+
+/* Output, read */
+
+/* root styles here */
+.reactMarkDown {
+  font-size: 1.25rem;
+  /* background-color: green; */
+}
+
+/* const MOBILE = "@media (max-width: 768px)"; */
+/* const XS = "@media (max-width: 480px)"; */
+
+/* @media ( max-width: 768px ) { */
+@media ( max-width: 480px ) {
+  .reactMarkDown {
+    font-size: 1rem;
+  };
+
+  /* .reactMarkDown h1 {
+    font-size: 2rem;
+  } */
+
+  /* .reactMarkDown pre {
+    max-width: 100% !important;
+  }; */
+}
+
+/* .reactMarkDown ul {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  list-style: disc outside none;
+}
+
+.reactMarkDown ul li {
+  margin-left: 2em;
+  display: list-item;
+  text-align: -webkit-match-parent;
+} */
+
+.reactMarkDown img {
+  max-width: 100% !important;
+  border-radius: 0.25rem;
+
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  /* border-radius: 0.5rem; */
+}
+
+.reactMarkDown a {
+  color: rgb(17, 160, 245);
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.reactMarkDown a:hover {
+  opacity: 0.7;
+}
+
+.reactMarkDown blockquote {
+  border-left: 4px solid #efefef;
+  padding: 0 0 0 0.5rem;
+  margin: 0 0 0.5rem 0;
+}
+
+.reactMarkDown p > code {
+  background: #efefef;
+  padding: 0 0.25rem;
+  /* color: ; */
+  /* border-radius: 3px; */
+  /* padding: 0.1rem; */
+  /* padding: 1rem; */
+}
+
+.reactMarkDown pre {
+  background: #efefef;
+  /* color: white; */
+  /* background: rgb(30, 30, 30); */
+  /* border-radius: 3px; */
+  /* padding: 0.5rem; */
+  /* color: #efefef; */
+
+  direction: ltr;
+  text-align: left;
+  position: relative;
+  white-space: pre-wrap;
+}
+
+/* .reactMarkDown pre:has(code) { */
+.reactMarkDown pre > code {
+  display: flex;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+
+.reactMarkDown pre > div {
+  /* display: flex; */
+  /* padding: 0.75rem; */
+  border-radius: 0.5rem;
+  /* font-size: 1rem; */
+}
+
+/* Instead of this, use console for code snippet without lang. */
+/* .reactMarkDown pre {
+  background: #efefef;
+  padding: 1rem;
+  border-radius: 0.5rem;
+} */
+
+/* .reactMarkDown span {
+  color: red;
+} */
