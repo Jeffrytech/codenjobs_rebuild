@@ -100,6 +100,10 @@ class MyDocument extends Document<{ stylesheets: any[] }> {
             href="https://fonts.cdnfonts.com/css/satoshi"
             rel="stylesheet"
           />
+          <link
+            href="https://fonts.cdnfonts.com/css/manrope"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />
