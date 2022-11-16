@@ -62,7 +62,6 @@ const MainContainer = styled("div", {
   // padding: "3.75rem 6rem 0 6rem",
   padding: "3.75rem 2rem 0 10rem",
   // padding: "3.75rem 4rem 0 8rem",
-
   width: "100%",
   // maxWidth: "47rem",
 
