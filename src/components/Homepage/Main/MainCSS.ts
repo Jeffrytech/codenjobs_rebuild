@@ -20,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
   input: {
     // marginLeft: theme.spacing(1),
     flex: 1,
+    fontFamily: '"Satoshi", sans-serif',
 
     width: "100%",
     marginRight: "0.5rem",
@@ -44,14 +45,14 @@ const useStyles = makeStyles((theme) => ({
 
 const MainSection = styled("section", {
   display: "flex",
-  height: "27rem",
+  height: "35rem",
   backgroundColor: white,
   // overflowY: "hidden",
 
   [DESKTOP]: {
     flexFlow: "column",
     height: "auto",
-  }
+  },
 });
 
 const MainContainer = styled("div", {
@@ -61,25 +62,37 @@ const MainContainer = styled("div", {
   // padding: "3.75rem 6rem 0 6rem",
   padding: "3.75rem 2rem 0 10rem",
   // padding: "3.75rem 4rem 0 8rem",
-
   width: "100%",
-  maxWidth: "47rem",
+  // maxWidth: "47rem",
 
   [DESKTOP]: {
     padding: "0.875rem 1rem 1rem 1.25rem",
     maxWidth: "100%",
-  }
+  },
 });
 
 const MainCompanyName = styled("h2", {
   color: darkBlue,
   marginBottom: "1rem",
+  fontSize: "1.5rem",
+  marginTop: "40px",
   fontWeight: "normal",
+  [MOBILE]: {
+    fontSize: ".9rem",
+    marginBottom: "10px",
+  },
 });
 
 const MainCompanyDescription = styled("h1", {
   marginTop: "0",
   fontSize: "2.5rem",
+  color: "#272927",
+  marginBottom: "20px",
+  fontWeight: 600,
+
+  [MOBILE]: {
+    fontSize: "2rem",
+  },
 });
 
 const MainJobSearchForm = styled("form", {
@@ -90,7 +103,11 @@ const MainJobSearchForm = styled("form", {
   [DESKTOP]: {
     paddingRight: "1rem",
     // paddingLeft: "1rem",
-  }
+  },
+  [MOBILE]: {
+    paddingRight: "0",
+    marginRight: "0",
+  },
 });
 
 const MainFormInputContainer = styled("div", {
@@ -99,13 +116,13 @@ const MainFormInputContainer = styled("div", {
 
   [DESKTOP]: {
     flexFlow: "column",
-  }
+  },
 });
 
 const MainFormInputWrapper = styled("div", {
   display: "flex",
   flexBasis: "100%",
-  
+
   padding: "2px 4px",
 
   alignItems: "center",
@@ -126,27 +143,27 @@ const MainFormInputWrapper = styled("div", {
     // maxWidth: "calc(100% - 1rem)",
     width: "calc(100% - 2rem)",
     maxWidth: "calc(100% - 2rem)",
-    
+
     margin: "0 1rem 1rem 0",
-  }
-  
+  },
 });
 
 const MainFormInputButton = styled("button", {
   backgroundColor: darkBlue,
   border: "none",
-  padding: "1rem",
+  minWidth: "48px",
   borderRadius: "0.5rem",
-  height: "2.75rem",
-  
+  height: "48px",
+
   display: "flex",
   alignItems: "center",
-  
+  justifyContent: "center",
+
   ":hover": hover,
-  
+
   [DESKTOP]: {
     display: "none",
-  }
+  },
 });
 
 const MainJobSearchListContainer = styled("ul", {
@@ -157,7 +174,7 @@ const MainJobSearchListContainer = styled("ul", {
 
   [DESKTOP]: {
     margin: "0.5rem 0 0 0.5rem",
-  }
+  },
 });
 
 const MainJobSearchList = styled("li", ({ $last }) => {
@@ -178,7 +195,7 @@ const MainJobSearchListLink = styled("span", {
     color: blue,
     transition: "all 0.2s",
     // color: darkBlue,
-  }
+  },
 });
 
 const MainDesktopImage = styled("img", {
@@ -187,10 +204,11 @@ const MainDesktopImage = styled("img", {
   // marginTop: "-3.75rem",
   marginTop: "-2.5rem",
   marginRight: "1.75rem",
+  width: "80%",
 
   [DESKTOP]: {
     display: "none",
-  }
+  },
 });
 
 const MainMobileImage = styled("img", {
@@ -204,39 +222,30 @@ const MainMobileImage = styled("img", {
     // marginRight: "1rem",
     marginBottom: "2rem",
 
-    width: "calc(100% - 4rem)"
+    width: "calc(100% - 4rem)",
     // marginBottom: "1rem",
-
   },
 
   [MOBILE]: {
     marginLeft: "1.5rem",
 
-    width: "calc(100% - 4rem)"
+    width: "calc(100% - 4rem)",
   },
-
 });
-
 
 export {
   useStyles,
-  
   MainSection,
   MainContainer,
   MainCompanyName,
   MainCompanyDescription,
-
   MainJobSearchForm,
-
   MainFormInputContainer,
   MainFormInputWrapper,
   MainFormInputButton,
-
   MainJobSearchListContainer,
   MainJobSearchList,
   MainJobSearchListLink,
-  
   MainDesktopImage,
   MainMobileImage,
-
 };
