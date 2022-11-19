@@ -19,7 +19,11 @@ import ShareIcon from "@material-ui/icons/Share";
 // } from "./ProfileShareCSS";
 
 // import SocialShare from "../../SocialShare";
-import { HTTPS, COMPANY_NAME, COMPANY_WEBSITE } from "../../../../config/environment";
+import {
+  HTTPS,
+  COMPANY_NAME,
+  COMPANY_WEBSITE,
+} from "../../../../config/environment";
 
 const ProfileCompaniesDialog = ({
   // username,
@@ -39,23 +43,31 @@ const ProfileCompaniesDialog = ({
 
   return (
     <>
-      <Dialog open={showProfileCompaniesDialog} onClose={handleClose} aria-labelledby="show-profile-company-list-dialog">
+      <Dialog
+        open={showProfileCompaniesDialog}
+        onClose={handleClose}
+        aria-labelledby="show-profile-company-list-dialog"
+      >
         {/* <Dialog open={showProfileCompaniesDialog} onClose={handleClose} aria-labelledby="show-profile-companies-dialgo"> */}
         {/* Include image here */}
         <DialogTitle id="profile-company-list-dialog-title">
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            marginTop: "1rem",
-          }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginTop: "1rem",
+            }}
+          >
             <Avatar
               alt={COMPANY_NAME}
-              src={"/static/logo.png"}
-              // src={dialogCompanyLogo || "/static/logo.png"}
+              src={"/static/logo.svg"}
+              // src={dialogCompanyLogo || "/static/logo.svg"}
             />
-            <span style={{
-              marginLeft: "0.5rem"
-            }}>
+            <span
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
               {/* {dialogNumberOfJobs} */}
               {dialogNumberOfJobs}
               {/* used for {dialogNumberOfJobs} */}
@@ -65,17 +77,15 @@ const ProfileCompaniesDialog = ({
           </div>
         </DialogTitle>
 
-        <DialogContent>          
+        <DialogContent>
           <DialogContentText>
-            You can't remove the company information when there is one or more job posts are used with it.
+            You can't remove the company information when there is one or more
+            job posts are used with it.
           </DialogContentText>
         </DialogContent>
-        
+
         <DialogActions>
-          <Button
-            onClick={handleClose}
-            color="primary"
-          >
+          <Button onClick={handleClose} color="primary">
             Close
           </Button>
         </DialogActions>

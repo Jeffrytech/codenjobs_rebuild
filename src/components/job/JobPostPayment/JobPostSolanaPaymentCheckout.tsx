@@ -6,16 +6,17 @@ import moment from "moment";
 
 import solana_logo from "../../../images/logos/solana_logo.png";
 
-import { 
-  Box, Button, 
-  Typography 
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import styled from "@emotion/styled";
 
-import { 
-  black, white, 
-  purple, blue, solana, green 
+import {
+  black,
+  white,
+  purple,
+  blue,
+  solana,
+  green,
 } from "../../../design/colors";
 import { useSolanaNotification } from "../../../contexts/solanaNotification";
 
@@ -32,11 +33,11 @@ const JobPostSolanaPaymentCheckout = ({
   last_updated,
   disableJobPostSolanaPaymentButton,
 
-  solanaPrice, 
+  solanaPrice,
   setSolanaPrice,
 }) => {
   // Verify the job(id) was already paid here and redirect?
-  
+
   const router = useRouter();
   // @ts-ignore
   const { solanaNotification, setSolanaNotification } = useSolanaNotification();
@@ -86,7 +87,7 @@ const JobPostSolanaPaymentCheckout = ({
     fontWeight: 400,
     flex: "2",
   });
-  
+
   const Value = styled(Typography)({
     flex: "1",
   });
@@ -105,20 +106,29 @@ const JobPostSolanaPaymentCheckout = ({
 
   // const currentSolanaPrice = (solanaPrice * 1).toFixed(2);
 
-  const currentJobPostPriceInDollar = (solanaPrice * job_post_price_in_solana).toFixed(2);
-  const currentUserBalanceInDollar = (solanaPrice * userSolanaBalance).toFixed(2);
-  
+  const currentJobPostPriceInDollar = (
+    solanaPrice * job_post_price_in_solana
+  ).toFixed(2);
+  const currentUserBalanceInDollar = (solanaPrice * userSolanaBalance).toFixed(
+    2
+  );
+
   // alert(last_updated);
 
   return (
     <>
       <Box>
-        <ContentBox style={{
-          padding: "1rem",
-        }}>
-          <Title align="center" style={{
-            marginBottom: "0.5rem",
-          }} >
+        <ContentBox
+          style={{
+            padding: "1rem",
+          }}
+        >
+          <Title
+            align="center"
+            style={{
+              marginBottom: "0.5rem",
+            }}
+          >
             Your Order Summary
           </Title>
 
@@ -134,7 +144,7 @@ const JobPostSolanaPaymentCheckout = ({
           </Box> */}
 
           {/* <Box mt={"1rem"} > */}
-          <Box >
+          <Box>
             {/* <IndividualBox>
               <Label style={{
                 color: solana,
@@ -156,21 +166,31 @@ const JobPostSolanaPaymentCheckout = ({
             </IndividualBox> */}
 
             <IndividualBox>
-              <Item>1 Job Post</Item> <Value>${currentJobPostPriceInDollar}</Value>
+              <Item>1 Job Post</Item>{" "}
+              <Value>${currentJobPostPriceInDollar}</Value>
             </IndividualBox>
             <IndividualBox>
-              <Label style={{
-                // color: solana,
-                color: green,
-                // fontWeight: "bold",
-              }} >🎉 Discount</Label> <TotalPrice style={{
-                marginLeft: "-0.25rem",
-                color: green,
-                fontWeight: "bold",
-              }} >
-                <span style={{
-                  marginLeft: "0.1rem",
-                }} >
+              <Label
+                style={{
+                  // color: solana,
+                  color: green,
+                  // fontWeight: "bold",
+                }}
+              >
+                🎉 Discount
+              </Label>{" "}
+              <TotalPrice
+                style={{
+                  marginLeft: "-0.25rem",
+                  color: green,
+                  fontWeight: "bold",
+                }}
+              >
+                <span
+                  style={{
+                    marginLeft: "0.1rem",
+                  }}
+                >
                   $0
                 </span>
               </TotalPrice>
@@ -179,24 +199,30 @@ const JobPostSolanaPaymentCheckout = ({
 
           <Box mt={"1.2rem"}>
             <IndividualBox>
-              <Label>Total Price</Label> <TotalPrice>${currentJobPostPriceInDollar}</TotalPrice>
+              <Label>Total Price</Label>{" "}
+              <TotalPrice>${currentJobPostPriceInDollar}</TotalPrice>
             </IndividualBox>
             <IndividualBox>
-              <Label style={{
-                color: solana,
-              }} >
-                In Solana <Image
+              <Label
+                style={{
+                  color: solana,
+                }}
+              >
+                In Solana{" "}
+                <Image
                   width={"12px"}
                   height={"12px"}
                   src={solana_logo}
                   alt="solana logo"
                 />
-                <span style={{
-                  marginLeft: "0.25rem",
-                }} >
+                <span
+                  style={{
+                    marginLeft: "0.25rem",
+                  }}
+                >
                   {job_post_price_in_solana.toFixed(2)}
                 </span>
-              </Label> 
+              </Label>
               {/* <TotalPrice style={{
                 marginLeft: "-0.25rem",
                 color: solana,
@@ -215,24 +241,30 @@ const JobPostSolanaPaymentCheckout = ({
               </TotalPrice> */}
             </IndividualBox>
             <IndividualBox>
-              <Label>Your Balance</Label> <TotalPrice>${currentUserBalanceInDollar}</TotalPrice>
+              <Label>Your Balance</Label>{" "}
+              <TotalPrice>${currentUserBalanceInDollar}</TotalPrice>
             </IndividualBox>
             <IndividualBox>
-              <Label style={{
-                color: solana,
-              }} >
-                In Solana <Image
+              <Label
+                style={{
+                  color: solana,
+                }}
+              >
+                In Solana{" "}
+                <Image
                   width={"12px"}
                   height={"12px"}
                   src={solana_logo}
                   alt="solana logo"
                 />
-                <span style={{
-                  marginLeft: "0.25rem",
-                }} >
+                <span
+                  style={{
+                    marginLeft: "0.25rem",
+                  }}
+                >
                   {userSolanaBalance?.toFixed(2)}
                 </span>
-              </Label> 
+              </Label>
               {/* <TotalPrice style={{
                 marginLeft: "-0.25rem",
                 color: solana,
@@ -252,14 +284,16 @@ const JobPostSolanaPaymentCheckout = ({
             </IndividualBox>
           </Box>
 
-          <div style={{
-            marginTop: "0.5rem",
-            opacity: 0.6,
-            fontSize: "0.75rem",
-            lineHeight: "1rem",
-            padding: "0.25rem",
-          }} >
-            <span 
+          <div
+            style={{
+              marginTop: "0.5rem",
+              opacity: 0.6,
+              fontSize: "0.75rem",
+              lineHeight: "1rem",
+              padding: "0.25rem",
+            }}
+          >
+            <span
               onClick={() => {
                 // alert(solanaNotification.show);
                 // setSolanaNotification({
@@ -268,21 +302,19 @@ const JobPostSolanaPaymentCheckout = ({
                 //   title: "Pay with CODE token ready",
                 //   message: `Confirm your job post payment`,
                 // });
-                
                 // alert(solanaNotification.show);
-
               }}
             >
-              The last update for the Solana price in the contract was {moment.utc(last_updated).fromNow()}. (Update happens every 10 minutes if there were differences in prices.)
+              The last update for the Solana price in the contract was{" "}
+              {moment.utc(last_updated).fromNow()}. (Update happens every 10
+              minutes if there were differences in prices.)
               {/* The last update for the Solana price in the contract was {moment.utc(new Date(last_updated)).fromNow()}.  */}
             </span>
           </div>
         </ContentBox>
-        
-        <Box border={"1px solid #d3d3d3"} borderRadius="0 0 0.5rem 0.5rem" >
-          <Box
-            m={"1rem 1rem 0 1rem"}
-          >
+
+        <Box border={"1px solid #d3d3d3"} borderRadius="0 0 0.5rem 0.5rem">
+          <Box m={"1rem 1rem 0 1rem"}>
             <Typography
               sx={{
                 fontWeight: "bold",
@@ -299,29 +331,29 @@ const JobPostSolanaPaymentCheckout = ({
                   opacity: "0.7",
                   transition: "all 0.2s",
                   cursor: "pointer",
-                }
+                },
               }}
-
               onClick={() => {
-                router.push(
-                  {
-                    pathname: router.pathname, 
-                    query: {
-                      ...router.query,
-                      method: "code"
-                    }
-                  }
-                );
+                router.push({
+                  pathname: router.pathname,
+                  query: {
+                    ...router.query,
+                    method: "code",
+                  },
+                });
               }}
             >
-              Use <img src="/static/logo.png"
+              Use{" "}
+              <img
+                src="/static/logo.svg"
                 style={{
                   width: "1rem",
                   height: "1rem",
                   marginLeft: "0.25rem",
                   marginRight: "0.25rem",
                 }}
-              /> CODE and have 5% off
+              />{" "}
+              CODE and have 5% off
             </Typography>
           </Box>
 
@@ -334,19 +366,19 @@ const JobPostSolanaPaymentCheckout = ({
               // Balance check here?
               disabled={disableJobPostSolanaPaymentButton}
               onClick={jobPostSolanaPayment}
-              sx={{ 
+              sx={{
                 background: purple,
-                color: white, 
+                color: white,
                 width: "8.5rem",
                 border: "1px solid white",
 
-                "&:disabled":{
+                "&:disabled": {
                   color: "#d3d3d3",
                 },
-                "&:hover":{
+                "&:hover": {
                   color: black,
-                  border: "1px solid black"
-                }
+                  border: "1px solid black",
+                },
               }}
             >
               <Box

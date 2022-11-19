@@ -53,56 +53,60 @@ const UpdateFile = ({
   } = useUpdateFileForm(
     // showUpdateFileForm,
     fileIdToUpdate,
-    setFileList,
+    setFileList
     // setFileIdToUpdate,
   );
 
-  useDebouncedEffect(async () => {
-    try {
-      if (fileIdToUpdate === null) {
-        return;
-      }
-      
-      const { data, error } = await findFileForOwner(fileIdToUpdate);
+  useDebouncedEffect(
+    async () => {
+      try {
+        if (fileIdToUpdate === null) {
+          return;
+        }
 
-      if (error) {
-        console.log("findFileForOwne error");
+        const { data, error } = await findFileForOwner(fileIdToUpdate);
+
+        if (error) {
+          console.log("findFileForOwne error");
+          console.error(error);
+
+          return;
+        }
+
+        // console.log("data");
+        // console.log(data);
+
+        // if (data) {
+        // console.log("data");
+        // console.log(data);
+
+        // alert(fileToUpdate);
+
+        // alert(data.fileList[0].path_to_file);
+
+        setFileThumbnail(data.fileList[0].path_to_file);
+        // const response = await axios.get(data.image, { responseType: "blob" });
+        // console.log(response); // Use this to set the file extension below
+        // console.log(response.data.type);
+
+        // eslint-disable-next-line no-undef
+        // const previousFileImage = new File([response.data], `file.${response.data.type.split("/")[1]}`, { type: response.data.type });
+        // setFieldValue("image", previousFileImage);
+        // document.getElementById("image").currentFiles[0] = previousPortfolioImage;
+
+        // setProfileImageThumbnail(data.image);
+
+        setFieldValue("title", data.fileList[0].title);
+        setFieldValue("description", data.fileList[0].description);
+        // }
+      } catch (error) {
+        console.log("error");
         console.error(error);
-
-        return;
       }
-
-      // console.log("data");
-      // console.log(data);
-
-      // if (data) {
-      // console.log("data");
-      // console.log(data);
-
-      // alert(fileToUpdate);
-
-      // alert(data.fileList[0].path_to_file);
-
-      setFileThumbnail(data.fileList[0].path_to_file);
-      // const response = await axios.get(data.image, { responseType: "blob" });
-      // console.log(response); // Use this to set the file extension below
-      // console.log(response.data.type);
-
-      // eslint-disable-next-line no-undef
-      // const previousFileImage = new File([response.data], `file.${response.data.type.split("/")[1]}`, { type: response.data.type });
-      // setFieldValue("image", previousFileImage);
-      // document.getElementById("image").currentFiles[0] = previousPortfolioImage;
-
-      // setProfileImageThumbnail(data.image);
-
-      setFieldValue("title", data.fileList[0].title);
-      setFieldValue("description", data.fileList[0].description);
-      // }
-    } catch (error) {
-      console.log("error");
-      console.error(error);
-    }
-  }, 600, [fileIdToUpdate]);
+    },
+    600,
+    [fileIdToUpdate]
+  );
 
   const handleClose = () => {
     resetForm();
@@ -112,28 +116,38 @@ const UpdateFile = ({
   };
 
   return (
-    <Dialog open={showUpdateFileForm} onClose={handleClose} aria-labelledby="update-file" >
+    <Dialog
+      open={showUpdateFileForm}
+      onClose={handleClose}
+      aria-labelledby="update-file"
+    >
       {/* Include image here */}
-      <div style={{
-        minHeight: "18rem",
-      }}>
+      <div
+        style={{
+          minHeight: "18rem",
+        }}
+      >
         <DialogTitle id="update-file">
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            // marginTop: "1rem",
-            // marginLeft: "-0.5rem",
-          }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              // marginTop: "1rem",
+              // marginLeft: "-0.5rem",
+            }}
+          >
             <div>
               <Avatar
                 alt={username}
-                src={profile_image || "/static/logo.png"}
+                src={profile_image || "/static/logo.svg"}
               />
             </div>
 
-            <span style={{
-              marginLeft: "0.5rem"
-            }}>
+            <span
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
               Update File Details
             </span>
           </div>
@@ -144,7 +158,6 @@ const UpdateFile = ({
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             handleBlur={handleBlur}
-
             values={values}
             fileThumbnail={fileThumbnail}
             // errors={errors}
@@ -158,9 +171,11 @@ const UpdateFile = ({
           />
         </DialogContent>
 
-        <DialogActions style={{
-          marginRight: "1rem",
-        }} >
+        <DialogActions
+          style={{
+            marginRight: "1rem",
+          }}
+        >
           <Button
             // disabled={isSubmitting}
             onClick={handleClose}
@@ -171,7 +186,6 @@ const UpdateFile = ({
 
           <Button
             disabled={isSubmitting}
-
             onClick={async (e) => {
               e.preventDefault();
 

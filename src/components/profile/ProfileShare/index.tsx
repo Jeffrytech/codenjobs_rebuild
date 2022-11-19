@@ -14,17 +14,16 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import { Tooltip } from "@material-ui/core";
 import ShareIcon from "@material-ui/icons/Share";
 
-import {
-  ProfileShareWrapper
-} from "./ProfileShareCSS";
+import { ProfileShareWrapper } from "./ProfileShareCSS";
 
 import SocialShare from "../../SocialShare";
-import { HTTPS, COMPANY_NAME, COMPANY_WEBSITE } from "../../../config/environment";
+import {
+  HTTPS,
+  COMPANY_NAME,
+  COMPANY_WEBSITE,
+} from "../../../config/environment";
 
-const ProfileShare = ({
-  username,
-  profile_image,
-}) => {
+const ProfileShare = ({ username, profile_image }) => {
   const [showShare, setShowShare] = useState(false);
   const handleClose = () => {
     setShowShare(false);
@@ -32,46 +31,56 @@ const ProfileShare = ({
 
   return (
     <>
-      <ProfileShareWrapper 
+      <ProfileShareWrapper
         onClick={() => {
           setShowShare(true);
         }}
       >
-        <Tooltip title="Share the profile" arrow >
+        <Tooltip title="Share the profile" arrow>
           <ShareIcon />
         </Tooltip>
       </ProfileShareWrapper>
 
-      <Dialog open={showShare} onClose={handleClose} aria-labelledby="show-social-share-buttons">
+      <Dialog
+        open={showShare}
+        onClose={handleClose}
+        aria-labelledby="show-social-share-buttons"
+      >
         {/* Include image here */}
         <DialogTitle id="change-email">
-          <div style={{
-            //  display: "flex",
-            //  alignItems: "center",
+          <div
+            style={{
+              //  display: "flex",
+              //  alignItems: "center",
 
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "1rem",
-          }}>
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
             <Avatar
               alt={COMPANY_NAME}
-              src={profile_image || "/static/logo.png"}
+              src={profile_image || "/static/logo.svg"}
             />
-            <span style={{
-              marginLeft: "0.5rem"
-            }}>
+            <span
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
               Share the profile
             </span>
           </div>
         </DialogTitle>
 
         <DialogContent>
-          <section style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}>
+          <section
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
             <SocialShare
               title={`${username} - Code&Jobs`}
               // Update this later?
@@ -79,12 +88,12 @@ const ProfileShare = ({
               url={`${HTTPS}${COMPANY_WEBSITE}/user/${username}`}
             />
           </section>
-          
+
           {/* <DialogContentText>
             Share this profile with others
           </DialogContentText> */}
         </DialogContent>
-        
+
         <DialogActions>
           <Button
             // disabled={isSubmitting}

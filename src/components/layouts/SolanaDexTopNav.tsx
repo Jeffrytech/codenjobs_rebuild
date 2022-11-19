@@ -11,18 +11,12 @@ import { scrollToTop } from "../../browser/scroll";
 import Header from "./Header";
 import Logo from "./Logo";
 
-import {
-  TopNavContainer,
-  LogoCompanyTitleContainer,
-
-} from "./TopNav/TopNavCSS";
+import { TopNavContainer, LogoCompanyTitleContainer } from "./TopNav/TopNavCSS";
 import { WalletMultiButton } from "@solana/wallet-adapter-react-ui";
 import SolanaImage from "../../crypto/SolanaImage";
 import SolanaWallet from "../../crypto/SolanaWalletConnection";
 
-const LoginTopNav = ({
-  children,
-}) => {
+const LoginTopNav = ({ children }) => {
   useEffect(() => {
     scrollToTop();
   });
@@ -34,13 +28,11 @@ const LoginTopNav = ({
           <TopNavContainer>
             <Link href={"/"}>
               <LogoCompanyTitleContainer>
-                <Logo src="/static/logo.png" />
+                <Logo src="/static/logo.svg" />
               </LogoCompanyTitleContainer>
             </Link>
 
-            <WalletMultiButton
-              startIcon={<SolanaImage />}
-            />
+            <WalletMultiButton startIcon={<SolanaImage />} />
           </TopNavContainer>
         </nav>
       </Header>

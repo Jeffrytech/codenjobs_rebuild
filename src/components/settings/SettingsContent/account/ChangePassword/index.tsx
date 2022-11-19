@@ -13,10 +13,7 @@ import useChangePasswordForm from "./useChangePasswordForm";
 import ChangePasswordForm from "./ChangePasswordForm";
 import { COMPANY_NAME } from "../../../../../config/environment";
 
-const ChangePassword = ({
-  changePassword,
-  setChangePassword,
-}) => {
+const ChangePassword = ({ changePassword, setChangePassword }) => {
   const {
     handleSubmit,
 
@@ -43,30 +40,37 @@ const ChangePassword = ({
   };
 
   return (
-    <Dialog open={changePassword} onClose={handleClose} aria-labelledby="change-password">
+    <Dialog
+      open={changePassword}
+      onClose={handleClose}
+      aria-labelledby="change-password"
+    >
       {/* Include image here */}
-      <div style={{
-        // minHeight: "18rem",
-        minHeight: "21rem",
-        // minHeight: "25rem",
-      }}>
+      <div
+        style={{
+          // minHeight: "18rem",
+          minHeight: "21rem",
+          // minHeight: "25rem",
+        }}
+      >
         <DialogTitle id="change-password">
-          <div style={{
-            //  display: "flex",
-            //  alignItems: "center",
+          <div
+            style={{
+              //  display: "flex",
+              //  alignItems: "center",
 
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "1rem",
-          }}>
-            <Avatar
-              alt={COMPANY_NAME}
-              src="/static/logo.png"
-            />
-            <span style={{
-              marginLeft: "0.5rem"
-            }}>
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
+            <Avatar alt={COMPANY_NAME} src="/static/logo.svg" />
+            <span
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
               Update Password
               {/* New Password */}
               {/* Update Your Password */}
@@ -77,7 +81,8 @@ const ChangePassword = ({
         <DialogContent>
           <DialogContentText>
             {/* You will need to login again with a new password after you change your current one. */}
-            Saving your new password will log you out. Please, login again after that.
+            Saving your new password will log you out. Please, login again after
+            that.
           </DialogContentText>
 
           {/* Extract this to change password form */}
@@ -87,19 +92,13 @@ const ChangePassword = ({
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             handleBlur={handleBlur}
-
             values={values}
             errors={errors}
             touched={touched}
           />
-
         </DialogContent>
         <DialogActions>
-          <Button
-            disabled={isSubmitting}
-            onClick={handleClose}
-            color="primary"
-          >
+          <Button disabled={isSubmitting} onClick={handleClose} color="primary">
             Cancel
           </Button>
           <Button

@@ -52,13 +52,23 @@ import NoList from "../../SearchList/NoList";
 import SearchListSkeleton from "../../SearchList/SearchListSkeleton";
 import ProfileJCompaniesForOwnerButtons from "./ProfileCompaniesForOwnerButtons";
 import ProfileList from "../../profile/ProfileList";
-import { findCompanyListForOwner, findTotalCompanyListForOwner } from "../../../api/privateCompany";
+import {
+  findCompanyListForOwner,
+  findTotalCompanyListForOwner,
+} from "../../../api/privateCompany";
 import CentralizeChildren from "../../CentralizeChildren";
 import CompanyLogoSide from "../CompanyLogoSide";
 import CompanyContainer from "../CompanyContainer";
-import { findProfileCompanyListOwnerSortOptionsLabelValue, profileCompanyListOwnerOptions } from "../../../typeDefinitions/company";
+import {
+  findProfileCompanyListOwnerSortOptionsLabelValue,
+  profileCompanyListOwnerOptions,
+} from "../../../typeDefinitions/company";
 import useProfileCompanyListForOwnerForm from "./useProfileCompanyListForOwnerForm";
-import { ListPaginationButtonsContainer, ListPaginationNextButton, ListPaginationPrevButton } from "../../job/ListPagination/ListPaginationCSS";
+import {
+  ListPaginationButtonsContainer,
+  ListPaginationNextButton,
+  ListPaginationPrevButton,
+} from "../../job/ListPagination/ListPaginationCSS";
 import { scrollToTop } from "../../../browser/scroll";
 import { useRouter } from "next/router";
 import NoProfileList from "../../NoProfileList";
@@ -70,7 +80,7 @@ import CompanyLogo from "../CompanyLogo";
 const formatProfileCompanyListTitleForOwner = (
   numberOfComapnies: Number,
   currentPage: Number,
-  totalPage: Number,
+  totalPage: Number
 ) => {
   // if (numberOfComapnies === null) {
   //   return null;
@@ -85,15 +95,15 @@ const formatProfileCompanyListTitleForOwner = (
   const compnayListTitle = `${numberOfComapnies} ${suffix}`;
   // const companyListState = `(${currentPage} / ${totalPage})`;
 
-  return <div>
-    {/* {compnayListTitle} <CompanyListState>{companyListState}</CompanyListState> */}
-    {compnayListTitle} 
-  </div>;
+  return (
+    <div>
+      {/* {compnayListTitle} <CompanyListState>{companyListState}</CompanyListState> */}
+      {compnayListTitle}
+    </div>
+  );
 };
 
-const formatNumberOfJobs = (
-  numberOfJobs: Number,
-) => {
+const formatNumberOfJobs = (numberOfJobs: Number) => {
   let suffix = "Jobs";
   if (numberOfJobs < 2) {
     suffix = "Job";
@@ -105,15 +115,11 @@ const formatNumberOfJobs = (
 };
 
 // Should include edit and delete.
-const CompanyList = ({
-  company_name,
-  sort,
-  page,
-  username,
-}) => {
+const CompanyList = ({ company_name, sort, page, username }) => {
   const router = useRouter();
 
-  const [showProifleCompaniesDialog, setShowProfileCompaniesDialog] = useState(false);
+  const [showProifleCompaniesDialog, setShowProfileCompaniesDialog] =
+    useState(false);
   const [dialogNumberOfJobs, setDialogNumberOfJobs] = useState("");
 
   const [companyList, setCompanyList] = useState(null);
@@ -144,10 +150,7 @@ const CompanyList = ({
     }
   }
 
-  const {
-    setFieldValue,
-    submitForm,
-  } = useProfileCompanyListForOwnerForm({
+  const { setFieldValue, submitForm } = useProfileCompanyListForOwnerForm({
     page,
     sort,
   });
@@ -155,8 +158,9 @@ const CompanyList = ({
   useEffect(() => {
     // findCompanyListForOwner(company_name)
     findCompanyListForOwner(
-      company_name, sort, 
-      (currentPage - 1) * companyPerPage, 
+      company_name,
+      sort,
+      (currentPage - 1) * companyPerPage,
       companyPerPage
     )
       .then(({ data }) => {
@@ -167,47 +171,52 @@ const CompanyList = ({
 
         setCompanyList(companyList);
         setTotalCompanyList(totalCompanyList);
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.log("findCompanyListForOwner error");
         console.error(error);
       });
-
   }, [
-    page, 
+    page,
     sort,
     // username
   ]);
 
   if (companyList === null) {
-    return <ProfileList>
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-    </ProfileList>;
+    return (
+      <ProfileList>
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+      </ProfileList>
+    );
   }
 
   if (companyList.length === 0) {
-  // if (true) {
-    return <ProfileList>
-      <NoProfileCompanyList 
-        href="/job/post" message="You can register your company with a job post." 
-      />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-      <SearchListSkeleton />
-    </ProfileList>;
+    // if (true) {
+    return (
+      <ProfileList>
+        <NoProfileCompanyList
+          href="/job/post"
+          message="You can register your company with a job post."
+        />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+        <SearchListSkeleton />
+      </ProfileList>
+    );
   }
 
   return (
@@ -215,18 +224,23 @@ const CompanyList = ({
       <CompanyListForOwnerHeader>
         <CentralizeChildren>
           {/* {formatProfileCompanyListTitle(companyList.length)} */}
-          {formatProfileCompanyListTitleForOwner(totalCompanyList, currentPage, totalPage)}
+          {formatProfileCompanyListTitleForOwner(
+            totalCompanyList,
+            currentPage,
+            totalPage
+          )}
         </CentralizeChildren>
 
-        <div style={{
-          marginLeft: "0.5rem",
-          marginRight: "1rem",
-          // minWidth: "8rem",
-        }}>
+        <div
+          style={{
+            marginLeft: "0.5rem",
+            marginRight: "1rem",
+            // minWidth: "8rem",
+          }}
+        >
           <Select
             id="profile_jobs_not_owner_sort_options"
             name="profile_jobs_not_owner_sort_options"
-
             styles={{
               control: (provided) => ({
                 ...provided,
@@ -244,12 +258,12 @@ const CompanyList = ({
                 ...provided,
                 // backgroundColor: "red",
                 marginLeft: "1.75rem",
-                opacity: "0.7"
+                opacity: "0.7",
               }),
               input: (provided) => ({
                 ...provided,
                 // backgroundColor: "blue",
-                backgroundImage: "url('/static/logo.png')",
+                backgroundImage: "url('/static/logo.svg')",
                 backgroundRepaet: "no-repeat",
                 backgroundSize: "cover",
 
@@ -263,7 +277,6 @@ const CompanyList = ({
                 marginLeft: "1.75rem",
               }),
             }}
-
             onChange={(e) => {
               if (e === null) {
                 setFieldValue("sort", undefined);
@@ -274,164 +287,182 @@ const CompanyList = ({
               submitForm();
             }}
             isClearable={false}
-
             placeholder="Sort"
             value={findProfileCompanyListOwnerSortOptionsLabelValue(sort)}
-
             options={profileCompanyListOwnerOptions}
           />
         </div>
       </CompanyListForOwnerHeader>
 
-      {companyList.map(({
-        company_id,
-        company_name,
-        company_website,
-        company_logo,
-        company_location,
-        company_description,
+      {companyList.map(
+        ({
+          company_id,
+          company_name,
+          company_website,
+          company_logo,
+          company_location,
+          company_description,
 
-        company_created_at,
-        company_updated_at,
+          company_created_at,
+          company_updated_at,
 
-        jobs_for_company_by_owner,
-      }) => {
-        // alert(jobs_for_company_by_owner.length);
-        // alert(jobs_for_company_by_owner);
-        // alert(company_created_at);
-        // alert(company_updated_at);
+          jobs_for_company_by_owner,
+        }) => {
+          // alert(jobs_for_company_by_owner.length);
+          // alert(jobs_for_company_by_owner);
+          // alert(company_created_at);
+          // alert(company_updated_at);
 
-        const numberOfJobsForCompanyByOwner = jobs_for_company_by_owner.length;
-        const numberOfJobsTitle = formatNumberOfJobs(jobs_for_company_by_owner.length);
-        const jobUsed = numberOfJobsForCompanyByOwner !== 0;
+          const numberOfJobsForCompanyByOwner =
+            jobs_for_company_by_owner.length;
+          const numberOfJobsTitle = formatNumberOfJobs(
+            jobs_for_company_by_owner.length
+          );
+          const jobUsed = numberOfJobsForCompanyByOwner !== 0;
 
-        return (
-          <ProfileListCardContainer key={company_id} >
-            {company_logo && <a
-              href={company_website}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <CompanyLogoSide src={`${company_logo}`} alt="logo" />
-            </a>}
-
-            <CompanyHeader>
-                
-              <div style={{
-                fontSize: "1rem",
-                opacity: "0.7",
-              }}>
-                {`Created ${moment.utc(company_created_at).fromNow()}`}
-              </div>
-
-              <CentralizeChildren >
-                <CompanyStatusContainer 
-                  onClick={() => {
-                    if (numberOfJobsForCompanyByOwner !== 0) {
-                      setDialogNumberOfJobs(numberOfJobsTitle);
-                      setShowProfileCompaniesDialog(true);
-                    }
-                  }} 
-                  $jobUsed={jobUsed}
+          return (
+            <ProfileListCardContainer key={company_id}>
+              {company_logo && (
+                <a
+                  href={company_website}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {numberOfJobsForCompanyByOwner !== 0 ? <LockIcon style={{
+                  <CompanyLogoSide src={`${company_logo}`} alt="logo" />
+                </a>
+              )}
+
+              <CompanyHeader>
+                <div
+                  style={{
                     fontSize: "1rem",
-                    marginRight: "0.25rem",
-                    opacity: 0.5,
-                  }} /> : <NoEncryptionIcon style={{
-                    fontSize: "1rem",
-                    marginRight: "0.25rem",
-                    opacity: 0.7,
-                  }} />}
-                  <span style={{
-                    opacity: 0.7,
-                    // color: "#ff1676",
-                  }}>
-                    {numberOfJobsTitle}
-                  </span>
-                </CompanyStatusContainer>
-                  
-              </CentralizeChildren>
-            </CompanyHeader>
+                    opacity: "0.7",
+                  }}
+                >
+                  {`Created ${moment.utc(company_created_at).fromNow()}`}
+                </div>
 
-            <CompanyContainer>
-              {company_logo && <CompanyLogo src={company_logo} alt="logo" />}
-              <CompanyName
-                href={company_website}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {company_name}
-              </CompanyName>
-            </CompanyContainer>
+                <CentralizeChildren>
+                  <CompanyStatusContainer
+                    onClick={() => {
+                      if (numberOfJobsForCompanyByOwner !== 0) {
+                        setDialogNumberOfJobs(numberOfJobsTitle);
+                        setShowProfileCompaniesDialog(true);
+                      }
+                    }}
+                    $jobUsed={jobUsed}
+                  >
+                    {numberOfJobsForCompanyByOwner !== 0 ? (
+                      <LockIcon
+                        style={{
+                          fontSize: "1rem",
+                          marginRight: "0.25rem",
+                          opacity: 0.5,
+                        }}
+                      />
+                    ) : (
+                      <NoEncryptionIcon
+                        style={{
+                          fontSize: "1rem",
+                          marginRight: "0.25rem",
+                          opacity: 0.7,
+                        }}
+                      />
+                    )}
+                    <span
+                      style={{
+                        opacity: 0.7,
+                        // color: "#ff1676",
+                      }}
+                    >
+                      {numberOfJobsTitle}
+                    </span>
+                  </CompanyStatusContainer>
+                </CentralizeChildren>
+              </CompanyHeader>
 
-            <CompanyLocationContainer>
-              <LocationOnIcon style={{
-                fontSize: "1.2rem",
-              }}/>
-              <CompanyFeature>{company_location}</CompanyFeature>
-            </CompanyLocationContainer>
+              <CompanyContainer>
+                {company_logo && <CompanyLogo src={company_logo} alt="logo" />}
+                <CompanyName
+                  href={company_website}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {company_name}
+                </CompanyName>
+              </CompanyContainer>
 
-            <CompanyDescription>
-              {company_description}
-            </CompanyDescription>
+              <CompanyLocationContainer>
+                <LocationOnIcon
+                  style={{
+                    fontSize: "1.2rem",
+                  }}
+                />
+                <CompanyFeature>{company_location}</CompanyFeature>
+              </CompanyLocationContainer>
 
-            <ProfileJCompaniesForOwnerButtons 
-              numberOfJobsForCompanyByOwner={numberOfJobsForCompanyByOwner}
-              company_id={company_id}
-              // company_name={company_name}
-            />
+              <CompanyDescription>{company_description}</CompanyDescription>
 
-          </ProfileListCardContainer>
-        );
-      })}
+              <ProfileJCompaniesForOwnerButtons
+                numberOfJobsForCompanyByOwner={numberOfJobsForCompanyByOwner}
+                company_id={company_id}
+                // company_name={company_name}
+              />
+            </ProfileListCardContainer>
+          );
+        }
+      )}
 
-      {companyList && totalPage > 1 && <ListPaginationButtonsContainer>
-        {currentPage.toString() !== "1" && <ListPaginationPrevButton
-          onClick={(e) => {
-            const prevPage = +(new Number(currentPage)) - 1;
+      {companyList && totalPage > 1 && (
+        <ListPaginationButtonsContainer>
+          {currentPage.toString() !== "1" && (
+            <ListPaginationPrevButton
+              onClick={(e) => {
+                const prevPage = +new Number(currentPage) - 1;
 
-            const queries = new URLSearchParams(window.location.search);
-            queries.set("page", prevPage.toString());
+                const queries = new URLSearchParams(window.location.search);
+                queries.set("page", prevPage.toString());
 
-            const query = Object.fromEntries(queries);
-            router.push({
-              pathname: window.location.pathname,
-              query,
-            });
-            scrollToTop();
-          }}
-        >
-          Prev
-        </ListPaginationPrevButton>}
-        {currentPage.toString() !== totalPage.toString() && <ListPaginationNextButton
-          onClick={(e) => {
-            e.preventDefault();
+                const query = Object.fromEntries(queries);
+                router.push({
+                  pathname: window.location.pathname,
+                  query,
+                });
+                scrollToTop();
+              }}
+            >
+              Prev
+            </ListPaginationPrevButton>
+          )}
+          {currentPage.toString() !== totalPage.toString() && (
+            <ListPaginationNextButton
+              onClick={(e) => {
+                e.preventDefault();
 
-            let nextPage = +(new Number(currentPage)) + 1;
+                let nextPage = +new Number(currentPage) + 1;
 
-            const queries = new URLSearchParams(window.location.search);
-            queries.set("page", nextPage.toString());
+                const queries = new URLSearchParams(window.location.search);
+                queries.set("page", nextPage.toString());
 
-            const query = Object.fromEntries(queries);
-            router.push({
-              pathname: window.location.pathname,
-              query,
-            });
-            scrollToTop();
-          }}
-        >
-          Next
-        </ListPaginationNextButton>}
-      </ListPaginationButtonsContainer>}
+                const query = Object.fromEntries(queries);
+                router.push({
+                  pathname: window.location.pathname,
+                  query,
+                });
+                scrollToTop();
+              }}
+            >
+              Next
+            </ListPaginationNextButton>
+          )}
+        </ListPaginationButtonsContainer>
+      )}
 
       <ProfileCompaniesDialog
         showProfileCompaniesDialog={showProifleCompaniesDialog}
         setShowProfileCompaniesDialog={setShowProfileCompaniesDialog}
-
         dialogNumberOfJobs={dialogNumberOfJobs}
       />
-
     </ProfileList>
   );
 };

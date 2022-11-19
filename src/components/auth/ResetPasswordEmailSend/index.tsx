@@ -22,16 +22,21 @@ import useResetPasswordForm from "./useResetPasswordForm";
 // } from "../../validators";
 
 import EmailFieldErrorMessage from "../Error/EmailFieldErrorMessage";
-import { LoginCompanyLogo, LoginForm, LoginFormInputWrapper, LoginFormLabel, LoginFormTextInput, Submit } from "../login/LoginCSS";
+import {
+  LoginCompanyLogo,
+  LoginForm,
+  LoginFormInputWrapper,
+  LoginFormLabel,
+  LoginFormTextInput,
+  Submit,
+} from "../login/LoginCSS";
 import { Grid, Typography } from "@material-ui/core";
 import LinkToRegister from "../LinkToRegister";
 import LinkToResetPassword from "../LinkToResetPassword";
 import LoginSpinner from "../../spinners/LoginSpinner";
 import Required from "../../Required";
 
-const ResetPasswordForm = ({
-  resetPasswordTitle,
-}) => {
+const ResetPasswordForm = ({ resetPasswordTitle }) => {
   // const classes = useStyles();
 
   const {
@@ -77,38 +82,38 @@ const ResetPasswordForm = ({
       // className={classes.form}
       onSubmit={handleSubmit}
     >
-      <LoginCompanyLogo 
-        src="/static/logo.png" alt="logo" 
+      <LoginCompanyLogo
+        src="/static/logo.svg"
+        alt="logo"
         style={{
           alignSelf: "center",
         }}
       />
-      <Typography style={{
-        marginTop: "0.25rem",
-        alignSelf: "center",
-      }} component="h1" variant="h5">
+      <Typography
+        style={{
+          marginTop: "0.25rem",
+          alignSelf: "center",
+        }}
+        component="h1"
+        variant="h5"
+      >
         {resetPasswordTitle}
       </Typography>
 
       <TextField
-        error={!!((email && email.length > 4 && touched.email && errors.email))}
-
+        error={!!(email && email.length > 4 && touched.email && errors.email)}
         variant="outlined"
         margin="normal"
         fullWidth
         required
-
         id="email"
         label="Email"
         name="email"
-
         autoComplete="email"
-
         // autoFocus
 
         onChange={handleChange}
         onBlur={handleBlur}
-
         value={email.toLowerCase().replace(/\s/g, "")}
 
         // ref={inputElement}
@@ -145,11 +150,7 @@ const ResetPasswordForm = ({
         formTouch={touched.email}
       />
 
-      <Submit
-        disabled={isSubmitting}
-
-        type="submit"
-      >
+      <Submit disabled={isSubmitting} type="submit">
         {isSubmitting && <LoginSpinner />}
         Submit
       </Submit>
@@ -186,16 +187,22 @@ const ResetPasswordForm = ({
       >
         {/* Extract this and reuse RegisterEmailSend/index.tsx? */}
         <DialogTitle id="support-email">
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-          }}>
-            <EmailIcon style={{
-              marginTop: "0.15rem",
-            }} />
-            <span style={{
-              marginLeft: "0.25rem",
-            }} >
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <EmailIcon
+              style={{
+                marginTop: "0.15rem",
+              }}
+            />
+            <span
+              style={{
+                marginLeft: "0.25rem",
+              }}
+            >
               support@codenjobs.com
             </span>
           </div>
@@ -207,12 +214,20 @@ const ResetPasswordForm = ({
             }} href="https://material-ui.com/pt/components/text-fields/" >If this continues, please contact us.</a> */}
             {/* Something went wrong at the server. Please try again. If this continues, please report to us. */}
             {/* Something went wrong at the server. */}
-            If <b>{email}</b> exists, you’ll receive an email with a link to reset your password in a few minutes. Use it to <a style={{
-              textDecoration: "none",
-              color: "rgb(17, 160, 245)",
-            }} href="/signin" target="_blank" rel="noopener noreferrer" >login</a> {
-              " "
-            } again.
+            If <b>{email}</b> exists, you’ll receive an email with a link to
+            reset your password in a few minutes. Use it to{" "}
+            <a
+              style={{
+                textDecoration: "none",
+                color: "rgb(17, 160, 245)",
+              }}
+              href="/signin"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              login
+            </a>{" "}
+            again.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -221,7 +236,6 @@ const ResetPasswordForm = ({
           </Button>
         </DialogActions>
       </Dialog>
-
     </LoginForm>
   );
 };

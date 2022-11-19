@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState
-} from "react";
+import React, { useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 // TODO
@@ -20,8 +17,7 @@ import Button from "@material-ui/core/Button";
 // import TextField from "@material-ui/core/TextField";
 // import Container from "@material-ui/core/Container";
 
-import { 
-  Tooltip} from "@material-ui/core";
+import { Tooltip } from "@material-ui/core";
 
 import { blue, red } from "../../../design/colors";
 
@@ -48,25 +44,38 @@ import PasswordFieldErrorMessage from "../Error/PasswordFieldErrorMessage";
 
 import LoginSpinner from "../../spinners/LoginSpinner";
 import { COMPANY_NAME, ReCAPTCHA_PUBLIC } from "../../../config/environment";
-import { LoginCompanyLogo, LoginFormInputWrapper, LoginFormLabel, LoginFormTextInput, Submit } from "../login/LoginCSS";
+import {
+  LoginCompanyLogo,
+  LoginFormInputWrapper,
+  LoginFormLabel,
+  LoginFormTextInput,
+  Submit,
+} from "../login/LoginCSS";
 // import Required from "../../Required";
 import ControlPasswordVisiblity from "../login/ControlPasswordVisibility";
 import Required from "../../form/Required";
-import { 
+import {
   findUserRegisterReferral,
-  // findRefUsername, 
-  // validateUserRegisterReference 
+  // findRefUsername,
+  // validateUserRegisterReference
 } from "../../../api/user";
 import { discordRegister } from "../../../api/discord";
-import { RegisterForm, RegisterFormContainer, RegisterFormDesktopImage, RegisterFormMobileImage, RegisterFormTitle, RegisterFormWrapper, RegisterWithOauthButtonWrapper, RegisterWithOauthContainer } from "./RegisterFormCSS";
+import {
+  RegisterForm,
+  RegisterFormContainer,
+  RegisterFormDesktopImage,
+  RegisterFormMobileImage,
+  RegisterFormTitle,
+  RegisterFormWrapper,
+  RegisterWithOauthButtonWrapper,
+  RegisterWithOauthContainer,
+} from "./RegisterFormCSS";
 import { githubRegister } from "../../../api/github";
 import { twitterRegister } from "../../../api/twitter";
 import { linkedinRegister } from "../../../api/linkedin";
 import Link from "next/link";
 
-const NewRegisterForm = ({
-  ref_username
-}) => {
+const NewRegisterForm = ({ ref_username }) => {
   // const classes = useStyles();
 
   const [useReferral, setUseReferral] = useState(null);
@@ -80,14 +89,12 @@ const NewRegisterForm = ({
         console.error(error);
         return;
       }
-    
+
       setUseReferral(data);
-      
     } catch (error) {
       console.log("findRefUsername catch error");
       console.error(error);
     }
-
   };
 
   useEffect(() => {
@@ -149,16 +156,14 @@ const NewRegisterForm = ({
             onSubmit={handleSubmit}
           >
             {/* <LoginCompanyLogo
-              src="/static/logo.png" alt="logo"
+              src="/static/logo.svg" alt="logo"
               style={{
                 marginLeft: "-0.25rem",
               }}
             /> */}
-            <LoginCompanyLogo 
-              src="/static/logo.png"
-            />
+            <LoginCompanyLogo src="/static/logo.svg" />
             {/* <img
-              src="/static/logo.png"
+              src="/static/logo.svg"
               style={{
                 width: "2rem",
                 marginLeft: "-0.25rem",
@@ -191,15 +196,13 @@ const NewRegisterForm = ({
               >
                 Create an account or
               </span>
-              <Link
-                href="/signin"
-              >
+              <Link href="/signin">
                 <span
                   style={{
                     marginLeft: "0.25rem",
                     color: blue,
                     opacity: 1,
-                    cursor: "pointer"
+                    cursor: "pointer",
                   }}
                 >
                   login
@@ -207,39 +210,49 @@ const NewRegisterForm = ({
               </Link>
             </span>
 
-            {ref_username !== "" && useReferral !== null && (useReferral === true ? <div
-              style={{
-                background: "#efefef",
-                padding: "0.5rem",
-                fontSize: "0.85rem",
-                marginTop: "0.25rem",
-                marginBottom: "0.5rem",
-                // opacity: "0.7",
-                borderRadius: "0.25rem",
-                lineHeight: "1.25rem",
-                wordBreak: "break-all",
+            {ref_username !== "" &&
+              useReferral !== null &&
+              (useReferral === true ? (
+                <div
+                  style={{
+                    background: "#efefef",
+                    padding: "0.5rem",
+                    fontSize: "0.85rem",
+                    marginTop: "0.25rem",
+                    marginBottom: "0.5rem",
+                    // opacity: "0.7",
+                    borderRadius: "0.25rem",
+                    lineHeight: "1.25rem",
+                    wordBreak: "break-all",
 
-                // color: blue,
-              }}
-            >
-              Your referencer username is <span style={{ fontWeight: "bold", }}>{ref_username}</span> and we will send the user 5% referral fee when you post the first job at our website
-            </div> : <div
-              style={{
-                background: "#efefef",
-                padding: "0.5rem",
-                fontSize: "0.85rem",
-                marginTop: "0.25rem",
-                // opacity: "0.7",
-                borderRadius: "0.25rem",
-                lineHeight: "1.25rem",
-                wordBreak: "break-all",
-                color: red,
-              }}
-            >
-              The referencer doesn't want to use our reference system or the ref_username doesn't exist
-            </div>)}
+                    // color: blue,
+                  }}
+                >
+                  Your referencer username is{" "}
+                  <span style={{ fontWeight: "bold" }}>{ref_username}</span> and
+                  we will send the user 5% referral fee when you post the first
+                  job at our website
+                </div>
+              ) : (
+                <div
+                  style={{
+                    background: "#efefef",
+                    padding: "0.5rem",
+                    fontSize: "0.85rem",
+                    marginTop: "0.25rem",
+                    // opacity: "0.7",
+                    borderRadius: "0.25rem",
+                    lineHeight: "1.25rem",
+                    wordBreak: "break-all",
+                    color: red,
+                  }}
+                >
+                  The referencer doesn't want to use our reference system or the
+                  ref_username doesn't exist
+                </div>
+              ))}
 
-            <LoginFormLabel htmlFor="email" >
+            <LoginFormLabel htmlFor="email">
               Email
               <Required />
             </LoginFormLabel>
@@ -248,13 +261,9 @@ const NewRegisterForm = ({
                 id="email"
                 name="email"
                 type="email"
-
                 placeholder={"youremail@codenjobs.com"}
-
                 autoComplete="email"
-
                 required
-
                 // minLength={passwordMinLength}
                 // maxLength={passwordMaxLength}
 
@@ -269,7 +278,7 @@ const NewRegisterForm = ({
               formTouch={touched.email}
             />
 
-            <LoginFormLabel htmlFor="username" >
+            <LoginFormLabel htmlFor="username">
               Username
               <Required />
             </LoginFormLabel>
@@ -278,17 +287,14 @@ const NewRegisterForm = ({
                 id="username"
                 name="username"
                 type="username"
-
                 placeholder={"username"}
                 // placeholder={"Type username"}
 
                 // autoComplete="email"
 
                 required
-
                 minLength={usernameMinLength}
                 maxLength={usernameMaxLength}
-
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={username.toLowerCase().replace(/\s/g, "")}
@@ -300,15 +306,16 @@ const NewRegisterForm = ({
               formTouch={touched.username}
             />
 
-            <LoginFormLabel htmlFor="password" >
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-                width: "100%",
-              }}>
+            <LoginFormLabel htmlFor="password">
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  width: "100%",
+                }}
+              >
                 Password
                 <Required />
-
                 <ControlPasswordVisiblity
                   handleClickShowPassword={handleClickShowPassword}
                   showPassword={showPassword}
@@ -319,19 +326,14 @@ const NewRegisterForm = ({
               <LoginFormTextInput
                 id="password"
                 name="password"
-
                 // type="password"
                 type={showPassword ? "text" : "password"}
-
                 placeholder={"••••••••••••"}
-
                 // autoComplete="email"
 
                 required
-
                 minLength={passwordMinLength}
                 maxLength={passwordMaxLength}
-
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={password.toLowerCase().replace(/\s/g, "")}
@@ -351,14 +353,19 @@ const NewRegisterForm = ({
             {/* Use button from submti and call execute() to make onChange of  */}
             {/* ReCAPTCHA setFieldValue of recapcha and submit form atfer that. */}
 
-            <div style={{
-              marginTop: "0.5rem",
-              marginBottom: "0.5rem",
-              // opacity: "0.5",
-              fontSize: "0.7rem",
-              lineHeight: "1.1rem",
-            }}>
-              <span style={{ opacity: 0.5 }} >By creating an account, you agree to the</span> <a
+            <div
+              style={{
+                marginTop: "0.5rem",
+                marginBottom: "0.5rem",
+                // opacity: "0.5",
+                fontSize: "0.7rem",
+                lineHeight: "1.1rem",
+              }}
+            >
+              <span style={{ opacity: 0.5 }}>
+                By creating an account, you agree to the
+              </span>{" "}
+              <a
                 style={{
                   textDecoration: "underline",
                   // color: "rgb(17, 160, 245)",
@@ -368,7 +375,14 @@ const NewRegisterForm = ({
                 }}
                 href="/company/policies/terms"
                 target="_blank"
-              > Terms</a> <span style={{ opacity: 0.5 }} >of our services and have read our</span> <a
+              >
+                {" "}
+                Terms
+              </a>{" "}
+              <span style={{ opacity: 0.5 }}>
+                of our services and have read our
+              </span>{" "}
+              <a
                 style={{
                   textDecoration: "underline",
                   // color: "rgb(17, 160, 245)",
@@ -378,7 +392,9 @@ const NewRegisterForm = ({
                 }}
                 href="/company/policies/privacy"
                 target="_blank"
-              >Privacy Statement</a>
+              >
+                Privacy Statement
+              </a>
               {/* By creating an account, you agree to our Terms and have read and acknowledge the Global Privacy Statement. */}
             </div>
 
@@ -401,7 +417,9 @@ const NewRegisterForm = ({
         </div> */}
 
             <Submit
-              disabled={isSubmitting || (ref_username !== "" && useReferral === false)}
+              disabled={
+                isSubmitting || (ref_username !== "" && useReferral === false)
+              }
               // disabled={isSubmitting}
 
               type="submit"
@@ -427,9 +445,7 @@ const NewRegisterForm = ({
                 marginTop: "0.5rem",
                 marginBottom: "0.5rem",
               }}
-            >
-
-            </div>
+            ></div>
 
             <RegisterWithOauthContainer>
               {/* <LinkToSignIn /> */}
@@ -442,7 +458,9 @@ const NewRegisterForm = ({
                   onClick={async (e) => {
                     e.preventDefault();
 
-                    const { data: redirect, error } = await discordRegister(ref_username);
+                    const { data: redirect, error } = await discordRegister(
+                      ref_username
+                    );
 
                     if (error) {
                       console.log("Discord login response error");
@@ -456,7 +474,6 @@ const NewRegisterForm = ({
                     if (redirect) {
                       window.location.href = redirect;
                     }
-
                   }}
                 >
                   {/* <BsDiscord style={{
@@ -480,7 +497,9 @@ const NewRegisterForm = ({
                   onClick={async (e) => {
                     e.preventDefault();
 
-                    const { data: redirect, error } = await linkedinRegister(ref_username);
+                    const { data: redirect, error } = await linkedinRegister(
+                      ref_username
+                    );
 
                     if (error) {
                       console.log("LinkedIn login response error");
@@ -496,7 +515,6 @@ const NewRegisterForm = ({
                     if (redirect) {
                       window.location.href = redirect;
                     }
-
                   }}
                 >
                   {/* <BsLinkedin style={{
@@ -523,7 +541,9 @@ const NewRegisterForm = ({
                   onClick={async (e) => {
                     e.preventDefault();
 
-                    const { data: redirect, error } = await githubRegister(ref_username);
+                    const { data: redirect, error } = await githubRegister(
+                      ref_username
+                    );
 
                     if (error) {
                       console.log("GitHub login response error");
@@ -539,7 +559,6 @@ const NewRegisterForm = ({
                     if (redirect) {
                       window.location.href = redirect;
                     }
-
                   }}
                 >
                   {/* <GitHubIcon style={{
@@ -556,51 +575,55 @@ const NewRegisterForm = ({
                 </RegisterWithOauthButtonWrapper>
               </Tooltip>
 
-              {!ref_username && <Tooltip
-                title="Create an account with your Twitter email and username"
-                arrow
-              >
-                <RegisterWithOauthButtonWrapper
-                  onClick={async (e) => {
-                    e.preventDefault();
-
-                    const { data: redirect, error } = await twitterRegister();
-
-                    if (error) {
-                      console.log("Twitter login response error");
-                      console.error(error);
-                      const errorDetail = error.response.data.detail;
-                      console.error(errorDetail);
-
-                      return;
-
-                      // setGithubEndpointError(errorDetail);
-                    }
-
-                    if (redirect) {
-                      window.location.href = redirect;
-                    }
-
-                  }}
+              {!ref_username && (
+                <Tooltip
+                  title="Create an account with your Twitter email and username"
+                  arrow
                 >
-                  <BsTwitter style={{
-                    fontSize: "1rem",
-                    // marginBottom: "0.1rem",
-                    color: blue,
-                    // border: "1px solid #efefef",
-                    border: "1px solid #eeefef",
-                    padding: "7px",
-                    borderRadius: "5px",
-                    // color: black,
-                  }} />
-                </RegisterWithOauthButtonWrapper>
-              </Tooltip>}
+                  <RegisterWithOauthButtonWrapper
+                    onClick={async (e) => {
+                      e.preventDefault();
 
+                      const { data: redirect, error } = await twitterRegister();
+
+                      if (error) {
+                        console.log("Twitter login response error");
+                        console.error(error);
+                        const errorDetail = error.response.data.detail;
+                        console.error(errorDetail);
+
+                        return;
+
+                        // setGithubEndpointError(errorDetail);
+                      }
+
+                      if (redirect) {
+                        window.location.href = redirect;
+                      }
+                    }}
+                  >
+                    <BsTwitter
+                      style={{
+                        fontSize: "1rem",
+                        // marginBottom: "0.1rem",
+                        color: blue,
+                        // border: "1px solid #efefef",
+                        border: "1px solid #eeefef",
+                        padding: "7px",
+                        borderRadius: "5px",
+                        // color: black,
+                      }}
+                    />
+                  </RegisterWithOauthButtonWrapper>
+                </Tooltip>
+              )}
             </RegisterWithOauthContainer>
 
-            <div style={{
-              marginTop: "0.5rem",
-            }} >
+            <div
+              style={{
+                marginTop: "0.5rem",
+              }}
+            >
               <ReCAPTCHA
                 ref={recaptchaRef}
                 sitekey={ReCAPTCHA_PUBLIC}
@@ -612,13 +635,11 @@ const NewRegisterForm = ({
 
                   submitForm();
                 }}
-
                 onErrored={(errors) => {
                   // Show error at frontend?
                   console.log("errors");
                   console.log(errors);
                 }}
-
               />
             </div>
 
@@ -633,12 +654,15 @@ const NewRegisterForm = ({
               aria-describedby="Register form error"
             >
               <DialogTitle id="reigster-error">
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-                  color: "#ff1676",
-                }}>
-                  <ErrorIcon /> <span style={{ marginLeft: "0.25rem" }}>Error</span>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    color: "#ff1676",
+                  }}
+                >
+                  <ErrorIcon />{" "}
+                  <span style={{ marginLeft: "0.25rem" }}>Error</span>
                 </div>
               </DialogTitle>
               <DialogContent>
@@ -654,28 +678,19 @@ const NewRegisterForm = ({
                 <Button
                   onClick={handleClose}
                   color="primary"
-                // autoFocus
+                  // autoFocus
                 >
                   Close
                 </Button>
               </DialogActions>
             </Dialog>
-
           </RegisterForm>
         </RegisterFormWrapper>
-        <RegisterFormDesktopImage
-          src="/static/design/register_desktop.svg"
-        />
-
+        <RegisterFormDesktopImage src="/static/design/register_desktop.svg" />
       </RegisterFormContainer>
 
-      <RegisterFormMobileImage
-        src="/static/design/register_mobile.svg"
-      />
-
+      <RegisterFormMobileImage src="/static/design/register_mobile.svg" />
     </>
-
-    
   );
 };
 

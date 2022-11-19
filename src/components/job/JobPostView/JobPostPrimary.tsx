@@ -14,7 +14,6 @@ import {
   // JobPostVisibilityWrapper,
 
   JobHeader,
-
   JobTitle,
   // JobFeaturesContainer,
   // JobFeatureWrapper,
@@ -43,7 +42,11 @@ import JobFeatures from "../JobFeatures";
 import How from "../How";
 import PostedBy from "../../PostedBy";
 import PostRenderer from "../../markdown/PostRenderer";
-import { COMPANY_NAME, COMPANY_WEBSITE, HTTPS } from "../../../config/environment";
+import {
+  COMPANY_NAME,
+  COMPANY_WEBSITE,
+  HTTPS,
+} from "../../../config/environment";
 import { Avatar, Tooltip } from "@material-ui/core";
 import SocialShare from "../../SocialShare";
 import JobPrimaryWrapper from "../../JobPrimaryWrapper";
@@ -75,7 +78,7 @@ const JobPostPrimary = ({
   job_type,
   job_skills,
   job_status,
-  
+
   jobPostValid, // Use this later when you update the backend code with Solana mainnet and ready for production
 }) => {
   const router = useRouter();
@@ -117,7 +120,7 @@ const JobPostPrimary = ({
   }
 
   // const format = "YYYY-MM-DD hh:mm:ss";
-  
+
   // const currentTime = moment.utc();
 
   // const jobPostDuration = 28 // 'd', 28 days (4 weeks)
@@ -142,17 +145,14 @@ const JobPostPrimary = ({
             alignItems: "center",
           }}
         >
-          <PostedBy 
-            username={username}
-            published_at={job_published_at}
-          />
+          <PostedBy username={username} published_at={job_published_at} />
 
           <JobShareWrapper
             onClick={() => {
               setShowShare(true);
             }}
           >
-            <Tooltip title="Share this job post" arrow >
+            <Tooltip title="Share this job post" arrow>
               <div
                 style={{
                   display: "flex",
@@ -165,18 +165,13 @@ const JobPostPrimary = ({
                     fontSize: "1rem",
                   }}
                 />
-                <ShareTextWrapper>
-                  Share
-                </ShareTextWrapper>
+                <ShareTextWrapper>Share</ShareTextWrapper>
               </div>
             </Tooltip>
           </JobShareWrapper>
-
         </div>
 
-        <JobTitle>
-          {`${job_title}`}
-        </JobTitle>
+        <JobTitle>{`${job_title}`}</JobTitle>
 
         <JobFeatures
           job_category={job_category}
@@ -184,7 +179,6 @@ const JobPostPrimary = ({
           job_location={job_location}
           job_salary={job_salary}
           job_pay_in_cryptocurrency={job_pay_in_cryptocurrency}
-
           isPreview={false}
         />
 
@@ -216,66 +210,70 @@ const JobPostPrimary = ({
             </div>
           </Tooltip>
         </JobShareWrapper> */}
-
       </JobHeader>
       {/* https://github.com/remarkjs/react-markdown */}
       {/* https://github.com/remarkjs/react-markdown#appendix-b-node-types */}
-      
+
       <JobDescription>
-        <PostRenderer 
-          input={job_description}
-        />
+        <PostRenderer input={job_description} />
       </JobDescription>
 
-      <How 
+      <How
         company_name={company_name}
         company_website={company_website}
         job_how_to_apply={job_how_to_apply}
       />
 
-      <JobPostSkills 
-        job_skills={job_skills}
-        isPreview={false}
-      />
+      <JobPostSkills job_skills={job_skills} isPreview={false} />
 
       {/* <JobShare
         title={job_title}
         url={`https://${COMPANY_WEBSITE}/job?&title=${job_title.split(" ").join("-")}&id=${job_id}`}
       /> */}
-      
-      <Dialog open={showShare} onClose={handleClose} aria-labelledby="job-post-show-social-share-buttons">
+
+      <Dialog
+        open={showShare}
+        onClose={handleClose}
+        aria-labelledby="job-post-show-social-share-buttons"
+      >
         <DialogTitle id="job-post-show-social-share">
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "1rem",
-          }}>
-            <Avatar
-              alt={COMPANY_NAME}
-              src={"/static/logo.png"}
-            />
-            <span style={{
-              marginLeft: "0.5rem"
-            }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
+            <Avatar alt={COMPANY_NAME} src={"/static/logo.svg"} />
+            <span
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
               Share this job post
             </span>
           </div>
         </DialogTitle>
 
         <DialogContent>
-          <section style={{
-            display: "flex",
-            alignItems: "center",
-            // justifyContent: "center",
-            justifyContent: "space-around",
-            margin: "0 1.5rem",
-          }}>
+          <section
+            style={{
+              display: "flex",
+              alignItems: "center",
+              // justifyContent: "center",
+              justifyContent: "space-around",
+              margin: "0 1.5rem",
+            }}
+          >
             <SocialShare
               title={`${job_title} - Code&Jobs`}
               // Update this later?
               // This will work at the production anyway.
-              url={`${HTTPS}${COMPANY_WEBSITE}/job?&title=${job_title.replaceAll(" ", "-")}?&id=${job_id}`}
+              url={`${HTTPS}${COMPANY_WEBSITE}/job?&title=${job_title.replaceAll(
+                " ",
+                "-"
+              )}?&id=${job_id}`}
             />
           </section>
 

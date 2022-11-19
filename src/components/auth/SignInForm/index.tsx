@@ -1,6 +1,5 @@
-import React, {
-// useState
-} from "react";
+import React from // useState
+"react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import { Grid, Typography } from "@material-ui/core";
@@ -25,7 +24,6 @@ import {
   // nameMaxLength,
   usernameMinLength,
   usernameMaxLength,
-  
   passwordMinLength,
   passwordMaxLength,
 } from "../../../validators";
@@ -37,15 +35,25 @@ import LinkToResetPassword from "../LinkToResetPassword";
 import LinkToRegister from "../LinkToRegister";
 
 import LoginSpinner from "../../spinners/LoginSpinner";
-import { COMPANY_NAME, LOGIN_DESCRIPTION, ReCAPTCHA_PUBLIC } from "../../../config/environment";
+import {
+  COMPANY_NAME,
+  LOGIN_DESCRIPTION,
+  ReCAPTCHA_PUBLIC,
+} from "../../../config/environment";
 import { styled } from "baseui";
-import { LoginCompanyLogo, LoginDescription, LoginForm, LoginFormInputWrapper, LoginFormLabel, LoginFormTextInput, Submit, } from "../login/LoginCSS";
+import {
+  LoginCompanyLogo,
+  LoginDescription,
+  LoginForm,
+  LoginFormInputWrapper,
+  LoginFormLabel,
+  LoginFormTextInput,
+  Submit,
+} from "../login/LoginCSS";
 import Required from "../../form/Required";
 // import { useEffect } from "react";
 
-const SignInForm = ({
-  from,
-}) => {
+const SignInForm = ({ from }) => {
   const recaptchaRef = React.createRef();
 
   // alert(from);
@@ -63,8 +71,6 @@ const SignInForm = ({
   // }, []);
 
   // alert(from);
-
-  
 
   // const classes = useStyles();
 
@@ -98,30 +104,30 @@ const SignInForm = ({
   } = values;
 
   return (
-    <LoginForm
-      onSubmit={handleSubmit}
-    >
-      <LoginCompanyLogo
-        src="/static/logo.png" alt="logo"
-      />
-      <Typography style={{
-        marginTop: "0.25rem",
-        alignSelf: "center",
-      }} component="h1" variant="h5">
+    <LoginForm onSubmit={handleSubmit}>
+      <LoginCompanyLogo src="/static/logo.svg" alt="logo" />
+      <Typography
+        style={{
+          marginTop: "0.25rem",
+          alignSelf: "center",
+        }}
+        component="h1"
+        variant="h5"
+      >
         {COMPANY_NAME}
       </Typography>
 
-      <Grid container >
-        <LoginDescription>
-          {LOGIN_DESCRIPTION}
-        </LoginDescription>
+      <Grid container>
+        <LoginDescription>{LOGIN_DESCRIPTION}</LoginDescription>
       </Grid>
 
-      <div style={{
-        display: "flex",
-        flexFlow: "column",
-      }}>
-        <LoginFormLabel htmlFor="username" >
+      <div
+        style={{
+          display: "flex",
+          flexFlow: "column",
+        }}
+      >
+        <LoginFormLabel htmlFor="username">
           Username
           <Required />
         </LoginFormLabel>
@@ -130,14 +136,11 @@ const SignInForm = ({
             id="username"
             name="username"
             type="text"
-            
             required
-  
             // placeholder={"codenjobs"}
 
             minLength={usernameMinLength}
             maxLength={usernameMaxLength}
-
             onChange={handleChange}
             onBlur={handleBlur}
             // value={username}
@@ -150,7 +153,7 @@ const SignInForm = ({
           formTouch={touched.username}
         />
 
-        <LoginFormLabel htmlFor="password" >
+        <LoginFormLabel htmlFor="password">
           Password
           <Required />
         </LoginFormLabel>
@@ -159,14 +162,11 @@ const SignInForm = ({
             id="password"
             name="password"
             type="password"
-
             // placeholder={"encrypted"}
 
             required
-            
             minLength={passwordMinLength}
             maxLength={passwordMaxLength}
-
             onChange={handleChange}
             onBlur={handleBlur}
             value={password}
@@ -178,7 +178,6 @@ const SignInForm = ({
           formTouch={touched.password}
         />
       </div>
-
 
       {/* <input
         // error={!!(username && errors.username && touched.username)}
@@ -210,9 +209,8 @@ const SignInForm = ({
       /> */}
 
       <Submit
-      // <Button
+        // <Button
         disabled={isSubmitting}
-
         // style={{
         //   marginTop: "1rem",
         //   marginBottom: "0.5rem",
@@ -246,9 +244,11 @@ const SignInForm = ({
         <LinkToRegister />
       </Grid>
 
-      <div style={{
-        marginTop: "0.5rem",
-      }} >
+      <div
+        style={{
+          marginTop: "0.5rem",
+        }}
+      >
         <ReCAPTCHA
           // id="recaptcha-login"
 
@@ -262,7 +262,6 @@ const SignInForm = ({
 
             submitForm();
           }}
-
           onErrored={(errors) => {
             // Show error at frontend?
             console.log("errors");
@@ -290,11 +289,13 @@ const SignInForm = ({
         aria-describedby="SignIn form error"
       >
         <DialogTitle id="signin-error">
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            color: "#ff1676",
-          }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              color: "#ff1676",
+            }}
+          >
             <ErrorIcon /> <span style={{ marginLeft: "0.25rem" }}>Error</span>
           </div>
         </DialogTitle>
@@ -304,7 +305,8 @@ const SignInForm = ({
               // color: "#08c",
             }} href="https://material-ui.com/pt/components/text-fields/" >If this continues, please contact us.</a> */}
             {/* Something went wrong at the server. Please try again. If this continues, please report to us. */}
-            Something went wrong at your login attempt, the server or Internet connection.
+            Something went wrong at your login attempt, the server or Internet
+            connection.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -317,7 +319,6 @@ const SignInForm = ({
           </Button>
         </DialogActions>
       </Dialog>
-
     </LoginForm>
   );
 };

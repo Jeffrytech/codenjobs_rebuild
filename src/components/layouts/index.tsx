@@ -12,9 +12,9 @@ import TopNav from "./TopNav";
 import Sidebar from "./Sidebar";
 
 import Footer from "./Footer";
-import { 
-  MOBILE, 
-  // XS 
+import {
+  MOBILE,
+  // XS
 } from "../../design/breakpoints";
 import SolanaNotification from "../../crypto/SolanaNotification";
 import SolanaWalletConnection from "../../crypto/SolanaWalletConnection";
@@ -25,36 +25,36 @@ import Shadow from "./Shadow";
 // Move these to another file.
 export const LayoutContainer = styled("div", {
   minWidth: "100vw",
-  minHeight: "100vh"
+  minHeight: "100vh",
 });
 
-const Main = styled("main", ({ 
-  $fullHeight = true,
-  $whiteatmobile = false,
-}) => { 
-  return {
-    marginTop: "3.75rem", // Move this role to the navbar?
-    backgroundColor: "rgb(247, 248, 250)",
-    
-    minHeight: $fullHeight ? "100vh" : 0,
+const Main = styled(
+  "main",
+  ({ $fullHeight = true, $whiteatmobile = false }) => {
+    return {
+      marginTop: "3.75rem", // Move this role to the navbar?
+      backgroundColor: "rgb(247, 248, 250)",
 
-    // "::-webkit-scrollbar": {
-    //   height: "16px",
-    //   width: "16px",
-    //   background: "gray",
-    // },
+      minHeight: $fullHeight ? "100vh" : 0,
 
-    // "::-webkit-scrollbar-thumb:horizontal": {
-    //     background: "#000",
-    //     borderRadius: "10px",
-    // },
+      // "::-webkit-scrollbar": {
+      //   height: "16px",
+      //   width: "16px",
+      //   background: "gray",
+      // },
 
-    [MOBILE]: {
-      backgroundColor: $whiteatmobile ? "white" : "rgb(247, 248, 250)",
-    }
-    // minHeight: $fullHeight ? "calc(100vh - 60px)" : 0,
-  };
-});
+      // "::-webkit-scrollbar-thumb:horizontal": {
+      //     background: "#000",
+      //     borderRadius: "10px",
+      // },
+
+      [MOBILE]: {
+        backgroundColor: $whiteatmobile ? "white" : "rgb(247, 248, 250)",
+      },
+      // minHeight: $fullHeight ? "calc(100vh - 60px)" : 0,
+    };
+  }
+);
 
 function Index({
   // https://forhjy.medium.com/react-solution-for-children-is-missing-in-props-validation-eslint-react-prop-types-2e11bc6043c7
@@ -66,7 +66,6 @@ function Index({
 
   whiteatmobile = false,
 }) {
-  
   useEffect(() => {
     if (useScrollToTop) {
       scrollToTop();
@@ -75,7 +74,7 @@ function Index({
 
   return (
     // This is here and not pages/_app.tsx because including it in that file stops metatags to work
-    <SolanaWalletConnection> 
+    <SolanaWalletConnection>
       <Layer>
         <LayoutContainer>
           <Header>
@@ -84,8 +83,10 @@ function Index({
 
           <Sidebar />
 
-          <Main $fullHeight={fullHeigth} $whiteatmobile={whiteatmobile} >{children}</Main>
-          
+          <Main $fullHeight={fullHeigth} $whiteatmobile={whiteatmobile}>
+            {children}
+          </Main>
+
           {showFooter && <Footer />}
         </LayoutContainer>
       </Layer>

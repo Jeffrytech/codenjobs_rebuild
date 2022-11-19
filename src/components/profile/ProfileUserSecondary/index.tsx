@@ -27,17 +27,15 @@ import Chip from "@material-ui/core/Chip";
 import {
   ProfileImage,
   SettingsWrapper,
-  
   ProfileCard,
   ProfileName,
   // UserName,
   Bio,
-  
+
   // ShowProfileDetailsButton,
   ProfileDetailsContainer,
   ProfileDetailWrapper,
   ProfileDetailLink,
-  
   ProfileFollowersLink,
 } from "./ProfileUserCSS";
 
@@ -54,8 +52,18 @@ import ProfileShare from "../ProfileShare";
 import { useAuth } from "../../../contexts/auth";
 import { ProfileSkill, ProfileSkillsWrapper } from "../ProfileSkillsCSS";
 import NewBlogPost from "./NewBlogPost";
-import { FULLTIME, PARTTIME, FREELANCE, CONTRACT, INTERNSHIP } from "../../../typeDefinitions/job";
-import { ProfileJobDetailsGroupContainer, ProfileJobDetailsLabel, ProfileJobDetailsLabelText } from "../Profile/ProfileCSS";
+import {
+  FULLTIME,
+  PARTTIME,
+  FREELANCE,
+  CONTRACT,
+  INTERNSHIP,
+} from "../../../typeDefinitions/job";
+import {
+  ProfileJobDetailsGroupContainer,
+  ProfileJobDetailsLabel,
+  ProfileJobDetailsLabelText,
+} from "../Profile/ProfileCSS";
 import CentralizeChildren from "../../CentralizeChildren";
 import { MainNFTImage } from "../../../crypto/MainNFTImage";
 import ProfileMainNFT from "../ProfileMainNFT";
@@ -65,18 +73,16 @@ import { shortenAddress } from "../../../crypto/utils";
 // import env from "../../../config/environment";
 // const API = `${env.API}`;
 
-const SettingLink = ({
-  isOwner
-}) => {
+const SettingLink = ({ isOwner }) => {
   if (isOwner) {
     return (
-      <Link href="/settings/profile" >
+      <Link href="/settings/profile">
         <SettingsWrapper>
           <Tooltip title="Edit the profile" arrow>
             <Settings />
           </Tooltip>
         </SettingsWrapper>
-      </Link >
+      </Link>
     );
   } else {
     return null;
@@ -90,17 +96,13 @@ const ProfileUserButton = ({
   isOwner,
   username,
 
-  page = "blog"
+  page = "blog",
 }) => {
   if (isOwner) {
     if (page === "blog") {
-      return (
-        <NewBlogPost />
-      );
+      return <NewBlogPost />;
     } else if (page === "job") {
-      return (
-        <NewJobPost />
-      );
+      return <NewJobPost />;
     }
   } else {
     return (
@@ -108,33 +110,41 @@ const ProfileUserButton = ({
         <Follow setFollowers={setFollowers} user={user} username={username} />
         <Message user={user} username={username} />
       </>
-      
     );
-  };
+  }
 };
 
 const ProfileJob = ({ job }) => {
   if (job) {
     return (
       <ProfileDetailWrapper>
-        <AccountBoxIcon style={{ fontSize: "1rem", marginRight: "0.25rem" }} /> {job}
+        <AccountBoxIcon style={{ fontSize: "1rem", marginRight: "0.25rem" }} />{" "}
+        {job}
       </ProfileDetailWrapper>
     );
   } else {
     return null;
-  };
+  }
 };
 
 const ProfileSalary = ({ salary }) => {
   if (salary) {
     return (
       <ProfileDetailWrapper>
-        <Money style={{ fontSize: "1rem", marginRight: "0.25rem", color: "white", backgroundColor: "rgb(37, 191, 161)" }} /> {salary}
+        <Money
+          style={{
+            fontSize: "1rem",
+            marginRight: "0.25rem",
+            color: "white",
+            backgroundColor: "rgb(37, 191, 161)",
+          }}
+        />{" "}
+        {salary}
       </ProfileDetailWrapper>
     );
   } else {
     return null;
-  };
+  }
 };
 
 const ProfileLocation = ({ location }) => {
@@ -146,7 +156,7 @@ const ProfileLocation = ({ location }) => {
     );
   } else {
     return null;
-  };
+  }
 };
 
 const ProfileWebsite = ({ website }) => {
@@ -164,7 +174,7 @@ const ProfileWebsite = ({ website }) => {
     );
   } else {
     return null;
-  };
+  }
 };
 
 const ProfileGitHub = ({ github_username }) => {
@@ -176,17 +186,18 @@ const ProfileGitHub = ({ github_username }) => {
         rel="noopener noreferrer"
       >
         <GitHubIcon style={{ fontSize: "1rem", marginRight: "0.25rem" }} />
-          GitHub
+        GitHub
       </ProfileDetailLink>
     );
   } else {
     return null;
-  };
+  }
 };
 
 const ProfileDiscord = ({ discord_user_details }) => {
   if (discord_user_details !== null) {
-    const { discord_id, discord_username, discriminator } = discord_user_details;
+    const { discord_id, discord_username, discriminator } =
+      discord_user_details;
     return (
       <ProfileDetailLink
         // href={`https://github.com/${github_username}`}
@@ -200,7 +211,7 @@ const ProfileDiscord = ({ discord_user_details }) => {
     );
   } else {
     return null;
-  };
+  }
 };
 
 const ProfileSolanaWallet = ({ solana_wallet_user_public_key }) => {
@@ -212,19 +223,21 @@ const ProfileSolanaWallet = ({ solana_wallet_user_public_key }) => {
         rel="noopener noreferrer"
       >
         {/* <GitHubIcon style={{ fontSize: "1rem", marginRight: "0.25rem" }} /> */}
-        <img src="/static/solana.png" style={{
-          width: "1rem",
-          height: "1rem",
-          marginRight: "0.25rem",
-        }} />
+        <img
+          src="/static/solana.png"
+          style={{
+            width: "1rem",
+            height: "1rem",
+            marginRight: "0.25rem",
+          }}
+        />
         {shortenAddress(solana_wallet_user_public_key)}
       </ProfileDetailLink>
     );
   } else {
     return null;
-  };
+  }
 };
-
 
 const ProfileUser = ({
   username,
@@ -271,8 +284,13 @@ const ProfileUser = ({
   const selectContract = jobTypes.includes(CONTRACT);
   const selectInternship = jobTypes.includes(INTERNSHIP);
 
-  const selected = selectFullTime || selectPartTime || selectFreelance || selectContract || selectInternship;
-  
+  const selected =
+    selectFullTime ||
+    selectPartTime ||
+    selectFreelance ||
+    selectContract ||
+    selectInternship;
+
   const [followers, setFollowers] = useState(total_followers);
 
   const joined = moment(created_at).format("MMMM Do YYYY");
@@ -282,7 +300,7 @@ const ProfileUser = ({
     user,
   } = useAuth();
 
-  const isOwner = user && (user.username === username);
+  const isOwner = user && user.username === username;
 
   const router = useRouter();
 
@@ -291,33 +309,35 @@ const ProfileUser = ({
 
   return (
     <ProfileCard>
-      <div style={{
-        // background: "rgb(17, 160, 245)",
-        background: "rgb(55, 66, 82)",
-        height: "2rem",
-        borderRadius: "0.5rem 0.5rem 0 0",
+      <div
+        style={{
+          // background: "rgb(17, 160, 245)",
+          background: "rgb(55, 66, 82)",
+          height: "2rem",
+          borderRadius: "0.5rem 0.5rem 0 0",
 
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "flex-end",
-      }} >
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+      >
         <ProfileShare username={username} profile_image={profile_image} />
-        <SettingLink
-          isOwner={isOwner}
-        />
+        <SettingLink isOwner={isOwner} />
       </div>
       {/* Use withStyle instead? */}
-      <CentralizeChildren style={{
-        paddingBottom: "0.5rem",
-        justifyContent: "flex-start",
-        marginLeft: "1rem",
-        marginRight: "1rem",
-      }}>
-        <Tooltip title={isOwner ? "Edit your profile image" : ""} arrow >
+      <CentralizeChildren
+        style={{
+          paddingBottom: "0.5rem",
+          justifyContent: "flex-start",
+          marginLeft: "1rem",
+          marginRight: "1rem",
+        }}
+      >
+        <Tooltip title={isOwner ? "Edit your profile image" : ""} arrow>
           <ProfileImage
             // @ts-ignore
             // $isOwner={!!isOwner}
-            onClick={e => {
+            onClick={(e) => {
               e.preventDefault();
               if (isOwner) {
                 router.push("/settings/profile");
@@ -336,100 +356,118 @@ const ProfileUser = ({
               src={profile_image || ""}
               // src={profile_image ? `${API}/${profile_image}` : ""}
             />
-            
           </ProfileImage>
         </Tooltip>
 
         <Link href={`/user/${username}`}>
           <ProfileName>{profile_name || username}</ProfileName>
         </Link>
-
       </CentralizeChildren>
 
-      <div style={{
-        padding: "0 1rem 1rem 1rem"
-      }}>
+      <div
+        style={{
+          padding: "0 1rem 1rem 1rem",
+        }}
+      >
         <ProfileMainNFT username={username} />
 
-        <Bio>
-          {bio}
-        </Bio>
+        <Bio>{bio}</Bio>
 
         {/* Decide where to put and how to show them */}
-        <div style={{
-          display: "flex",
-          flexWrap: "wrap",
-          marginTop: "1rem",
-        }}>
-          <div style={{
-            flex: "1 1 50%",
-            marginBottom: "1rem",
-          }}>
-            <h5 style={{
-              margin: 0,
-              fontSize: "1rem",
-            }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            marginTop: "1rem",
+          }}
+        >
+          <div
+            style={{
+              flex: "1 1 50%",
+              marginBottom: "1rem",
+            }}
+          >
+            <h5
+              style={{
+                margin: 0,
+                fontSize: "1rem",
+              }}
+            >
               Followers
             </h5>
-            <Link href={`/user/${username}/followers`} >
-              <ProfileFollowersLink>
-                {followers}
-              </ProfileFollowersLink>
+            <Link href={`/user/${username}/followers`}>
+              <ProfileFollowersLink>{followers}</ProfileFollowersLink>
             </Link>
           </div>
-          
-          <div style={{
-            flex: "1 1 50%",
-            marginBottom: "1rem",
-          }}>
-            <h5 style={{
-              margin: 0,
-              fontSize: "1rem",
-            }}>
+
+          <div
+            style={{
+              flex: "1 1 50%",
+              marginBottom: "1rem",
+            }}
+          >
+            <h5
+              style={{
+                margin: 0,
+                fontSize: "1rem",
+              }}
+            >
               Joined
             </h5>
-            <div style={{
-              fontSize: "0.85rem",
-              opacity: "0.7",
-              marginTop: "0.1rem",
-              display: "flex",
-            }} >
+            <div
+              style={{
+                fontSize: "0.85rem",
+                opacity: "0.7",
+                marginTop: "0.1rem",
+                display: "flex",
+              }}
+            >
               {joined}
             </div>
           </div>
 
-          <div style={{
-            flex: "1 1 50%",
-            marginBottom: "1rem",
-          }}>
-            <h5 style={{
-              margin: 0,
-              fontSize: "1rem",
-            }}>
+          <div
+            style={{
+              flex: "1 1 50%",
+              marginBottom: "1rem",
+            }}
+          >
+            <h5
+              style={{
+                margin: 0,
+                fontSize: "1rem",
+              }}
+            >
               For Hire
             </h5>
-            <div style={{
-              fontSize: "1rem",
-              opacity: "0.7",
-              marginTop: "0.1rem",
-              display: "flex",
-            }} >
+            <div
+              style={{
+                fontSize: "1rem",
+                opacity: "0.7",
+                marginTop: "0.1rem",
+                display: "flex",
+              }}
+            >
               {/* {joined} */}
               {for_hire ? "Yes" : "No"}
             </div>
           </div>
 
-          <div style={{
-            flex: "1 1 50%",
-            marginBottom: "1rem",
-          }}>
-            <h5 style={{
-              display: "flex",
-              alignItems: "center",
+          <div
+            style={{
+              flex: "1 1 50%",
+              marginBottom: "1rem",
+            }}
+          >
+            <h5
+              style={{
+                display: "flex",
+                alignItems: "center",
 
-              margin: 0,
-              fontSize: "1rem",
-            }}>
+                margin: 0,
+                fontSize: "1rem",
+              }}
+            >
               {/* Use crypto */}
               {/* <span style={{
                   color: "#F89B2C",
@@ -439,10 +477,14 @@ const ProfileUser = ({
 
                 {/* https://cryptologos.cc/ */}
               {/* Do you use Bitcoin or other cryptocurrencies? at profile form. */}
-              <img style={{
-                width: "1rem",
-                marginRight: "0.25rem",
-              }} src="/static/logos/bitcoin.svg" /> Pay
+              <img
+                style={{
+                  width: "1rem",
+                  marginRight: "0.25rem",
+                }}
+                src="/static/logos/bitcoin.svg"
+              />{" "}
+              Pay
               {/* }} src="/static/logos/bitcoin.svg" /> Blockchain */}
               {/* <img style={{
                   width: "1rem",
@@ -450,42 +492,54 @@ const ProfileUser = ({
                 }} src="/static/logos/bitcoin.svg" /> User */}
               {/* }}>₿</span> Crypto User */}
             </h5>
-            <div style={{
-              fontSize: "1rem",
-              opacity: "0.7",
-              marginTop: "0.1rem",
-              display: "flex",
-            }} >
+            <div
+              style={{
+                fontSize: "1rem",
+                opacity: "0.7",
+                marginTop: "0.1rem",
+                display: "flex",
+              }}
+            >
               {use_cryptocurrency ? "Yes" : "No"}
             </div>
           </div>
         </div>
 
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          marginBottom: "1rem",
-        }}>
-          <img src="/static/logo.png" style={{
-            width: "1rem",
-            height: "1rem"
-          }} />
-          <span style={{
-            marginLeft: "0.25rem",
-          }} >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginBottom: "1rem",
+          }}
+        >
+          <img
+            src="/static/logo.svg"
+            style={{
+              width: "1rem",
+              height: "1rem",
+            }}
+          />
+          <span
+            style={{
+              marginLeft: "0.25rem",
+            }}
+          >
             {!total_blog_votes ? 0 : total_blog_votes}
           </span>
         </div>
 
         <CentralizeChildren
-          $style={{
-            // marginTop: "0.5rem"
-          }}
+          $style={
+            {
+              // marginTop: "0.5rem"
+            }
+          }
         >
           <ProfileUserButton
             setFollowers={setFollowers}
-            user={user} isOwner={isOwner} username={username}
-
+            user={user}
+            isOwner={isOwner}
+            username={username}
             page={page}
           />
         </CentralizeChildren>
@@ -495,36 +549,46 @@ const ProfileUser = ({
           aria-labelledby="checkbox-group"
           $selected={selected}
         >
-          {selectFullTime && <ProfileJobDetailsLabel>
-            <input type="checkbox" checked />
-            <ProfileJobDetailsLabelText>
-              {FULLTIME}
-            </ProfileJobDetailsLabelText>
-          </ProfileJobDetailsLabel>}
-          {selectPartTime && <ProfileJobDetailsLabel>
-            <input type="checkbox" checked />
-            <ProfileJobDetailsLabelText>
-              {PARTTIME}
-            </ProfileJobDetailsLabelText>
-          </ProfileJobDetailsLabel>}
-          {selectContract && <ProfileJobDetailsLabel>
-            <input type="checkbox" checked />
-            <ProfileJobDetailsLabelText>
-              {CONTRACT}
-            </ProfileJobDetailsLabelText>
-          </ProfileJobDetailsLabel>}
-          {selectFreelance && <ProfileJobDetailsLabel>
-            <input type="checkbox" checked />
-            <ProfileJobDetailsLabelText>
-              {FREELANCE}
-            </ProfileJobDetailsLabelText>
-          </ProfileJobDetailsLabel>}
-          {selectInternship && <ProfileJobDetailsLabel>
-            <input type="checkbox" checked />
-            <ProfileJobDetailsLabelText>
-              {INTERNSHIP}
-            </ProfileJobDetailsLabelText>
-          </ProfileJobDetailsLabel>}
+          {selectFullTime && (
+            <ProfileJobDetailsLabel>
+              <input type="checkbox" checked />
+              <ProfileJobDetailsLabelText>
+                {FULLTIME}
+              </ProfileJobDetailsLabelText>
+            </ProfileJobDetailsLabel>
+          )}
+          {selectPartTime && (
+            <ProfileJobDetailsLabel>
+              <input type="checkbox" checked />
+              <ProfileJobDetailsLabelText>
+                {PARTTIME}
+              </ProfileJobDetailsLabelText>
+            </ProfileJobDetailsLabel>
+          )}
+          {selectContract && (
+            <ProfileJobDetailsLabel>
+              <input type="checkbox" checked />
+              <ProfileJobDetailsLabelText>
+                {CONTRACT}
+              </ProfileJobDetailsLabelText>
+            </ProfileJobDetailsLabel>
+          )}
+          {selectFreelance && (
+            <ProfileJobDetailsLabel>
+              <input type="checkbox" checked />
+              <ProfileJobDetailsLabelText>
+                {FREELANCE}
+              </ProfileJobDetailsLabelText>
+            </ProfileJobDetailsLabel>
+          )}
+          {selectInternship && (
+            <ProfileJobDetailsLabel>
+              <input type="checkbox" checked />
+              <ProfileJobDetailsLabelText>
+                {INTERNSHIP}
+              </ProfileJobDetailsLabelText>
+            </ProfileJobDetailsLabel>
+          )}
           {/* <input type="checkbox" checked={selectFullTime} />
               <ProfileJobDetailsLabelText>
                 {FULLTIME}
@@ -563,16 +627,18 @@ const ProfileUser = ({
           <ProfileWebsite website={website} />
           <ProfileGitHub github_username={github_username} />
           <ProfileDiscord discord_user_details={discord_user_details} />
-          <ProfileSolanaWallet solana_wallet_user_public_key={solana_wallet_user_public_key} />
+          <ProfileSolanaWallet
+            solana_wallet_user_public_key={solana_wallet_user_public_key}
+          />
           {/* Include joined here */}
           {/* <ProfileLinkedIn linkedin={linkedin} /> */}
         </ProfileDetailsContainer>
         {/* <JobPostSkillsWrapper> */}
-        {skills && skills.length > 0 && <ProfileSkillsWrapper>
-          {
-            skills.map((skill) => {
-            // skills.map((skill, index) => {
-            // ["Rust", "Python", "Go", "Haskell", "JavaScript", "React", "AWS", "Heroku", "GitHub", "DevOps"].map((skill, index) => {
+        {skills && skills.length > 0 && (
+          <ProfileSkillsWrapper>
+            {skills.map((skill) => {
+              // skills.map((skill, index) => {
+              // ["Rust", "Python", "Go", "Haskell", "JavaScript", "React", "AWS", "Heroku", "GitHub", "DevOps"].map((skill, index) => {
               return (
                 <ProfileSkill key={skill}>
                   <Chip
@@ -582,9 +648,9 @@ const ProfileUser = ({
                   />
                 </ProfileSkill>
               );
-            })
-          }
-        </ProfileSkillsWrapper>}
+            })}
+          </ProfileSkillsWrapper>
+        )}
         {/* </JobPostSkillsWrapper> */}
       </div>
     </ProfileCard>

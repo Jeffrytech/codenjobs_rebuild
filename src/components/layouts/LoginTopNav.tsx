@@ -23,7 +23,6 @@ import PrimarySpinner from "../spinners/PrimarySpinner";
 import {
   TopNavContainer,
   LogoCompanyTitleContainer,
-
   FindJob,
 } from "./TopNav/TopNavCSS";
 import JobCategories from "./TopNav/JobCategories";
@@ -42,7 +41,7 @@ const PreviousPageButton = styled("li", {
 
   ":hover": {
     opacity: 0.7,
-  }
+  },
 });
 
 const LoginTopNav = ({
@@ -70,9 +69,11 @@ const LoginTopNav = ({
   } = useAuth();
 
   if (loading) {
-    return (<CenteredInPage>
-      <PrimarySpinner />
-    </CenteredInPage>);
+    return (
+      <CenteredInPage>
+        <PrimarySpinner />
+      </CenteredInPage>
+    );
   }
 
   if (user && !router.query.from) {
@@ -82,34 +83,42 @@ const LoginTopNav = ({
 
   return (
     <>
-      {register === false && <Header>
-        <nav>
-          <TopNavContainer>
-            {confirm && <Link href={"/"}>
-              <LogoCompanyTitleContainer>
-                <Logo src="/static/logo.png" />
-              </LogoCompanyTitleContainer>
-            </Link>}
-            <div style={{
-              marginRight: "auto",
-            }}>
-              {/* <JobCategories /> */}
-              {/* <CommunityCategories /> */}
-              {/* <PeopleCategories /> */}
-            </div>
-            
-            {!confirm && <PreviousPageButton>
-              <ArrowBackRoundedIcon
+      {register === false && (
+        <Header>
+          <nav>
+            <TopNavContainer>
+              {confirm && (
+                <Link href={"/"}>
+                  <LogoCompanyTitleContainer>
+                    <Logo src="/static/logo.svg" />
+                  </LogoCompanyTitleContainer>
+                </Link>
+              )}
+              <div
                 style={{
-                  color: "white",
-                  backgroundColor: "black",
+                  marginRight: "auto",
                 }}
-                onClick={() => router.back()}
-              />
-            </PreviousPageButton>}
-          </TopNavContainer>
-        </nav>
-      </Header>}
+              >
+                {/* <JobCategories /> */}
+                {/* <CommunityCategories /> */}
+                {/* <PeopleCategories /> */}
+              </div>
+
+              {!confirm && (
+                <PreviousPageButton>
+                  <ArrowBackRoundedIcon
+                    style={{
+                      color: "white",
+                      backgroundColor: "black",
+                    }}
+                    onClick={() => router.back()}
+                  />
+                </PreviousPageButton>
+              )}
+            </TopNavContainer>
+          </nav>
+        </Header>
+      )}
 
       <main>{children}</main>
     </>

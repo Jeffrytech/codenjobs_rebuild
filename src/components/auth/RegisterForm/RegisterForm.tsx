@@ -1,7 +1,4 @@
-import React, {
-  useEffect,
-  useState
-} from "react";
+import React, { useEffect, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import GitHubIcon from "@material-ui/icons/GitHub";
@@ -19,10 +16,10 @@ import Button from "@material-ui/core/Button";
 // import TextField from "@material-ui/core/TextField";
 // import Container from "@material-ui/core/Container";
 
-import { 
+import {
   Tooltip,
-  // InputAdornment, IconButton, Grid, 
-  Typography
+  // InputAdornment, IconButton, Grid,
+  Typography,
 } from "@material-ui/core";
 
 import { black, blue, discord, red, shadowBlue } from "../../../design/colors";
@@ -50,20 +47,35 @@ import UsernameFieldErrorMessage from "../Error/UsernameFieldErrorMessage";
 import PasswordFieldErrorMessage from "../Error/PasswordFieldErrorMessage";
 
 import LoginSpinner from "../../spinners/LoginSpinner";
-import { COMPANY_NAME, LOGIN_DESCRIPTION, ReCAPTCHA_PUBLIC } from "../../../config/environment";
+import {
+  COMPANY_NAME,
+  LOGIN_DESCRIPTION,
+  ReCAPTCHA_PUBLIC,
+} from "../../../config/environment";
 import { sub } from "date-fns";
-import { LoginCompanyLogo, LoginDescription, LoginForm, LoginFormInputWrapper, LoginFormLabel, LoginFormTextInput, Submit } from "../login/LoginCSS";
+import {
+  LoginCompanyLogo,
+  LoginDescription,
+  LoginForm,
+  LoginFormInputWrapper,
+  LoginFormLabel,
+  LoginFormTextInput,
+  Submit,
+} from "../login/LoginCSS";
 // import Required from "../../Required";
 import ControlPasswordVisiblity from "../login/ControlPasswordVisibility";
 import Required from "../../form/Required";
 import { findUserProfileByUsername } from "../../../api/profile";
-import { 
+import {
   findUserRegisterReferral,
-  // findRefUsername, 
-  // validateUserRegisterReference 
+  // findRefUsername,
+  // validateUserRegisterReference
 } from "../../../api/user";
 import { discordRegister } from "../../../api/discord";
-import { RegisterWithOauthButtonWrapper, RegisterWithOauthContainer } from "./RegisterFormCSS";
+import {
+  RegisterWithOauthButtonWrapper,
+  RegisterWithOauthContainer,
+} from "./RegisterFormCSS";
 import { githubRegister } from "../../../api/github";
 import { twitterRegister } from "../../../api/twitter";
 import { linkedinRegister } from "../../../api/linkedin";
@@ -99,7 +111,7 @@ import { linkedinRegister } from "../../../api/linkedin";
 //       // onMouseDown={handleMouseDownPassword}
 //     //   edge="end"
 //     // >
-//     <div 
+//     <div
 //       style={{
 //         marginLeft: "auto",
 //         display: "flex",
@@ -109,14 +121,12 @@ import { linkedinRegister } from "../../../api/linkedin";
 //       {showPassword ? <Visibility /> : <VisibilityOff />}
 //     </div>
 //       // {showPassword ? <Visibility /> : <VisibilityOff />}
-    
+
 //     // </IconButton>
 //   );
 // };
 
-const RegisterForm = ({
-  ref_username
-}) => {
+const RegisterForm = ({ ref_username }) => {
   // const classes = useStyles();
 
   const [useReferral, setUseReferral] = useState(null);
@@ -130,14 +140,12 @@ const RegisterForm = ({
         console.error(error);
         return;
       }
-    
+
       setUseReferral(data);
-      
     } catch (error) {
       console.log("findRefUsername catch error");
       console.error(error);
     }
-
   };
 
   useEffect(() => {
@@ -204,48 +212,60 @@ const RegisterForm = ({
       // className={classes.form}
       onSubmit={handleSubmit}
     >
-      <LoginCompanyLogo
-        src="/static/logo.png" alt="logo"
-      />
-      <Typography style={{
-        marginTop: "0.25rem",
-        alignSelf: "center",
-      }} component="h1" variant="h5">
+      <LoginCompanyLogo src="/static/logo.svg" alt="logo" />
+      <Typography
+        style={{
+          marginTop: "0.25rem",
+          alignSelf: "center",
+        }}
+        component="h1"
+        variant="h5"
+      >
         {/* {registerTitle} */}
         {COMPANY_NAME}
       </Typography>
 
-      {ref_username !== "" && useReferral !== null && (useReferral === true ? <div 
-        style={{
-          background: "#efefef",
-          padding: "0.5rem",
-          fontSize: "0.85rem",
-          marginTop: "0.25rem",
-          // opacity: "0.7",
-          borderRadius: "0.25rem",
-          lineHeight: "1.25rem",
-          wordBreak: "break-all",
-          // color: blue,
-        }}
-      >
-        Your referencer username is <span style={{ fontWeight: "bold", }}>{ref_username}</span> and we will send the user 5% referral fee when you post the first job at our website
-      </div> : <div
-        style={{
-          background: "#efefef",
-          padding: "0.5rem",
-          fontSize: "0.85rem",
-          marginTop: "0.25rem",
-          // opacity: "0.7",
-          borderRadius: "0.25rem",
-          lineHeight: "1.25rem",
-          wordBreak: "break-all",
-          color: red,
-        }}
-      >
-        The referencer doesn't want to use our reference system or the ref_username doesn't exist
-        {/* please use the correct one to sign up */}
-        {/* The referencer is not allowed to use our reference system or doesn't exist, please use correct ref_username to sign up */}
-      </div>)}
+      {ref_username !== "" &&
+        useReferral !== null &&
+        (useReferral === true ? (
+          <div
+            style={{
+              background: "#efefef",
+              padding: "0.5rem",
+              fontSize: "0.85rem",
+              marginTop: "0.25rem",
+              // opacity: "0.7",
+              borderRadius: "0.25rem",
+              lineHeight: "1.25rem",
+              wordBreak: "break-all",
+              // color: blue,
+            }}
+          >
+            Your referencer username is{" "}
+            <span style={{ fontWeight: "bold" }}>{ref_username}</span> and we
+            will send the user 5% referral fee when you post the first job at
+            our website
+          </div>
+        ) : (
+          <div
+            style={{
+              background: "#efefef",
+              padding: "0.5rem",
+              fontSize: "0.85rem",
+              marginTop: "0.25rem",
+              // opacity: "0.7",
+              borderRadius: "0.25rem",
+              lineHeight: "1.25rem",
+              wordBreak: "break-all",
+              color: red,
+            }}
+          >
+            The referencer doesn't want to use our reference system or the
+            ref_username doesn't exist
+            {/* please use the correct one to sign up */}
+            {/* The referencer is not allowed to use our reference system or doesn't exist, please use correct ref_username to sign up */}
+          </div>
+        ))}
 
       {/* <Grid container >
         <LoginDescription>
@@ -261,7 +281,7 @@ const RegisterForm = ({
         <input type="text" />
       </div>
        */}
-       
+
       {/* <TextField
         // autoFocus
         autoComplete="email"
@@ -290,7 +310,7 @@ const RegisterForm = ({
         value={email.toLowerCase().replace(/\s/g, "")}
       // value={email}
       /> */}
-      <LoginFormLabel htmlFor="email" >
+      <LoginFormLabel htmlFor="email">
         Email
         <Required />
       </LoginFormLabel>
@@ -299,13 +319,9 @@ const RegisterForm = ({
           id="email"
           name="email"
           type="email"
-
           placeholder={"email@codenjobs.com"}
-
           autoComplete="email"
-
           required
-
           // minLength={passwordMinLength}
           // maxLength={passwordMaxLength}
 
@@ -347,7 +363,7 @@ const RegisterForm = ({
         value={username.toLowerCase().replace(/\s/g, "")}
       /> */}
 
-      <LoginFormLabel htmlFor="username" >
+      <LoginFormLabel htmlFor="username">
         Username
         <Required />
       </LoginFormLabel>
@@ -356,16 +372,13 @@ const RegisterForm = ({
           id="username"
           name="username"
           type="username"
-
           // placeholder={"codenjobs"}
 
           // autoComplete="email"
 
           required
-
           minLength={usernameMinLength}
           maxLength={usernameMaxLength}
-
           onChange={handleChange}
           onBlur={handleBlur}
           value={username.toLowerCase().replace(/\s/g, "")}
@@ -410,16 +423,17 @@ const RegisterForm = ({
 
         value={password}
       /> */}
-      <LoginFormLabel htmlFor="password" >
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          width: "100%",
-        }}>
+      <LoginFormLabel htmlFor="password">
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
           Password
           <Required />
-
-          <ControlPasswordVisiblity 
+          <ControlPasswordVisiblity
             handleClickShowPassword={handleClickShowPassword}
             // handleMouseDownPassword={handleMouseDownPassword}
             showPassword={showPassword}
@@ -430,19 +444,15 @@ const RegisterForm = ({
         <LoginFormTextInput
           id="password"
           name="password"
-
           // type="password"
           type={showPassword ? "text" : "password"}
-
           // placeholder={"codenjobs"}
 
           // autoComplete="email"
 
           required
-
           minLength={passwordMinLength}
           maxLength={passwordMaxLength}
-
           onChange={handleChange}
           onBlur={handleBlur}
           value={password.toLowerCase().replace(/\s/g, "")}
@@ -462,26 +472,36 @@ const RegisterForm = ({
       {/* Use button from submti and call execute() to make onChange of  */}
       {/* ReCAPTCHA setFieldValue of recapcha and submit form atfer that. */}
 
-      <div style={{
-        marginTop: "0.5rem",
-        marginBottom: "0.5rem",
-        opacity: "0.5",
-        fontSize: "0.7rem",
-      }}>
-        By sumitting this form, you agree to the <a style={{
-          textDecoration: "underline",
-          // color: "rgb(17, 160, 245)",
-          color: "#121212",
-          fontWeight: "bold",
-          // opacity: 1,
-        }} 
-        href="/company/policies/terms" 
-        target="_blank" 
-        > terms and conditions</a> of our services
+      <div
+        style={{
+          marginTop: "0.5rem",
+          marginBottom: "0.5rem",
+          opacity: "0.5",
+          fontSize: "0.7rem",
+        }}
+      >
+        By sumitting this form, you agree to the{" "}
+        <a
+          style={{
+            textDecoration: "underline",
+            // color: "rgb(17, 160, 245)",
+            color: "#121212",
+            fontWeight: "bold",
+            // opacity: 1,
+          }}
+          href="/company/policies/terms"
+          target="_blank"
+        >
+          {" "}
+          terms and conditions
+        </a>{" "}
+        of our services
       </div>
 
       <Submit
-        disabled={isSubmitting || (ref_username !== "" && useReferral === false)}
+        disabled={
+          isSubmitting || (ref_username !== "" && useReferral === false)
+        }
         // disabled={isSubmitting}
 
         type="submit"
@@ -528,7 +548,9 @@ const RegisterForm = ({
             onClick={async (e) => {
               e.preventDefault();
 
-              const { data: redirect, error } = await discordRegister(ref_username);
+              const { data: redirect, error } = await discordRegister(
+                ref_username
+              );
 
               if (error) {
                 console.log("Discord login response error");
@@ -544,17 +566,18 @@ const RegisterForm = ({
               if (redirect) {
                 window.location.href = redirect;
               }
-
             }}
           >
-            <BsDiscord style={{
-              // marginLeft: "0.25rem",
-              fontSize: "1.5rem",
-              color: discord
-            }} />
+            <BsDiscord
+              style={{
+                // marginLeft: "0.25rem",
+                fontSize: "1.5rem",
+                color: discord,
+              }}
+            />
           </RegisterWithOauthButtonWrapper>
         </Tooltip>
-        
+
         <Tooltip
           title="Create an account with your LinkedIn email and username"
           arrow
@@ -563,7 +586,9 @@ const RegisterForm = ({
             onClick={async (e) => {
               e.preventDefault();
 
-              const { data: redirect, error } = await linkedinRegister(ref_username);
+              const { data: redirect, error } = await linkedinRegister(
+                ref_username
+              );
 
               if (error) {
                 console.log("LinkedIn login response error");
@@ -579,16 +604,17 @@ const RegisterForm = ({
               if (redirect) {
                 window.location.href = redirect;
               }
-
             }}
           >
-            <BsLinkedin style={{
-              fontSize: "1.25rem",
-              marginBottom: "0.1rem",
-              // color: shadowBlue,
-              // color: black,
-              color: blue,
-            }} />
+            <BsLinkedin
+              style={{
+                fontSize: "1.25rem",
+                marginBottom: "0.1rem",
+                // color: shadowBlue,
+                // color: black,
+                color: blue,
+              }}
+            />
           </RegisterWithOauthButtonWrapper>
         </Tooltip>
 
@@ -600,7 +626,9 @@ const RegisterForm = ({
             onClick={async (e) => {
               e.preventDefault();
 
-              const { data: redirect, error } = await githubRegister(ref_username);
+              const { data: redirect, error } = await githubRegister(
+                ref_username
+              );
 
               if (error) {
                 console.log("GitHub login response error");
@@ -616,58 +644,63 @@ const RegisterForm = ({
               if (redirect) {
                 window.location.href = redirect;
               }
-
             }}
           >
-            <GitHubIcon style={{
-              fontSize: "1.25rem",
-              marginBottom: "0.1rem",
-              color: black,
-            }} />
+            <GitHubIcon
+              style={{
+                fontSize: "1.25rem",
+                marginBottom: "0.1rem",
+                color: black,
+              }}
+            />
           </RegisterWithOauthButtonWrapper>
         </Tooltip>
 
-        {!ref_username && <Tooltip
-          title="Create an account with your Twitter email and username"
-          arrow
-        >
-          <RegisterWithOauthButtonWrapper
-            onClick={async (e) => {
-              e.preventDefault();
-
-              const { data: redirect, error } = await twitterRegister();
-
-              if (error) {
-                console.log("Twitter login response error");
-                console.error(error);
-                const errorDetail = error.response.data.detail;
-                console.error(errorDetail);
-
-                return;
-
-                // setGithubEndpointError(errorDetail);
-              }
-
-              if (redirect) {
-                window.location.href = redirect;
-              }
-
-            }}
+        {!ref_username && (
+          <Tooltip
+            title="Create an account with your Twitter email and username"
+            arrow
           >
-            <BsTwitter style={{
-              fontSize: "1.25rem",
-              marginBottom: "0.1rem",
-              color: blue,
-              // color: black,
-            }} />
-          </RegisterWithOauthButtonWrapper>
-        </Tooltip>}
+            <RegisterWithOauthButtonWrapper
+              onClick={async (e) => {
+                e.preventDefault();
 
+                const { data: redirect, error } = await twitterRegister();
+
+                if (error) {
+                  console.log("Twitter login response error");
+                  console.error(error);
+                  const errorDetail = error.response.data.detail;
+                  console.error(errorDetail);
+
+                  return;
+
+                  // setGithubEndpointError(errorDetail);
+                }
+
+                if (redirect) {
+                  window.location.href = redirect;
+                }
+              }}
+            >
+              <BsTwitter
+                style={{
+                  fontSize: "1.25rem",
+                  marginBottom: "0.1rem",
+                  color: blue,
+                  // color: black,
+                }}
+              />
+            </RegisterWithOauthButtonWrapper>
+          </Tooltip>
+        )}
       </RegisterWithOauthContainer>
 
-      <div style={{
-        marginTop: "0.5rem",
-      }} >
+      <div
+        style={{
+          marginTop: "0.5rem",
+        }}
+      >
         <ReCAPTCHA
           ref={recaptchaRef}
           sitekey={ReCAPTCHA_PUBLIC}
@@ -679,7 +712,6 @@ const RegisterForm = ({
 
             submitForm();
           }}
-
           onErrored={(errors) => {
             // Show error at frontend?
             console.log("errors");
@@ -688,10 +720,10 @@ const RegisterForm = ({
 
           // onloadCallback={() => { console.log("ReCAPTCHA did load."); }}
 
-        // style={{
-        //   width: "100%",
-        //   display: "inline-lbock",
-        // }}
+          // style={{
+          //   width: "100%",
+          //   display: "inline-lbock",
+          // }}
         />
       </div>
 
@@ -702,11 +734,13 @@ const RegisterForm = ({
         aria-describedby="Register form error"
       >
         <DialogTitle id="reigster-error">
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            color: "#ff1676",
-          }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              color: "#ff1676",
+            }}
+          >
             <ErrorIcon /> <span style={{ marginLeft: "0.25rem" }}>Error</span>
           </div>
         </DialogTitle>
@@ -723,13 +757,12 @@ const RegisterForm = ({
           <Button
             onClick={handleClose}
             color="primary"
-          // autoFocus
+            // autoFocus
           >
             Close
           </Button>
         </DialogActions>
       </Dialog>
-
     </LoginForm>
   );
 };

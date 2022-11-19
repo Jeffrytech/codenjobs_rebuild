@@ -2,14 +2,22 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 import { ProfileUserFileList } from "../../profile/ProfileList";
-import { findFileForOwner, findFileListForOwner } from "../../../api/privateFile";
+import {
+  findFileForOwner,
+  findFileListForOwner,
+} from "../../../api/privateFile";
 
 import { useAuth } from "../../../contexts/auth";
 import useProfileFileListForm from "./useProfileFileListForm";
 import ProfileFile from "./ProfileFile";
 import { scrollToTop } from "../../../browser/scroll";
 import UpdateFileForm from "../UpdateFileForm";
-import { ProfileFileListPaginationButtonsContainer, ProfileFileListPaginationCurrentButton, ProfileFileListPaginationNextButton, ProfileFileListPaginationPrevButton } from "./ProfileFileListPagination";
+import {
+  ProfileFileListPaginationButtonsContainer,
+  ProfileFileListPaginationCurrentButton,
+  ProfileFileListPaginationNextButton,
+  ProfileFileListPaginationPrevButton,
+} from "./ProfileFileListPagination";
 import ProfileFileListSkeleton from "./ProfileFileListSkeleton";
 import NoSearchList from "../../SearchList/NoSearchList";
 import { FileNoSearchListHeader } from "./ProfileFileListCSS";
@@ -18,7 +26,7 @@ import { FileNoSearchListHeader } from "./ProfileFileListCSS";
 const formatProfilFileListTitle = (
   numberOfFiles: Number,
   currentPage: Number,
-  totalPage: Number,
+  totalPage: Number
 ) => {
   // const prefix = "Code";
 
@@ -30,16 +38,18 @@ const formatProfilFileListTitle = (
   const fileListTitle = `${numberOfFiles} ${suffix}`;
   // const fileListState = `(${currentPage} / ${totalPage})`;
 
-  return <div>
-    {/* {fileListTitle} <span>{fileListState}</span> */}
-    {fileListTitle} 
-    {/* {fileListTitle} */}
-  </div>;
+  return (
+    <div>
+      {/* {fileListTitle} <span>{fileListState}</span> */}
+      {fileListTitle}
+      {/* {fileListTitle} */}
+    </div>
+  );
 };
 
 const ProfileFileList = ({
   file_id,
-  
+
   title,
   sort,
   reuse,
@@ -47,7 +57,7 @@ const ProfileFileList = ({
 }) => {
   const {
     // @ts-ignore
-    user
+    user,
   } = useAuth();
 
   const { username, image } = user;
@@ -56,10 +66,7 @@ const ProfileFileList = ({
   const [showUpdateFileForm, setShowUpdateFileForm] = useState(false);
   const [fileIdToUpdate, setFileIdToUpdate] = useState(null);
 
-  const {
-    setFieldValue,
-    submitForm,
-  } = useProfileFileListForm({
+  const { setFieldValue, submitForm } = useProfileFileListForm({
     router,
     username,
     sort,
@@ -70,7 +77,7 @@ const ProfileFileList = ({
   // const filesPerPage = 6;
   const filesPerPage = 12;
 
-  const [fileList, setFileList] = useState(null); 
+  const [fileList, setFileList] = useState(null);
   const [totalFileList, setTotalFileList] = useState(0);
 
   // TODO
@@ -118,13 +125,13 @@ const ProfileFileList = ({
           }
 
           if (data) {
-
             const { fileList, totalFileList } = data;
-              
+
             setFileList(fileList);
             setTotalFileList(totalFileList);
           }
-        }).catch(error => {
+        })
+        .catch((error) => {
           console.log("error");
           console.error(error);
         });
@@ -132,15 +139,8 @@ const ProfileFileList = ({
       const skip = (currentPage - 1) * filesPerPage;
       const limit = filesPerPage;
 
-      findFileListForOwner(
-        title,
-        sort,
-        reuse,
-        skip,
-        limit,
-      )
+      findFileListForOwner(title, sort, reuse, skip, limit)
         .then(({ data, error }) => {
-
           if (error) {
             console.log("findFileForOwner error");
             console.error(error);
@@ -149,18 +149,17 @@ const ProfileFileList = ({
           }
 
           if (data) {
-
             const { fileList, totalFileList } = data;
 
             setFileList(fileList);
             setTotalFileList(totalFileList);
           }
-        }).catch(error => {
+        })
+        .catch((error) => {
           console.log("error");
           console.error(error);
         });
     }
-
   }, [
     file_id,
 
@@ -176,28 +175,7 @@ const ProfileFileList = ({
   // alert(fileList.length);
 
   if (fileList === null) {
-    return <ProfileUserFileList>
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-      <ProfileFileListSkeleton />
-    </ProfileUserFileList>;
-  }
-
-  if (fileList.length === 0) {
-  // if (true) {
-    return <>
-      <FileNoSearchListHeader>
-        <NoSearchList href="/blog/post" message="Upload a file for blog posts" />
-      </FileNoSearchListHeader>
+    return (
       <ProfileUserFileList>
         <ProfileFileListSkeleton />
         <ProfileFileListSkeleton />
@@ -212,7 +190,35 @@ const ProfileFileList = ({
         <ProfileFileListSkeleton />
         <ProfileFileListSkeleton />
       </ProfileUserFileList>
-    </>;
+    );
+  }
+
+  if (fileList.length === 0) {
+    // if (true) {
+    return (
+      <>
+        <FileNoSearchListHeader>
+          <NoSearchList
+            href="/blog/post"
+            message="Upload a file for blog posts"
+          />
+        </FileNoSearchListHeader>
+        <ProfileUserFileList>
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+          <ProfileFileListSkeleton />
+        </ProfileUserFileList>
+      </>
+    );
   }
 
   // alert(fileList.length);
@@ -222,110 +228,103 @@ const ProfileFileList = ({
 
   return (
     <>
-      <ProfileUserFileList
-        includeMoreList={includeMoreList}
-      >
-        {fileList.map(({
-          id,
-          path_to_file,
-          // cloudinary_file_public_id,
-          title,
-          description,
-          reuse,
+      <ProfileUserFileList includeMoreList={includeMoreList}>
+        {fileList.map(
+          ({
+            id,
+            path_to_file,
+            // cloudinary_file_public_id,
+            title,
+            description,
+            reuse,
 
-          created_at,
-          updated_at,
-        }) => {
-          // TODO
-          // This should be a separate component to have its own state 
-          // and update title, reuse, description, created_at, updated_at etc
+            created_at,
+            updated_at,
+          }) => {
+            // TODO
+            // This should be a separate component to have its own state
+            // and update title, reuse, description, created_at, updated_at etc
 
-          return (
-            <ProfileFile
-              id={id}
-              key={id}
-                
-              path_to_file={path_to_file}
-              // cloudinary_file_public_id,
-              title={title}
-              description={description}
-              reuse={reuse}
-
-              created_at={created_at}
-              updated_at={updated_at}
-
-              setFileList={setFileList}
-              setTotalFileList={setTotalFileList}
-
-              filesPerPage={filesPerPage}
-              fileList={fileList}
-              setFileIdToUpdate={setFileIdToUpdate}
-              setShowUpdateFileForm={setShowUpdateFileForm}
-            />
-
-          );
-        })
-        }
-
+            return (
+              <ProfileFile
+                id={id}
+                key={id}
+                path_to_file={path_to_file}
+                // cloudinary_file_public_id,
+                title={title}
+                description={description}
+                reuse={reuse}
+                created_at={created_at}
+                updated_at={updated_at}
+                setFileList={setFileList}
+                setTotalFileList={setTotalFileList}
+                filesPerPage={filesPerPage}
+                fileList={fileList}
+                setFileIdToUpdate={setFileIdToUpdate}
+                setShowUpdateFileForm={setShowUpdateFileForm}
+              />
+            );
+          }
+        )}
       </ProfileUserFileList>
 
-      {
-        fileList && totalPage > 1 && <ProfileFileListPaginationButtonsContainer>
-          {currentPage.toString() !== "1" && <ProfileFileListPaginationPrevButton
-            onClick={(e) => {
-              e.preventDefault();
+      {fileList && totalPage > 1 && (
+        <ProfileFileListPaginationButtonsContainer>
+          {currentPage.toString() !== "1" && (
+            <ProfileFileListPaginationPrevButton
+              onClick={(e) => {
+                e.preventDefault();
 
-              const prevPage = +(new Number(currentPage)) - 1;
+                const prevPage = +new Number(currentPage) - 1;
 
-              const queries = new URLSearchParams(window.location.search);
-              queries.set("page", prevPage.toString());
-              // @ts-ignore
-              // window.location = `${window.location.pathname}?${queries.toString()}`;
+                const queries = new URLSearchParams(window.location.search);
+                queries.set("page", prevPage.toString());
+                // @ts-ignore
+                // window.location = `${window.location.pathname}?${queries.toString()}`;
 
-              router.push(`/user/${username}/files?${queries.toString()}`);
-              scrollToTop();
-            }}
-          >
-            {/* Prev */}
-            {(parseInt(currentPage) - 1).toString()}
-          </ProfileFileListPaginationPrevButton>}
+                router.push(`/user/${username}/files?${queries.toString()}`);
+                scrollToTop();
+              }}
+            >
+              {/* Prev */}
+              {(parseInt(currentPage) - 1).toString()}
+            </ProfileFileListPaginationPrevButton>
+          )}
           <ProfileFileListPaginationCurrentButton>
             {currentPage}
           </ProfileFileListPaginationCurrentButton>
-          {currentPage.toString() !== totalPage.toString() && <ProfileFileListPaginationNextButton
-            onClick={(e) => {
-              e.preventDefault();
+          {currentPage.toString() !== totalPage.toString() && (
+            <ProfileFileListPaginationNextButton
+              onClick={(e) => {
+                e.preventDefault();
 
-              let nextPage = +(new Number(currentPage)) + 1;
+                let nextPage = +new Number(currentPage) + 1;
 
-              const queries = new URLSearchParams(window.location.search);
-              queries.set("page", nextPage.toString());
-              // @ts-ignore
-              // window.location = `${window.location.pathname}?${queries.toString()}`;
-              router.push(`/user/${username}/files?${queries.toString()}`);
-              scrollToTop();
-            }}
-          >
-            {/* Next */}
-            {(parseInt(currentPage) + 1).toString()}
-          </ProfileFileListPaginationNextButton>}
+                const queries = new URLSearchParams(window.location.search);
+                queries.set("page", nextPage.toString());
+                // @ts-ignore
+                // window.location = `${window.location.pathname}?${queries.toString()}`;
+                router.push(`/user/${username}/files?${queries.toString()}`);
+                scrollToTop();
+              }}
+            >
+              {/* Next */}
+              {(parseInt(currentPage) + 1).toString()}
+            </ProfileFileListPaginationNextButton>
+          )}
         </ProfileFileListPaginationButtonsContainer>
-      }
+      )}
 
       <UpdateFileForm
         username={username}
         profile_image={image}
-        
         fileIdToUpdate={fileIdToUpdate}
         setFileIdToUpdate={setFileIdToUpdate}
-
         showUpdateFileForm={showUpdateFileForm}
         setShowUpdateFileForm={setShowUpdateFileForm}
-
         setFileList={setFileList}
       />
     </>
-    
   );
 };
 
@@ -385,7 +384,6 @@ export default ProfileFileList;
 //   </ListPaginationButtonsContainer>
 // }
 
-
 // {
 //   file_id === null && <ListHeader>
 //     <CentralizeChildren>
@@ -417,7 +415,7 @@ export default ProfileFileList;
 //           }),
 //           input: (provided) => ({
 //             ...provided,
-//             backgroundImage: "url('/static/logo.png')",
+//             backgroundImage: "url('/static/logo.svg')",
 //             backgroundRepaet: "no-repeat",
 //             backgroundSize: "cover",
 
@@ -450,8 +448,8 @@ export default ProfileFileList;
 //   </ListHeader>
 // }
 
-
-{/* {
+{
+  /* {
   fileList && totalPage > 1 && <ListPaginationButtonsContainer
     style={{
       marginLeft: "1.5rem",
@@ -491,4 +489,5 @@ export default ProfileFileList;
       Next
     </ListPaginationNextButton>}
   </ListPaginationButtonsContainer>
-} */}
+} */
+}
