@@ -1,7 +1,7 @@
 import Link from "next/link";
 import ExternalLink from "../../ExternalLink";
 import { COMPANY_ENGLISH_DOCS_WEBSITE } from "../../../config/environment";
-import { 
+import {
   FeatureListNav,
   FeatureListNavLinkList,
   FeatureListNavLinkListButton,
@@ -11,9 +11,10 @@ import {
   FeatureListNavLinkListDescription,
   FeatureListNavLinkListImage,
   FeatureListNavLinkListTitle,
-  FeatureListSection, 
-  FeatureListTitle 
+  FeatureListSection,
+  FeatureListTitle,
 } from "./FeatureListCSS";
+import { ArrowForwardIosOutlined } from "@material-ui/icons";
 
 const JOBS = "Post or find a job.";
 const FOR_HIRE = "Find candidates.";
@@ -24,32 +25,19 @@ const BLOGS = "Read blog posts.";
 
 const FeatureList = () => {
   return (
-    <FeatureListSection
-      id="feature-list-section"
-    >
-      <FeatureListTitle>
-        What We Do
-      </FeatureListTitle>
+    <FeatureListSection className="feature-section" id="feature-list-section">
+      <FeatureListTitle>What We Do</FeatureListTitle>
       <FeatureListNav>
-        <FeatureListNavLinkListContainer
-          $first={true}
-        >
+        <FeatureListNavLinkListContainer $first={true}>
           <FeatureListNavLinkList>
-            <FeatureListNavLinkListImage 
-              src="/static/design/website_features/job.svg"
-            />
-            <FeatureListNavLinkListTitle>
-              Jobs
-            </FeatureListNavLinkListTitle>
+            <FeatureListNavLinkListImage src="/static/design/website_features/job.svg" />
+            <FeatureListNavLinkListTitle>Jobs</FeatureListNavLinkListTitle>
             <FeatureListNavLinkListDescription>
               {JOBS}
-              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et justo blandit, porttitor leo at, pretium ex. */}
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <ExternalLink
-                href="/jobs"
-              >
+              <ExternalLink href="/jobs">
                 <FeatureListNavLinkListButton>
                   <span
                     style={{
@@ -60,33 +48,24 @@ const FeatureList = () => {
                     Find a job
                   </span>
 
-                  <img
-                    src="/static/design/link_white.svg"
+                  <ArrowForwardIosOutlined
+                    fontWeight="300"
+                    fontSize="inherit"
                   />
                 </FeatureListNavLinkListButton>
               </ExternalLink>
             </FeatureListNavLinkListButtonWrapper>
-            
           </FeatureListNavLinkList>
 
-          <FeatureListNavLinkList
-            $second={true}
-          >
-            <FeatureListNavLinkListImage
-              src="/static/design/website_features/forhire.svg"
-            />
-            <FeatureListNavLinkListTitle>
-            For Hire
-            </FeatureListNavLinkListTitle>
+          <FeatureListNavLinkList $second={true}>
+            <FeatureListNavLinkListImage src="/static/design/website_features/forhire.svg" />
+            <FeatureListNavLinkListTitle>For Hire</FeatureListNavLinkListTitle>
             <FeatureListNavLinkListDescription>
               {FOR_HIRE}
-              {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et justo blandit, porttitor leo at, pretium ex. */}
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <ExternalLink
-                href="/forhire"
-              >
+              <ExternalLink href="/forhire">
                 <FeatureListNavLinkListButton>
                   <span
                     style={{
@@ -94,11 +73,12 @@ const FeatureList = () => {
                     }}
                   >
                     {/* Learn More */}
-                  People For Hire
+                    People For Hire
                   </span>
 
-                  <img
-                    src="/static/design/link_white.svg"
+                  <ArrowForwardIosOutlined
+                    fontWeight="300"
+                    fontSize="inherit"
                   />
                 </FeatureListNavLinkListButton>
               </ExternalLink>
@@ -106,11 +86,9 @@ const FeatureList = () => {
           </FeatureListNavLinkList>
 
           <FeatureListNavLinkList>
-            <FeatureListNavLinkListImage
-              src="/static/design/website_features/market.svg"
-            />
+            <FeatureListNavLinkListImage src="/static/design/website_features/market.svg" />
             <FeatureListNavLinkListTitle>
-            NFT Market
+              NFT Market
             </FeatureListNavLinkListTitle>
             <FeatureListNavLinkListDescription>
               {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et justo blandit, porttitor leo at, pretium ex. */}
@@ -118,47 +96,35 @@ const FeatureList = () => {
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <FeatureListNavLinkListButton
-                disabled={true}
-              >
+              <FeatureListNavLinkListButton disabled={true}>
                 <span
                   style={{
                     marginRight: "0.5rem",
                   }}
                 >
                   {/* Buy NFTs */}
-                Trade NFTs
+                  Trade NFTs
                 </span>
 
-                <img
-                  src="/static/design/link_white.svg"
-                />
+                <ArrowForwardIosOutlined fontWeight="300" fontSize="inherit" />
               </FeatureListNavLinkListButton>
             </FeatureListNavLinkListButtonWrapper>
-        
           </FeatureListNavLinkList>
         </FeatureListNavLinkListContainer>
 
         {/* <FeatureListNavLinkListContainerSplit /> */}
 
         <FeatureListNavLinkListContainer>
-
           <FeatureListNavLinkList>
-            <FeatureListNavLinkListImage
-              src="/static/design/website_features/launchpad.svg"
-            />
-            <FeatureListNavLinkListTitle>
-              Laucnhpad
-            </FeatureListNavLinkListTitle>
+            <FeatureListNavLinkListImage src="/static/design/website_features/launchpad.svg" />
+            <FeatureListNavLinkListTitle>Laucnhpad</FeatureListNavLinkListTitle>
             <FeatureListNavLinkListDescription>
               {LAUNCH_PAD}
               {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et justo blandit, porttitor leo at, pretium ex. */}
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <ExternalLink
-                href="/nft/projects"
-              >
+              <ExternalLink href="/nft/projects">
                 <FeatureListNavLinkListButton>
                   <span
                     style={{
@@ -168,33 +134,25 @@ const FeatureList = () => {
                     New Projects
                   </span>
 
-                  <img
-                    src="/static/design/link_white.svg"
+                  <ArrowForwardIosOutlined
+                    fontWeight="300"
+                    fontSize="inherit"
                   />
                 </FeatureListNavLinkListButton>
               </ExternalLink>
             </FeatureListNavLinkListButtonWrapper>
-
           </FeatureListNavLinkList>
-          
-          <FeatureListNavLinkList
-            $second={true}
-          >
-            <FeatureListNavLinkListImage
-              src="/static/design/website_features/dex.svg"
-            />
-            <FeatureListNavLinkListTitle>
-              DEX
-            </FeatureListNavLinkListTitle>
+
+          <FeatureListNavLinkList $second={true}>
+            <FeatureListNavLinkListImage src="/static/design/website_features/dex.svg" />
+            <FeatureListNavLinkListTitle>DEX</FeatureListNavLinkListTitle>
             <FeatureListNavLinkListDescription>
               {DEX}
               {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et justo blandit, porttitor leo at, pretium ex. */}
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <FeatureListNavLinkListButton
-                disabled={true}
-              >
+              <FeatureListNavLinkListButton disabled={true}>
                 <span
                   style={{
                     marginRight: "0.5rem",
@@ -203,30 +161,21 @@ const FeatureList = () => {
                   Swap Tokens
                   {/* Swap */}
                 </span>
-
-                <img
-                  src="/static/design/link_white.svg"
-                />
+                <ArrowForwardIosOutlined fontWeight="300" fontSize="inherit" />
               </FeatureListNavLinkListButton>
             </FeatureListNavLinkListButtonWrapper>
           </FeatureListNavLinkList>
 
           <FeatureListNavLinkList>
-            <FeatureListNavLinkListImage
-              src="/static/design/website_features/blog.svg"
-            />
-            <FeatureListNavLinkListTitle>
-              Blogs
-            </FeatureListNavLinkListTitle>
+            <FeatureListNavLinkListImage src="/static/design/website_features/blog.svg" />
+            <FeatureListNavLinkListTitle>Blogs</FeatureListNavLinkListTitle>
             <FeatureListNavLinkListDescription>
               {BLOGS}
               {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec et justo blandit, porttitor leo at, pretium ex. */}
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <ExternalLink
-                href="/blogs"
-              >
+              <ExternalLink href="/blogs">
                 <FeatureListNavLinkListButton>
                   <span
                     style={{
@@ -236,13 +185,13 @@ const FeatureList = () => {
                     Read a blog
                   </span>
 
-                  <img
-                    src="/static/design/link_white.svg"
+                  <ArrowForwardIosOutlined
+                    fontWeight="300"
+                    fontSize="inherit"
                   />
                 </FeatureListNavLinkListButton>
               </ExternalLink>
             </FeatureListNavLinkListButtonWrapper>
-
           </FeatureListNavLinkList>
         </FeatureListNavLinkListContainer>
       </FeatureListNav>

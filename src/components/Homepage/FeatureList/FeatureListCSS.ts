@@ -6,28 +6,27 @@ import { disabled, hover } from "../../../design/common";
 const FeatureListSection = styled("section", {
   // height: "44rem",
   paddingBottom: "3.75rem",
-    
+
   // background: whiteGrey,
-  background: "#f3f0eb",
+  background: "#F3F0EB",
 
   display: "flex",
   flexFlow: "column",
 
   [MOBILE]: {
-    paddingBottom: 0
-  }
-
+    paddingBottom: 0,
+  },
 });
 
 const FeatureListTitle = styled("h2", {
   color: black,
-  fontWeight: "normal",
-    
+  fontWeight: "600",
+
   marginTop: "3.75rem",
   marginBottom: "3.75rem",
   // marginTop: "2rem",
   // marginBottom: "2rem",
-    
+
   fontSize: "2rem",
   textAlign: "center",
   width: "100%",
@@ -35,8 +34,8 @@ const FeatureListTitle = styled("h2", {
   [MOBILE]: {
     marginTop: "2rem",
     marginBottom: "2rem",
-  }
-
+    fontSize: "28px",
+  },
 });
 
 const FeatureListNav = styled("nav", {
@@ -55,8 +54,6 @@ const FeatureListNav = styled("nav", {
     width: "100%",
     maxWidth: "100%",
   },
-
-    
 });
 
 const FeatureListNavLinkListContainer = styled("ul", ({ $first }) => {
@@ -69,7 +66,7 @@ const FeatureListNavLinkListContainer = styled("ul", ({ $first }) => {
 
       listStyle: "none",
 
-      borderBottom: "1px solid  #575757",
+      borderBottom: "1px solid  rgba(87, 87, 87, 0.15)",
 
       [MOBILE]: {
         flexFlow: "column",
@@ -77,9 +74,8 @@ const FeatureListNavLinkListContainer = styled("ul", ({ $first }) => {
 
         padding: 0,
         margin: 0,
-      }
+      },
     };
-
   } else {
     return {
       display: "flex",
@@ -93,25 +89,22 @@ const FeatureListNavLinkListContainer = styled("ul", ({ $first }) => {
         flexFlow: "column",
         padding: 0,
         margin: 0,
-      }
-
+      },
     };
-
   }
-
 });
 
 const FeatureListNavLinkListContainerSplit = styled("div", {
-  border: `0.5px solid #575757`,
+  border: "5px solid red",
   margin: "1rem 1rem",
-  width: "100%"
+  width: "100%",
 });
 
 const FeatureListNavLinkList = styled("li", ({ $second }) => {
   if ($second) {
     return {
-      borderLeft: "1px solid #575757",
-      borderRight: "1px solid #575757",
+      borderLeft: "1px solid rgba(87, 87, 87, 0.15)",
+      borderRight: "1px solid rgba(87, 87, 87, 0.15)",
 
       flexBasis: "100%",
       padding: "0 2rem",
@@ -119,17 +112,16 @@ const FeatureListNavLinkList = styled("li", ({ $second }) => {
       [MOBILE]: {
         marginBottom: "2rem",
         border: "none",
-      }
+      },
     };
-         
   } else {
     return {
       flexBasis: "100%",
       padding: "0 2rem",
-        
+
       [MOBILE]: {
         marginBottom: "2rem",
-      }
+      },
     };
   }
 });
@@ -154,36 +146,39 @@ const FeatureListNavLinkListButtonWrapper = styled("div", {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  margin: "1rem 0 1rem 0"
+  margin: "1rem 0 1rem 0",
 });
 
 const FeatureListNavLinkListButton = styled("button", {
   padding: "0.75rem 1rem",
   borderRadius: "0.25rem",
   border: "none",
-  backgroundColor: darkBlue,
-  color: white,
+  color: "#575757",
+  backgroundColor: "rgba(87, 87, 87, 0.1)",
 
   display: "flex",
+  height: "40px",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "14px",
 
   ":disabled": {
     cursor: "not-allowed",
   },
   // ":hover": hover
   ":hover": {
+    backgroundColor: darkBlue,
     cursor: "pointer",
-  }
-
+    color: white,
+  },
 });
 
 export {
   FeatureListSection,
   FeatureListTitle,
-
   FeatureListNav,
   FeatureListNavLinkListContainer,
   FeatureListNavLinkListContainerSplit,
-
   FeatureListNavLinkList,
   FeatureListNavLinkListImage,
   FeatureListNavLinkListTitle,
