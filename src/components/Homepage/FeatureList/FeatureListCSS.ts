@@ -161,6 +161,7 @@ const FeatureListNavLinkListButton = styled("button", {
   alignItems: "center",
   justifyContent: "center",
   fontSize: "14px",
+  gap: "8px",
 
   ":disabled": {
     cursor: "not-allowed",

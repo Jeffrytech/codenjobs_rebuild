@@ -15,6 +15,7 @@ import {
   FeatureListTitle,
 } from "./FeatureListCSS";
 import { ArrowForwardIosOutlined } from "@material-ui/icons";
+import Carousel from "../../carousel";
 
 const JOBS = "Post or find a job.";
 const FOR_HIRE = "Find candidates.";
@@ -23,11 +24,35 @@ const LAUNCH_PAD = "Find new projects.";
 const DEX = "Trade cryptocurrencies.";
 const BLOGS = "Read blog posts.";
 
+const options = [
+  {
+    name: "Jobs",
+    text: JOBS,
+    img: "job.svg",
+    btnText: "Find a Job",
+    to: "/jobs",
+  },
+  {
+    name: "Launchpad",
+    text: LAUNCH_PAD,
+    img: "launchpad.svg",
+    btnText: "New Projects",
+    to: "/nft/projects",
+  },
+  {
+    name: "For Hire",
+    text: LAUNCH_PAD,
+    img: "forhire.svg",
+    btnText: "People For Hire",
+    to: "/forhire",
+  },
+];
+
 const FeatureList = () => {
   return (
     <FeatureListSection className="feature-section" id="feature-list-section">
       <FeatureListTitle>What We Do</FeatureListTitle>
-      <FeatureListNav>
+      <FeatureListNav className="hidden sm:flex">
         <FeatureListNavLinkListContainer $first={true}>
           <FeatureListNavLinkList>
             <FeatureListNavLinkListImage src="/static/design/website_features/job.svg" />
@@ -39,15 +64,7 @@ const FeatureList = () => {
             <FeatureListNavLinkListButtonWrapper>
               <ExternalLink href="/jobs">
                 <FeatureListNavLinkListButton>
-                  <span
-                    style={{
-                      marginRight: "0.5rem",
-                    }}
-                  >
-                    {/* Learn More */}
-                    Find a job
-                  </span>
-
+                  Find a job
                   <ArrowForwardIosOutlined
                     fontWeight="300"
                     fontSize="inherit"
@@ -67,15 +84,8 @@ const FeatureList = () => {
             <FeatureListNavLinkListButtonWrapper>
               <ExternalLink href="/forhire">
                 <FeatureListNavLinkListButton>
-                  <span
-                    style={{
-                      marginRight: "0.5rem",
-                    }}
-                  >
-                    {/* Learn More */}
-                    People For Hire
-                  </span>
-
+                  {/* Learn More */}
+                  People For Hire
                   <ArrowForwardIosOutlined
                     fontWeight="300"
                     fontSize="inherit"
@@ -97,15 +107,8 @@ const FeatureList = () => {
 
             <FeatureListNavLinkListButtonWrapper>
               <FeatureListNavLinkListButton disabled={true}>
-                <span
-                  style={{
-                    marginRight: "0.5rem",
-                  }}
-                >
-                  {/* Buy NFTs */}
-                  Trade NFTs
-                </span>
-
+                {/* Buy NFTs */}
+                Trade NFTs
                 <ArrowForwardIosOutlined fontWeight="300" fontSize="inherit" />
               </FeatureListNavLinkListButton>
             </FeatureListNavLinkListButtonWrapper>
@@ -126,14 +129,7 @@ const FeatureList = () => {
             <FeatureListNavLinkListButtonWrapper>
               <ExternalLink href="/nft/projects">
                 <FeatureListNavLinkListButton>
-                  <span
-                    style={{
-                      marginRight: "0.5rem",
-                    }}
-                  >
-                    New Projects
-                  </span>
-
+                  New Projects
                   <ArrowForwardIosOutlined
                     fontWeight="300"
                     fontSize="inherit"
@@ -153,14 +149,8 @@ const FeatureList = () => {
 
             <FeatureListNavLinkListButtonWrapper>
               <FeatureListNavLinkListButton disabled={true}>
-                <span
-                  style={{
-                    marginRight: "0.5rem",
-                  }}
-                >
-                  Swap Tokens
-                  {/* Swap */}
-                </span>
+                Swap Tokens
+                {/* Swap */}
                 <ArrowForwardIosOutlined fontWeight="300" fontSize="inherit" />
               </FeatureListNavLinkListButton>
             </FeatureListNavLinkListButtonWrapper>
@@ -177,14 +167,7 @@ const FeatureList = () => {
             <FeatureListNavLinkListButtonWrapper>
               <ExternalLink href="/blogs">
                 <FeatureListNavLinkListButton>
-                  <span
-                    style={{
-                      marginRight: "0.5rem",
-                    }}
-                  >
-                    Read a blog
-                  </span>
-
+                  Read a blog
                   <ArrowForwardIosOutlined
                     fontWeight="300"
                     fontSize="inherit"
@@ -195,6 +178,50 @@ const FeatureList = () => {
           </FeatureListNavLinkList>
         </FeatureListNavLinkListContainer>
       </FeatureListNav>
+      <div className="sm:block block py-8 featured">
+        <Carousel
+          autoplay={true}
+          autoplaySpeed={2500}
+          dots={true}
+          infinite={true}
+          speed={500}
+          slidesToShow={1}
+          slidesToScroll={1}
+          nextArrow={
+            <div>
+              <img
+                alt=""
+                className="-scale-x-100 mr-4"
+                src="/static/icons/ArrowsLeft.svg"
+              />
+            </div>
+          }
+          prevArrow={
+            <div>
+              <img alt="" className="ml-4" src="/static/icons/ArrowsLeft.svg" />
+            </div>
+          }
+        >
+          {options.map(({ name, btnText, img, text, to }) => (
+            <div key={name}>
+              <div className="flex flex-col items-center">
+                <img alt="" src={`/static/design/website_features/${img}`} />
+                <h4 className="mb-2 text-lg font-semibold">{name}</h4>
+                <p className="mb-3">{text}</p>
+                <ExternalLink href={to}>
+                  <FeatureListNavLinkListButton className="bg-[#26619C] text-white">
+                    {btnText}
+                    <ArrowForwardIosOutlined
+                      fontWeight="300"
+                      fontSize="inherit"
+                    />
+                  </FeatureListNavLinkListButton>
+                </ExternalLink>
+              </div>
+            </div>
+          ))}
+        </Carousel>
+      </div>
     </FeatureListSection>
   );
 };

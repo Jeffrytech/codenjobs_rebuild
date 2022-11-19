@@ -90,6 +90,13 @@ h6 {
 }
 
 .feature-section button svg {
-  margin-top: 4px;
+  margin-top: 2px;
   font-size: 10px;
+}
+.featured .slick-prev,
+.featured .slick-next {
+  height: unset;
+  width: unset;
+  margin-inline: 30px;
+  z-index: 10;
 }
