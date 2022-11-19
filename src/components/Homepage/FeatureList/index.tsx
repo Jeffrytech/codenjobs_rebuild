@@ -31,13 +31,7 @@ const options = [
     img: "job.svg",
     btnText: "Find a Job",
     to: "/jobs",
-  },
-  {
-    name: "Launchpad",
-    text: LAUNCH_PAD,
-    img: "launchpad.svg",
-    btnText: "New Projects",
-    to: "/nft/projects",
+    disabled: false,
   },
   {
     name: "For Hire",
@@ -45,6 +39,39 @@ const options = [
     img: "forhire.svg",
     btnText: "People For Hire",
     to: "/forhire",
+    disabled: false,
+  },
+  {
+    name: "NFT Market",
+    text: NFT_MARKET,
+    img: "market.svg",
+    btnText: "Trade NFTs",
+    to: "",
+    disabled: true,
+  },
+  {
+    name: "Launchpad",
+    text: LAUNCH_PAD,
+    img: "launchpad.svg",
+    btnText: "New Projects",
+    to: "/nft/projects",
+    disabled: false,
+  },
+  {
+    name: "DEX",
+    text: DEX,
+    img: "dex.svg",
+    btnText: "Swap Tokens",
+    to: "",
+    disabled: true,
+  },
+  {
+    name: "Blogs",
+    text: BLOGS,
+    img: "blog.svg",
+    btnText: "Read a blog",
+    to: "",
+    disabled: false,
   },
 ];
 
@@ -178,7 +205,7 @@ const FeatureList = () => {
           </FeatureListNavLinkList>
         </FeatureListNavLinkListContainer>
       </FeatureListNav>
-      <div className="sm:block block py-8 featured">
+      <div className="sm:hidden block py-8 featured">
         <Carousel
           autoplay={true}
           autoplaySpeed={2500}
@@ -202,21 +229,25 @@ const FeatureList = () => {
             </div>
           }
         >
-          {options.map(({ name, btnText, img, text, to }) => (
+          {options.map(({ name, btnText, img, text, to, disabled }) => (
             <div key={name}>
               <div className="flex flex-col items-center">
                 <img alt="" src={`/static/design/website_features/${img}`} />
                 <h4 className="mb-2 text-lg font-semibold">{name}</h4>
                 <p className="mb-3">{text}</p>
-                <ExternalLink href={to}>
-                  <FeatureListNavLinkListButton className="bg-[#26619C] text-white">
+
+                <Link href={disabled ? "" : to} passHref>
+                  <FeatureListNavLinkListButton
+                    disabled={disabled}
+                    className="bg-[#26619C] text-white"
+                  >
                     {btnText}
                     <ArrowForwardIosOutlined
                       fontWeight="300"
                       fontSize="inherit"
                     />
                   </FeatureListNavLinkListButton>
-                </ExternalLink>
+                </Link>
               </div>
             </div>
           ))}
