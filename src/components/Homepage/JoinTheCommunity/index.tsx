@@ -21,7 +21,7 @@ const JoinTheCommunity = () => {
             justifyContent: "center",
           }}
         >
-          <Link href="/register">
+          <Link href="/register" passHref>
             <JoinTheCommunityRegisterButton className="flex items-center">
               Get Started
             </JoinTheCommunityRegisterButton>
@@ -31,6 +31,7 @@ const JoinTheCommunity = () => {
               Learn More
               <img
                 src="/static/design/link_white.svg"
+                alt=""
                 className="h-[10px] mt-[2px]"
               />
             </JoinTheCommunityDocsButton>
