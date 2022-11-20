@@ -79,6 +79,7 @@ const FeatureList = () => {
   return (
     <FeatureListSection className="feature-section" id="feature-list-section">
       <FeatureListTitle>What We Do</FeatureListTitle>
+
       <FeatureListNav className="hidden sm:flex">
         <FeatureListNavLinkListContainer $first={true}>
           <FeatureListNavLinkList>

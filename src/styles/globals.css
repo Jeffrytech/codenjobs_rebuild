@@ -108,3 +108,44 @@ h6 {
   margin-inline: 30px;
   z-index: 10;
 }
+@-webkit-keyframes anim-glow {
+  0% {
+    box-shadow: 0 0 #61ef61;
+  }
+  100% {
+    box-shadow: 0 0 10px 8px transparent;
+    border-width: 2px;
+  }
+}
+@keyframes anim-glow {
+  0% {
+    box-shadow: 0 0 #61ef61;
+  }
+  100% {
+    box-shadow: 0 0 10px 8px transparent;
+    border-width: 2px;
+  }
+}
+
+.glow-icon {
+  border-radius: 50%;
+  border: 2px solid #61ef61;
+  width: 28px;
+  height: 28px;
+  text-align: center;
+  position: relative;
+  -webkit-animation: anim-glow 1.5s ease infinite;
+  animation: anim-glow 1.5s ease infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.glow-icon i {
+  border-radius: 50%;
+  border: 2px solid #61ef61;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  vertical-align: 6px;
+  background-color: #61ef61;
+}

@@ -1,5 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable no-trailing-spaces */
 import React, { useRef, useState } from "react";
 import User from "../User";
 import LoginPrompt from "../LoginPrompt";
@@ -10,6 +8,8 @@ import Shadow from "../Shadow";
 import Image from "next/image";
 import { CloseOutlined } from "@material-ui/icons";
 import { useOnClickOutside } from "../../../hooks/useOnClickOutside";
+import Tooltip from "@mui/material/Tooltip";
+import { useOnOutsideClick } from "../../../useOutsideClick";
 
 const options = [
   {
@@ -46,7 +46,9 @@ const TopNav = () => {
     loading,
   } = useAuth();
 
-  const walletRef = useOnClickOutside(() => setShowWallets(false));
+  const { innerBorderRef: walletRef } = useOnOutsideClick(() =>
+    setShowWallets(false)
+  );
   const menuRef = useOnClickOutside(() => setShowMenu(false));
 
   if (loading) {
@@ -62,7 +64,7 @@ const TopNav = () => {
 
   return (
     <>
-      <nav className="border flex fixed top-0 w-full bg-white z-30 items-center justify-center px-5 py-3">
+      <nav className="border fixed z-30 flex  top-0 w-full bg-white items-center justify-center px-5 py-3 h-[72px]">
         <Shadow />
         <div className="flex justify-between w-full">
           <Image
@@ -80,6 +82,29 @@ const TopNav = () => {
             </ul>
           </div>
           <div className="flex gap-4 items-center">
+            <div ref={menuRef} className="block sm:hidden">
+              <img
+                src="/static/icons/Menu.svg"
+                alt=""
+                className="cursor-pointer"
+                onClick={() => setShowMenu((c) => !c)}
+              />
+              {showMenu && (
+                <div className="absolute bg-white w-full p-5 my-[17px] mobile-menu right-0 shadow-mm">
+                  <ul className="flex-col flex gap-4">
+                    <li>Jobs</li>
+                    <li>For Hire</li>
+                    <li>Marketplace</li>
+                    <li>Blog</li>
+                  </ul>
+                </div>
+              )}
+            </div>
+            <Tooltip placement="top" title="Sign In">
+              <div className="glow-icon">
+                <i></i>
+              </div>
+            </Tooltip>
             <div ref={walletRef} className="relative">
               <img
                 width={28}
@@ -113,24 +138,6 @@ const TopNav = () => {
                       </div>
                     ))}
                   </div>
-                </div>
-              )}
-            </div>
-            <div ref={menuRef} className="block sm:hidden">
-              <img
-                src="/static/icons/Menu.svg"
-                alt=""
-                className="cursor-pointer"
-                onClick={() => setShowMenu((c) => !c)}
-              />
-              {showMenu && (
-                <div className="absolute bg-white w-full p-5 my-[17px] mobile-menu right-0 shadow-mm">
-                  <ul className="flex-col flex gap-4">
-                    <li>Jobs</li>
-                    <li>For Hire</li>
-                    <li>Marketplace</li>
-                    <li>Blog</li>
-                  </ul>
                 </div>
               )}
             </div>
