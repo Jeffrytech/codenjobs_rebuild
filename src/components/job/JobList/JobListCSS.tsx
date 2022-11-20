@@ -35,13 +35,12 @@ const JobSearchListContent = styled("div", () => {
 
     [MOBILE]: {
       flexFlow: "column",
-    }
+    },
   };
 });
 
 const JobSearchListPrimaryWrapper = styled("div", () => {
   return {
-
     width: "45rem", // 16 x 44 / 704
     minHeight: "0",
 
@@ -71,7 +70,7 @@ const JobSearchListSecondaryWrapper = styled("div", {
   [DESKTOP]: {
     // width: "100%"
     display: "none",
-  }
+  },
 });
 
 const JobNoSearchListHeader = styled("div", () => {
@@ -145,7 +144,7 @@ const JobListInputSearchButtonWrapper = styled("div", {
 
   ":hover": {
     cursor: "pointer",
-  }
+  },
 });
 
 const JobListInputClearButtonWrapper = styled("div", {
@@ -154,7 +153,7 @@ const JobListInputClearButtonWrapper = styled("div", {
 
   ":hover": {
     cursor: "pointer",
-  }
+  },
 });
 
 const JobSearchListTextInput = styled("input", {
@@ -171,7 +170,7 @@ const JobSearchListTextInput = styled("input", {
 
   ":focus": {
     outline: "none",
-  }
+  },
 });
 
 // Extract this?
@@ -192,13 +191,13 @@ const JobListCardContainer = styled("div", {
   // borderRadius: $last ? "0 0 0.5rem 0.5rem" : "0",
   // borderRadius,
   // borderRadius: '0.5rem',
-  borderRadius: '0.5rem',
+  borderRadius: "0.5rem",
   marginBottom: "1rem",
 
   [XS]: {
     // padding: "1.5rem",
     padding: "1.25rem",
-  }
+  },
 });
 
 const JobSearchListHeader = styled("div", () => {
@@ -224,7 +223,6 @@ const JobSearchListHeader = styled("div", () => {
     borderRadius: "0.5rem",
 
     marginBottom: "1rem",
-
   };
 });
 
@@ -253,7 +251,7 @@ const JobHeader = styled("div", {
   [XS]: {
     flexFlow: "column",
     alignItems: "flex-start",
-  }
+  },
 });
 
 // const PostedByWrapper = styled("div", {
@@ -293,7 +291,7 @@ const PostedBy = styled("div", {
 
   [XS]: {
     flexFlow: "column",
-  }
+  },
 });
 
 const JobPostTime = styled("div", {
@@ -304,12 +302,12 @@ const JobPostTime = styled("div", {
     marginLeft: "inherit",
     // opacity: 0.7,
     fontSize: "15px",
-  }
+  },
 });
 
 const CompanyName = styled("a", {
   display: "flex",
-  
+
   color: "black",
   opacity: "0.7",
   // textDecoration: "none",
@@ -317,7 +315,7 @@ const CompanyName = styled("a", {
 
   // marginTop: "0.25rem",
   // marginBottom: "0.25rem",
-  
+
   transition: "all 0.2s",
   cursor: "pointer",
   ":hover": {
@@ -342,12 +340,12 @@ const JobTitle = styled("div", {
   cursor: "pointer",
   ":hover": {
     opacity: "0.8",
-    color: "rgb(17, 160, 245)"
+    color: "rgb(17, 160, 245)",
   },
-  
+
   [XS]: {
     fontSize: "1.2rem",
-  }
+  },
 });
 
 const JobFeaturesContainer = styled("div", {
@@ -366,7 +364,7 @@ const JobFeaturesContainer = styled("div", {
     // fontSize: "11px",
     // lineHeight: "18px"
     lineHeight: "1.25rem",
-  }
+  },
 });
 
 const JobFeatureWrapper = styled("div", {
@@ -383,7 +381,7 @@ const JobFeatureWrapper = styled("div", {
   ":hover": {
     opacity: 0.7,
     color: "rgb(17, 160, 245)",
-  }
+  },
 });
 
 // const JobFeature = styled("a", {
@@ -437,7 +435,7 @@ const JobListSkillContainer = styled("div", {
 
   [MOBILE]: {
     marginTop: 0,
-  }
+  },
 });
 
 const JobListSkill = styled("div", {
@@ -454,7 +452,7 @@ const JobListSkill = styled("div", {
   [MOBILE]: {
     marginTop: "0.5rem",
     marginRight: "0.5rem",
-  }
+  },
 });
 
 const LocationWrapper = styled("div", {
@@ -467,7 +465,7 @@ const LocationWrapper = styled("div", {
 const ShowCurrentPage = styled("span", {
   [MOBILE]: {
     display: "none",
-  }
+  },
 });
 
 // Pagination
@@ -480,7 +478,7 @@ const JobListPaginationButtonsContainer = styled("div", {
 
   borderTop: "2px solid rgb(247, 248, 250)",
 
-  backgroundColor: white,
+  // backgroundColor: white,
 
   background: "none",
   borderRadius: "0.5rem",
@@ -492,7 +490,6 @@ const JobListPaginationButtonsContainer = styled("div", {
   //   // padding: "1rem 2.5rem"
   //   padding: "1rem",
   // }
-
 });
 
 const JobListPaginationPrevButton = styled("button", {
@@ -534,7 +531,6 @@ const JobListPaginationNextButton = styled("button", {
   // }
 });
 
-
 export {
   // JobListHeaderContainer, JobListHeaderTitle,
 
@@ -542,44 +538,33 @@ export {
   JobSearchListContent,
   JobSearchListPrimaryWrapper,
   JobSearchListSecondaryWrapper,
-
   JobSearchListHeader,
   JobSearchListTextInputWrapper,
   JobSearchListTextInput,
   JobListInputSearchButtonWrapper,
   JobListInputClearButtonWrapper,
-
-  
   JobNoSearchListHeader,
   JobSearchListSkeletonContainer,
   // JobListContainer,
   // JobListWrapper,
   // // JobListHeader,
   // JobListSection,
-
   JobListCardContainer,
 
   // PostedByWrapper,
   // CompanyContainer,
-
   JobHeader,
   PostedBy,
   JobPostTime,
-
   CompanyName,
   JobTitle,
-  
   JobFeaturesContainer,
   JobFeatureWrapper,
   // JobFeature,
-
   JobListSkillContainer,
   JobListSkill,
-
   LocationWrapper,
-
   ShowCurrentPage,
-
   JobListPaginationButtonsContainer,
   JobListPaginationPrevButton,
   JobListPaginationNextButton,

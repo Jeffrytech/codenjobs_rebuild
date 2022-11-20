@@ -1,6 +1,4 @@
-import {
-  apiRequest,
-} from "./requests";
+import { apiRequest } from "./requests";
 
 const findJobList = async (
   title: string,
@@ -15,11 +13,7 @@ const findJobList = async (
   skip?: Number,
   limit?: Number
 ) => {
-  console.log("sort");
-  console.log(sort);
-
   try {
-
     let target = `/api/v1/job/list?`;
 
     if (title !== "") {
@@ -66,9 +60,8 @@ const findJobList = async (
     if (limit !== null) {
       target += `&limit=${limit}`;
     }
-    
+
     const { data } = await apiRequest.get(target);
-    // console.log(data);
 
     return {
       data,
@@ -78,7 +71,7 @@ const findJobList = async (
     // console.log(username); // 69a024d1-c240-476e-b7a9-3092bf980b83
 
     return {
-      error
+      error,
     };
   }
 };
@@ -113,7 +106,7 @@ const findJobListIndex = async () => {
     // console.log(username); // 69a024d1-c240-476e-b7a9-3092bf980b83
 
     return {
-      error
+      error,
     };
   }
 };
@@ -139,7 +132,12 @@ const findJobListIndex = async () => {
 //   return target;
 // };
 
-const findJobListByUsername = async (username: string, sort?: string, skip?: number, limit?: number) => {
+const findJobListByUsername = async (
+  username: string,
+  sort?: string,
+  skip?: number,
+  limit?: number
+) => {
   try {
     let target = `/api/v1/job/list?username=${username}`;
 
@@ -167,7 +165,7 @@ const findJobListByUsername = async (username: string, sort?: string, skip?: num
     // console.error(error);
 
     return {
-      error
+      error,
     };
   }
 };
@@ -194,7 +192,7 @@ const findTotalJobList = async (username?: string) => {
     // console.error(error);
 
     return {
-      error
+      error,
     };
   }
 };
@@ -202,9 +200,11 @@ const findTotalJobList = async (username?: string) => {
 // job id can be uuid or null
 const findMoreJobListByUsername = async (username: string, job_id) => {
   try {
-
     // Use null for pages other than job view
-    const target = job_id === null ? `/api/v1/job/list/more/username?&username=${username}&limit=10` : `/api/v1/job/list/more/username?&username=${username}&job_id=${job_id}&limit=10`;
+    const target =
+      job_id === null
+        ? `/api/v1/job/list/more/username?&username=${username}&limit=10`
+        : `/api/v1/job/list/more/username?&username=${username}&job_id=${job_id}&limit=10`;
     const { data } = await apiRequest.post(target);
     // console.log(data);
 
@@ -217,16 +217,18 @@ const findMoreJobListByUsername = async (username: string, job_id) => {
     // console.error(error);
 
     return {
-      error
+      error,
     };
   }
 };
 
 const findMoreJobListByCategory = async (category: string, job_id) => {
   try {
-
     // Use null for pages other than job view
-    const target = job_id === null ? `/api/v1/job/list/more/category?&category=${category}&limit=10` : `/api/v1/job/list/more/category?&category=${category}&job_id=${job_id}&limit=10`;
+    const target =
+      job_id === null
+        ? `/api/v1/job/list/more/category?&category=${category}&limit=10`
+        : `/api/v1/job/list/more/category?&category=${category}&job_id=${job_id}&limit=10`;
     const { data } = await apiRequest.post(target);
     // console.log(data);
 
@@ -239,7 +241,7 @@ const findMoreJobListByCategory = async (category: string, job_id) => {
     // console.error(error);
 
     return {
-      error
+      error,
     };
   }
 };
@@ -258,7 +260,7 @@ const findJobStatusById = async (id: string) => {
     // console.error(error);
 
     return {
-      error
+      error,
     };
   }
 };
@@ -282,7 +284,6 @@ const findJobStatusById = async (id: string) => {
 //   }
 // };
 
-
 const findJobPostPrices = async () => {
   try {
     const { data } = await apiRequest.get("/job/post/server/prices");
@@ -297,23 +298,18 @@ const findJobPostPrices = async () => {
     // console.error(error);
 
     return {
-      error
+      error,
     };
   }
 };
 
-
 export {
   findJobList,
   findJobListIndex,
-
   findJobListByUsername,
   findTotalJobList,
-  
   findMoreJobListByUsername,
-
   findMoreJobListByCategory,
-  
   findJobStatusById,
   findJobPostPrices,
 
