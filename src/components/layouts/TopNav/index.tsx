@@ -101,8 +101,8 @@ const TopNav = () => {
               )}
             </div>
             <Tooltip placement="top" title="Sign In">
-              <div className="glow-container">
-                <div className="glow-icon">{/* <i /> */}</div>
+              <div className="glow-container cursor-pointer">
+                <div className="glow-icon" />
                 <div className="glow-sqr" />
               </div>
             </Tooltip>
