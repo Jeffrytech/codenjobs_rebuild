@@ -149,3 +149,7 @@ h6 {
   vertical-align: 6px;
   background-color: #61ef61;
 }
+
+.blockchain-list .slick-active img {
+  margin-inline: auto;
+}
