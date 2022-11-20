@@ -32,7 +32,7 @@ const TopUsersForHireCard = styled("div", ({ $list }) => {
     [XS]: {
       marginBottom: "1rem",
       // marginBottom: $list === undefined ? "0" : "1rem",
-    }
+    },
   };
   // ...card,
 
@@ -47,13 +47,11 @@ const TopUsersForHireTitle = styled("h5", {
 
   borderBottom: "1px solid #efefef",
 
-  marginBottom: "1.5rem",
-
   transition: "all 0.2s",
   ":hover": {
     color: "rgb(17, 160, 245)",
     opacity: 0.7,
-  }
+  },
 });
 
 const TopUsersForHireContainer = styled("ul", {
@@ -71,7 +69,7 @@ const TopUsersForHireList = styled("li", {
   ":hover": {
     cursor: "pointer",
     opacity: "0.7",
-  }
+  },
 });
 
 export {
