@@ -12,10 +12,8 @@ import moment from "moment";
 import {
   UserProfileCardContainer,
   UsernameWrapper,
-  
   ProfileImage,
   UserProfileCardDetailWrapper,
-  
   FollowersWrapper,
   FollowersText,
   JobPostsText,
@@ -53,9 +51,7 @@ const formatJobPosts = (totalJobPosts: number) => {
   return `${totalJobPosts} Job Posts`;
 };
 
-const UserProfileCard = ({
-  username
-}) => {
+const UserProfileCard = ({ username }) => {
   const [profile, setProfile] = useState(null);
 
   const [loading, setLoading] = useState(true);
@@ -65,7 +61,8 @@ const UserProfileCard = ({
       .then(({ data, error }) => {
         setLoading(false);
 
-        if (data) { // It can be null if there is no user
+        if (data) {
+          // It can be null if there is no user
           setProfile(data);
           // console.log("data");
           // console.log(data);
@@ -75,7 +72,8 @@ const UserProfileCard = ({
           console.log("api error");
           console.error(error);
         }
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.log("catch error");
         console.error(error);
       });
@@ -83,27 +81,35 @@ const UserProfileCard = ({
 
   if (profile === null) {
     // return null;
-    return <UserProfileCardContainer>
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-      }}>
-        <ErrorIcon style={{
-          color: "rgb(17, 160, 245)",
-        }} />
-        <span style={{
-          marginLeft: "0.25rem",
-        }}>
-          {loading ? "Loading..." : "Something went wrong"}
-        </span>
-      </div>
-    </UserProfileCardContainer>;
+    return (
+      <UserProfileCardContainer>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
+          <ErrorIcon
+            style={{
+              color: "rgb(17, 160, 245)",
+            }}
+          />
+          <span
+            style={{
+              marginLeft: "0.25rem",
+            }}
+          >
+            {loading ? "Loading..." : "Something went wrong"}
+          </span>
+        </div>
+      </UserProfileCardContainer>
+    );
   }
 
   const {
     profile_image,
     created_at,
-    
+
     job,
     location,
     use_cryptocurrency,
@@ -120,12 +126,14 @@ const UserProfileCard = ({
 
   return (
     <UserProfileCardContainer>
-      <div style={{
-        display: "flex",
-        alignItems: "center",
-        flexFlow: "row",
-      }}>
-        <Link href={`/user/${username}`} >
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          flexFlow: "row",
+        }}
+      >
+        <Link href={`/user/${username}`}>
           <ProfileImage>
             <Avatar
               size="2rem"
@@ -136,24 +144,30 @@ const UserProfileCard = ({
             />
           </ProfileImage>
         </Link>
-        <div style={{
-          display: "flex",
-          flexFlow: "column",
-          marginLeft: "0.5rem",
-        }}>
-          <Link href={`/user/${username}`} >
-            <UsernameWrapper style={{
-              fontSize: "1rem",
-              fontWeight: "bold",
-              wordBreak: "break-all",
-            }}>
+        <div
+          style={{
+            display: "flex",
+            flexFlow: "column",
+            marginLeft: "0.5rem",
+          }}
+        >
+          <Link href={`/user/${username}`}>
+            <UsernameWrapper
+              style={{
+                fontSize: "1rem",
+                fontWeight: "bold",
+                wordBreak: "break-all",
+              }}
+            >
               u/{username}
             </UsernameWrapper>
           </Link>
-          <span style={{
-            opacity: 0.7,
-            fontSize: "0.8rem",
-          }}>
+          <span
+            style={{
+              opacity: 0.7,
+              fontSize: "0.8rem",
+            }}
+          >
             {moment.utc(created_at).fromNow()}
             {/* {moment.utc(new Date(created_at)).fromNow()} */}
           </span>
@@ -162,34 +176,32 @@ const UserProfileCard = ({
 
       <UserProfileCardMainNFT username={username} isUserProfileCard={true} />
 
-      <div style={{
-        marginTop: "0.25rem",
-        // marginTop: "0.5rem",
-        display: "flex",
-        flexFlow: "column",
-        // borderTop: "2px solid black",
-      }}>
-        <div style={{
+      <div
+        style={{
+          marginTop: "0.25rem",
+          // marginTop: "0.5rem",
           display: "flex",
-          alignItems: "center",
-        }}>
+          flexFlow: "column",
+          // borderTop: "2px solid black",
+        }}
+      >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+          }}
+        >
           <Link href={`/user/${username}/followers`}>
             <FollowersWrapper>
-              <FollowersText>
-                {formatFollowers(total_followers)}
-              </FollowersText>
+              <FollowersText>{formatFollowers(total_followers)}</FollowersText>
             </FollowersWrapper>
           </Link>
 
-          <span>
-            |
-          </span>
+          <span>|</span>
 
           <Link href={`/user/${username}/jobs`}>
             <JobPostsWrapper>
-              <JobPostsText>
-                {formatJobPosts(total_jobs)}
-              </JobPostsText>
+              <JobPostsText>{formatJobPosts(total_jobs)}</JobPostsText>
             </JobPostsWrapper>
           </Link>
 
@@ -198,7 +210,7 @@ const UserProfileCard = ({
             alignItems: "center",
             marginLeft: "0.25rem",
           }}>
-            <img src="/static/logo.png" style={{
+            <img src="/static/logo.svg" style={{
               width: "1rem",
               height: "1rem"
             }} />
@@ -210,18 +222,25 @@ const UserProfileCard = ({
           </div> */}
         </div>
 
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          marginLeft: "0.1rem",
-        }}>
-          <img src="/static/logo.png" style={{
-            width: "1rem",
-            height: "1rem"
-          }} />
-          <span style={{
-            marginLeft: "0.25rem",
-          }} >
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            marginLeft: "0.1rem",
+          }}
+        >
+          <img
+            src="/static/logo.svg"
+            style={{
+              width: "1rem",
+              height: "1rem",
+            }}
+          />
+          <span
+            style={{
+              marginLeft: "0.25rem",
+            }}
+          >
             {!total_blog_votes ? 0 : total_blog_votes}
           </span>
         </div>
@@ -236,49 +255,68 @@ const UserProfileCard = ({
           </Link>
         </UserProfileCardDetailWrapper> */}
 
-        {job && <UserProfileCardDetailWrapper>
-          <AccountBoxIcon style={{
-            fontSize: "1.25rem",
-          }} />
-          <span style={{
-            marginLeft: "0.1rem",
-            // opacity: 0.7,
-          }}>
-            {job}
-          </span>
-        </UserProfileCardDetailWrapper>}
-        
-        {location && <UserProfileCardDetailWrapper>
-          <LocationOnIcon style={{
-            // backgroundColor: "green",
-            // color: "white",
-            fontSize: "1rem",
-            marginLeft: "0.1rem",
-          }} />
-          <span style={{
-            marginLeft: "0.25rem",
-            // opacity: 0.7,
-          }}>
-            {location}
-          </span>
-        </UserProfileCardDetailWrapper>}
+        {job && (
+          <UserProfileCardDetailWrapper>
+            <AccountBoxIcon
+              style={{
+                fontSize: "1.25rem",
+              }}
+            />
+            <span
+              style={{
+                marginLeft: "0.1rem",
+                // opacity: 0.7,
+              }}
+            >
+              {job}
+            </span>
+          </UserProfileCardDetailWrapper>
+        )}
 
-        {use_cryptocurrency && <UserProfileCardDetailWrapper>
-          <img src="/static/bitcoin.svg" style={{
-            width: "1rem",
-            marginLeft: "0.1rem",
-          }} />
-          <span style={{
-            marginLeft: "0.25rem",
-            // opacity: 0.7,
-          }}>
-            {/* Pay */}
-            {/* Pay (Yes) */}
-            {/* Pay | Yes */}
-            {/* Pay | No */}
-            Yes
-          </span>
-        </UserProfileCardDetailWrapper>}
+        {location && (
+          <UserProfileCardDetailWrapper>
+            <LocationOnIcon
+              style={{
+                // backgroundColor: "green",
+                // color: "white",
+                fontSize: "1rem",
+                marginLeft: "0.1rem",
+              }}
+            />
+            <span
+              style={{
+                marginLeft: "0.25rem",
+                // opacity: 0.7,
+              }}
+            >
+              {location}
+            </span>
+          </UserProfileCardDetailWrapper>
+        )}
+
+        {use_cryptocurrency && (
+          <UserProfileCardDetailWrapper>
+            <img
+              src="/static/bitcoin.svg"
+              style={{
+                width: "1rem",
+                marginLeft: "0.1rem",
+              }}
+            />
+            <span
+              style={{
+                marginLeft: "0.25rem",
+                // opacity: 0.7,
+              }}
+            >
+              {/* Pay */}
+              {/* Pay (Yes) */}
+              {/* Pay | Yes */}
+              {/* Pay | No */}
+              Yes
+            </span>
+          </UserProfileCardDetailWrapper>
+        )}
       </div>
     </UserProfileCardContainer>
   );

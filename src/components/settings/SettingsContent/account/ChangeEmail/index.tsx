@@ -14,11 +14,7 @@ import ChangeEmailForm from "./ChangeEmailForm";
 
 import { COMPANY_NAME } from "../../../../../config/environment";
 
-const ChangeEmail = ({
-  email,
-  changeEmail,
-  setChangeEmail,
-}) => {
+const ChangeEmail = ({ email, changeEmail, setChangeEmail }) => {
   const {
     handleSubmit,
 
@@ -47,38 +43,41 @@ const ChangeEmail = ({
   // Refer to its API
   // https://material-ui.com/pt/components/dialogs/
   return (
-    <Dialog 
-      open={changeEmail} 
-      onClose={handleClose} 
-      aria-labelledby="change-email" 
+    <Dialog
+      open={changeEmail}
+      onClose={handleClose}
+      aria-labelledby="change-email"
       // fullScreen={true}
-      
+
       // style={{
       //   minHeight: "8rem",
       // }}
     >
-      <div style={{
-        minHeight: "16rem",
-        // minHeight: "21rem",
-      }}>
+      <div
+        style={{
+          minHeight: "16rem",
+          // minHeight: "21rem",
+        }}
+      >
         {/* Include image here */}
         <DialogTitle id="change-email">
-          <div style={{
-            //  display: "flex",
-            //  alignItems: "center",
+          <div
+            style={{
+              //  display: "flex",
+              //  alignItems: "center",
 
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "1rem",
-          }}>
-            <Avatar
-              alt={COMPANY_NAME}
-              src="/static/logo.png"
-            />
-            <span style={{
-              marginLeft: "0.5rem"
-            }}>
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
+            <Avatar alt={COMPANY_NAME} src="/static/logo.svg" />
+            <span
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
               Update Your Email
             </span>
           </div>
@@ -87,7 +86,8 @@ const ChangeEmail = ({
         <DialogContent>
           <DialogContentText>
             {/* You will need to login again with a new password after you change your current one. */}
-            Saving your new email will log you out. Then, we will send a notification to it in a few minutes.
+            Saving your new email will log you out. Then, we will send a
+            notification to it in a few minutes.
             {/* Please, confirm it and login again. */}
           </DialogContentText>
 
@@ -98,19 +98,13 @@ const ChangeEmail = ({
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             handleBlur={handleBlur}
-
             values={values}
             errors={errors}
             touched={touched}
           />
-
         </DialogContent>
         <DialogActions>
-          <Button
-            disabled={isSubmitting}
-            onClick={handleClose}
-            color="primary"
-          >
+          <Button disabled={isSubmitting} onClick={handleClose} color="primary">
             Cancel
           </Button>
           <Button

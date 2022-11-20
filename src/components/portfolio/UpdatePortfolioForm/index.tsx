@@ -53,7 +53,7 @@ const UpdatePortfolio = ({
   } = usePortfolioForm(
     setShowUpdatePortfolioForm,
     portfolioIdToUpdate,
-    setPortfolioIdToUpdate,
+    setPortfolioIdToUpdate
     // setPortfolioIdToUpdate,
 
     // showUpdatePortfolioForm,
@@ -61,44 +61,56 @@ const UpdatePortfolio = ({
   );
   // } = useUpdatePortfolioForm(email, setChangeEmail);
 
-  useDebouncedEffect(async () => {
-    // If I make it work, others will work also?
+  useDebouncedEffect(
+    async () => {
+      // If I make it work, others will work also?
 
-    try {
-      if (portfolioIdToUpdate === null) {
-        return;
-      }
-      
-      const { data, error } = await findPortfolioByIdForOwner(portfolioIdToUpdate);
+      try {
+        if (portfolioIdToUpdate === null) {
+          return;
+        }
 
-      if (error) {
+        const { data, error } = await findPortfolioByIdForOwner(
+          portfolioIdToUpdate
+        );
+
+        if (error) {
+          console.log("error");
+          console.error(error);
+
+          return;
+        }
+
+        if (data) {
+          const response = await axios.get(data.image, {
+            responseType: "blob",
+          });
+          // console.log(response); // Use this to set the file extension below
+          // console.log(response.data.type);
+
+          // eslint-disable-next-line no-undef
+          const previousPortfolioImage = new File(
+            [response.data],
+            `portfolio.${response.data.type.split("/")[1]}`,
+            { type: response.data.type }
+          );
+          setFieldValue("image", previousPortfolioImage);
+          // document.getElementById("image").currentFiles[0] = previousPortfolioImage;
+
+          setProfileImageThumbnail(data.image);
+
+          setFieldValue("title", data.title);
+          setFieldValue("link", data.link);
+          setFieldValue("description", data.description);
+        }
+      } catch (error) {
         console.log("error");
         console.error(error);
-
-        return;
       }
-
-      if (data) {
-        const response = await axios.get(data.image, { responseType: "blob" });
-        // console.log(response); // Use this to set the file extension below
-        // console.log(response.data.type);
-
-        // eslint-disable-next-line no-undef
-        const previousPortfolioImage = new File([response.data], `portfolio.${response.data.type.split("/")[1]}`, { type: response.data.type });
-        setFieldValue("image", previousPortfolioImage);
-        // document.getElementById("image").currentFiles[0] = previousPortfolioImage;
-
-        setProfileImageThumbnail(data.image);
-
-        setFieldValue("title", data.title);
-        setFieldValue("link", data.link);
-        setFieldValue("description", data.description);
-      }
-    } catch (error) {
-      console.log("error");
-      console.error(error);
-    }
-  }, 600, [portfolioIdToUpdate]);
+    },
+    600,
+    [portfolioIdToUpdate]
+  );
 
   // useEffect(() => {
   //   // setValues({
@@ -149,34 +161,44 @@ const UpdatePortfolio = ({
     resetForm();
 
     setProfileImageThumbnail(null);
-    
+
     setShowUpdatePortfolioForm(false);
     setPortfolioIdToUpdate(null);
   };
 
   return (
-    <Dialog open={showUpdatePortfolioForm} onClose={handleClose} aria-labelledby="update-portfolio">
+    <Dialog
+      open={showUpdatePortfolioForm}
+      onClose={handleClose}
+      aria-labelledby="update-portfolio"
+    >
       {/* Include image here */}
-      <div style={{
-        minHeight: "18rem",
-      }}>
+      <div
+        style={{
+          minHeight: "18rem",
+        }}
+      >
         <DialogTitle id="update-porfolio">
-          <div style={{
-            display: "flex",
-            alignItems: "center",
-            // marginTop: "1rem",
-            marginLeft: "-0.5rem",
-          }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              // marginTop: "1rem",
+              marginLeft: "-0.5rem",
+            }}
+          >
             <div>
               <Avatar
                 alt={username}
-                src={profile_image || "/static/logo.png"}
+                src={profile_image || "/static/logo.svg"}
               />
             </div>
 
-            <span style={{
-              marginLeft: "0.5rem"
-            }}>
+            <span
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
               Update Portfolio
             </span>
           </div>
@@ -187,24 +209,23 @@ const UpdatePortfolio = ({
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             handleBlur={handleBlur}
-
             values={values}
             errors={errors}
             touched={touched}
-
             setFieldValue={setFieldValue}
-
             profileImageThumbnail={profileImageThumbnail}
             setProfileImageThumbnail={setProfileImageThumbnail}
 
-          // ref={portFolioFormContent}
+            // ref={portFolioFormContent}
           />
         </DialogContent>
 
-        <DialogActions style={{
-          marginRight: "1rem",
-          // marginBottom: "2rem",
-        }} >
+        <DialogActions
+          style={{
+            marginRight: "1rem",
+            // marginBottom: "2rem",
+          }}
+        >
           <Button
             // disabled={isSubmitting}
             onClick={handleClose}
@@ -215,7 +236,6 @@ const UpdatePortfolio = ({
 
           <Button
             disabled={isSubmitting}
-
             onClick={async (e) => {
               e.preventDefault();
 

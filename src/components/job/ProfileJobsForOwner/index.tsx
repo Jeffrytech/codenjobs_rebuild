@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 
@@ -7,16 +6,24 @@ import { useRouter } from "next/router";
 
 import moment from "moment";
 
-import ErrorIcon from '@material-ui/icons/Error';
+import ErrorIcon from "@material-ui/icons/Error";
 
 import CompanyLogoSide from "../../company/CompanyLogoSide";
 import {
-  JobHeader, JobListForOwnerHeader, JobPostDetailWrapper, JobPostResubmit, JobPostReview, SolanaJobPostPaymentTx,
+  JobHeader,
+  JobListForOwnerHeader,
+  JobPostDetailWrapper,
+  JobPostResubmit,
+  JobPostReview,
+  SolanaJobPostPaymentTx,
 } from "./ProfileJobsForOwnerCSS";
 
 import ProfileJobsOwnerButtons from "./ProfileJobsForOwnerButtons";
 
-import { findJobDraftListByOwner, findJobListSolanaByOwner } from "../../../api/privateJob";
+import {
+  findJobDraftListByOwner,
+  findJobListSolanaByOwner,
+} from "../../../api/privateJob";
 // import { UserName } from "../cmp/ProfileUser/another/ProfileUser/ProfileUserCSS";
 
 import ListHeader from "../../SearchList/ListHeader";
@@ -31,16 +38,18 @@ import {
 
   // ProfileListWrapper,
   ProfileListCardContainer,
-
   CompanyName,
-  Title
+  Title,
 
   // ProfileListSkillContainer,
   // ProfileListSkill,
 } from "../../profile/ProfileList/ProfileListCSS";
 import ProfileList from "../../profile/ProfileList";
 import SearchListSkeleton from "../../SearchList/SearchListSkeleton";
-import { findJobStatusLabelValue, jobStatusOptions } from "../../../typeDefinitions/job";
+import {
+  findJobStatusLabelValue,
+  jobStatusOptions,
+} from "../../../typeDefinitions/job";
 import NoProfileList from "../../NoProfileList";
 import JobListSkeleton from "../../profile/JobListSkeleton";
 import CentralizeChildren from "../../CentralizeChildren";
@@ -54,9 +63,7 @@ import CompanyLogo from "../../company/CompanyLogo";
 import ProfileJobCompanyLogo from "../../company/ProfileJobCompanyLogo";
 
 // Extract this?
-const formatProfileJobListTitle = (
-  numberOfJobs: Number,
-) => {
+const formatProfileJobListTitle = (numberOfJobs: Number) => {
   // const prefix = "Code";
 
   let suffix = "Jobs";
@@ -90,11 +97,7 @@ const formatProfileJobListTitle = (
 // };
 
 // Should include edit and delete.
-const ProfileJobsForOwner = ({
-  username,
-  status,
-  id,
-}) => {
+const ProfileJobsForOwner = ({ username, status, id }) => {
   // alert("id");
   // alert(id);
   // alert(status);
@@ -104,44 +107,51 @@ const ProfileJobsForOwner = ({
   const [jobList, setJobList] = useState(null);
 
   useEffect(() => {
-    
     if (status === null) {
       // alert(status);
-      Promise.all([findJobDraftListByOwner(), findJobListSolanaByOwner(null, id)]).then((values) => {
-        let { data: draftJobList } = values[0];
-        let { data: jobListSolana } = values[1];
+      Promise.all([
+        findJobDraftListByOwner(),
+        findJobListSolanaByOwner(null, id),
+      ])
+        .then((values) => {
+          let { data: draftJobList } = values[0];
+          let { data: jobListSolana } = values[1];
 
+          console.log("draftJobList");
+          console.log("jobListSolana");
+          console.log(draftJobList);
+          console.log(jobListSolana);
 
-        console.log("draftJobList");
-        console.log("jobListSolana");
-        console.log(draftJobList);
-        console.log(jobListSolana);
+          // if (draftJobList === null) {
+          //   draftJobList = [];
+          // }
 
-        // if (draftJobList === null) {
-        //   draftJobList = [];
-        // }
+          // if (jobListSolana === null) {
+          //   jobListSolana = [];
+          // }
 
-        // if (jobListSolana === null) {
-        //   jobListSolana = [];
-        // }
+          if (draftJobList.length === 0 && jobListSolana.length === 0) {
+            setJobList([]);
+            return;
+          }
 
-        if (draftJobList.length === 0 && jobListSolana.length === 0) {
-          setJobList([]);
-          return;
-        }
+          const jobList = [...draftJobList, ...jobListSolana];
 
-        const jobList = [...draftJobList, ...jobListSolana];
-
-        if (jobList.length > 0) {
-          setJobList(jobList.sort(function (x, y) {
-            return (new Date(y.job_created_at)).getTime() - (new Date(x.job_created_at)).getTime();
-          })); 
-        }
-      }).catch(error => {
-        console.log("error");
-        console.error(error);
-      });
-      
+          if (jobList.length > 0) {
+            setJobList(
+              jobList.sort(function (x, y) {
+                return (
+                  new Date(y.job_created_at).getTime() -
+                  new Date(x.job_created_at).getTime()
+                );
+              })
+            );
+          }
+        })
+        .catch((error) => {
+          console.log("error");
+          console.error(error);
+        });
     } else if (status === "Draft") {
       findJobDraftListByOwner()
         .then(({ data }) => {
@@ -159,7 +169,7 @@ const ProfileJobsForOwner = ({
           // }
           setJobList(data);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("error");
           console.error(error);
         });
@@ -180,12 +190,11 @@ const ProfileJobsForOwner = ({
           // }
           setJobList(data);
         })
-        .catch(error => {
+        .catch((error) => {
           console.log("error");
           console.error(error);
         });
     }
-
   }, [status]);
 
   // console.log(jobList);
@@ -217,38 +226,42 @@ const ProfileJobsForOwner = ({
   // alert(jobList);
 
   if (jobList === null) {
-    return <ProfileList>
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-    </ProfileList>;
+    return (
+      <ProfileList>
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+      </ProfileList>
+    );
   }
 
   if (jobList.length === 0) {
-    return <ProfileList>
-      <NoProfileList href={redirect} message={message} />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-      <JobListSkeleton />
-    </ProfileList>;
+    return (
+      <ProfileList>
+        <NoProfileList href={redirect} message={message} />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+        <JobListSkeleton />
+      </ProfileList>
+    );
   }
 
   return (
@@ -259,11 +272,13 @@ const ProfileJobsForOwner = ({
           {formatProfileJobListTitle(jobList.length)}
         </CentralizeChildren>
 
-        <div style={{
-          marginLeft: "1rem",
-          marginRight: "1rem",
-          minWidth: "8rem",
-        }}>
+        <div
+          style={{
+            marginLeft: "1rem",
+            marginRight: "1rem",
+            minWidth: "8rem",
+          }}
+        >
           <Select
             // id="satus"
             // name="status"
@@ -285,12 +300,12 @@ const ProfileJobsForOwner = ({
                 ...provided,
                 // backgroundColor: "red",
                 marginLeft: "1.75rem",
-                opacity: "0.7"
+                opacity: "0.7",
               }),
               input: (provided) => ({
                 ...provided,
                 // backgroundColor: "blue",
-                backgroundImage: "url('/static/logo.png')",
+                backgroundImage: "url('/static/logo.svg')",
                 backgroundRepaet: "no-repeat",
                 backgroundSize: "cover",
 
@@ -304,10 +319,8 @@ const ProfileJobsForOwner = ({
                 marginLeft: "1.75rem",
               }),
             }}
-
             // defaultValue={blogStatusOptions[0]}
             value={findJobStatusLabelValue(status)}
-
             onChange={({ value }) => {
               // alert(value);
               // console.log(e);
@@ -317,7 +330,6 @@ const ProfileJobsForOwner = ({
                 router.push(`/user/${username}/jobs?&status=${value}`);
               }
             }}
-
             options={jobStatusOptions}
 
             // isSearchable={false}
@@ -327,417 +339,489 @@ const ProfileJobsForOwner = ({
         </div>
       </JobListForOwnerHeader>
 
-      {jobList.map(({
-        company_name,
-        company_logo,
-        // username,
-        job_title,
+      {jobList.map(
+        (
+          {
+            company_name,
+            company_logo,
+            // username,
+            job_title,
 
-        job_created_at,
-        job_updated_at,
-        job_published_at,
+            job_created_at,
+            job_updated_at,
+            job_published_at,
 
-        job_id,
-        job_location,
-        job_type,
-        job_salary,
-        job_skills,
+            job_id,
+            job_location,
+            job_type,
+            job_salary,
+            job_skills,
 
-        job_status,
+            job_status,
 
-        // Solana
-        // What to use for this?
-        job_post_public_key,
-        user_public_key,
-        pay_job_post_tx,
+            // Solana
+            // What to use for this?
+            job_post_public_key,
+            user_public_key,
+            pay_job_post_tx,
 
-        hold_job_post_tx,
-        edit_job_post_tx,
-          
-        paid_to_confirmed_job_post_tx,
-        review_to_confirmed_job_post_tx,
+            hold_job_post_tx,
+            edit_job_post_tx,
 
-        refund_job_post_tx,
-        refund_job_post_at,
+            paid_to_confirmed_job_post_tx,
+            review_to_confirmed_job_post_tx,
 
-        authority_close_job_post_tx,
-        authority_close_job_post_at,
+            refund_job_post_tx,
+            refund_job_post_at,
 
-        solana_payment_method,
-      }, index) => {
-        // alert(solana_payment_method);
+            authority_close_job_post_tx,
+            authority_close_job_post_at,
 
-        const draft = job_status === "Draft";
-        const paid = job_status === "Paid";
-        const hold = job_status === "Hold";
-        const review = job_status === "Review";
-          
-        // const confirmed = job_status === "Confirmed";
-        // alert(paid_to_confirmed_job_post_tx);
-        const confirmed = paid_to_confirmed_job_post_tx || review_to_confirmed_job_post_tx;
-        // alert(confirm_tx);
+            solana_payment_method,
+          },
+          index
+        ) => {
+          // alert(solana_payment_method);
 
-        const closed = job_status === "Closed";
+          const draft = job_status === "Draft";
+          const paid = job_status === "Paid";
+          const hold = job_status === "Hold";
+          const review = job_status === "Review";
 
-        const showJobPost = (paid || confirmed) && !closed;
+          // const confirmed = job_status === "Confirmed";
+          // alert(paid_to_confirmed_job_post_tx);
+          const confirmed =
+            paid_to_confirmed_job_post_tx || review_to_confirmed_job_post_tx;
+          // alert(confirm_tx);
 
-        // alert(moment.utc(new Date(job_created_at)).fromNow());
-        // alert(job_updated_at);
-        // alert(job_published_at);
+          const closed = job_status === "Closed";
 
-        // console.log(job_created_at);
+          const showJobPost = (paid || confirmed) && !closed;
 
-        return (
-          <ProfileListCardContainer 
-            key={job_id}
-            $last={index === jobList.length - 1}
-          >
-            {company_logo && <Link
-              href={`/user/${username}/companies?&company_name=${company_name}`}
-              // href={`/jobs?&company_name=${company_name}`}
+          // alert(moment.utc(new Date(job_created_at)).fromNow());
+          // alert(job_updated_at);
+          // alert(job_published_at);
+
+          // console.log(job_created_at);
+
+          return (
+            <ProfileListCardContainer
+              key={job_id}
+              $last={index === jobList.length - 1}
             >
-              <CompanyLogoSide
-                src={company_logo || ""}
-                alt="logo"
-              />
-            </Link>}
+              {company_logo && (
+                <Link
+                  href={`/user/${username}/companies?&company_name=${company_name}`}
+                  // href={`/jobs?&company_name=${company_name}`}
+                >
+                  <CompanyLogoSide src={company_logo || ""} alt="logo" />
+                </Link>
+              )}
 
-            <div style={{
-              display: "flex",
-              marginBottom: "0.25rem",
-              // marginBottom: "0.5rem",
-            }}>
-              <span style={{
-                marginRight: "auto",
-                opacity: "0.7",
-              }} >
-                {/* {jobTimeForOwner(job_published_at, job_updated_at, job_created_at)} */}
-                {/* Created {moment.utc("2021-08-04T22:32:52.806479").fromNow()} */}
+              <div
+                style={{
+                  display: "flex",
+                  marginBottom: "0.25rem",
+                  // marginBottom: "0.5rem",
+                }}
+              >
+                <span
+                  style={{
+                    marginRight: "auto",
+                    opacity: "0.7",
+                  }}
+                >
+                  {/* {jobTimeForOwner(job_published_at, job_updated_at, job_created_at)} */}
+                  {/* Created {moment.utc("2021-08-04T22:32:52.806479").fromNow()} */}
                   Created {moment.utc(job_created_at).fromNow()}
-              </span>
-
-              <ProfileJobStatus
-                // job_status={"Paid"}
-                job_status={job_status}
-              />
-            </div>
-
-            <JobHeader>
-
-              {/* Should be the link to edit company */}
-              <Link href={`/user/${username}/companies?&company_name=${company_name}`} >
-                <div style={{
-                  display: "flex",
-                }}>
-                  {company_logo && <ProfileJobCompanyLogo src={company_logo} alt="logo" />}
-                  <CompanyName>
-                    {company_name}
-                  </CompanyName>
-                </div>
-              </Link>
-
-            </JobHeader>
-
-            <Title 
-              $inherit={closed || hold || review}
-              onClick={(e) => {
-                e.preventDefault();
-
-                // Should handle all these for buttons, time and link etc.
-                // DRAFT = "Draft"
-                // PAID = "Paid"
-
-                // CONFIRMED = "Confirmed"
-
-                // HOLD = "Hold"
-                // REVIEW = "Review"
-
-                // CLOSED = "Closed"
-
-                if (closed) {
-                  return;
-                }
-
-                if (review) {
-                  return;
-                }
-
-                if (draft) {
-                  router.push(`/job/post/preview?&title=${formatPathTitle(job_title)}&id=${job_id}`);
-                } else if (confirmed) {
-                  router.push(`/job?&title=${formatPathTitle(job_title)}&id=${job_id}`);
-                } else if (paid) {
-                  router.push(`/job?&title=${formatPathTitle(job_title)}&id=${job_id}`);
-                }
-              }} >
-              {job_title}
-            </Title>
-
-            {showJobPost && <JobPostDetailWrapper>
-              <div style={{
-                marginRight: "auto",
-                opacity: "0.7",
-                lineHeight: "1.25rem",
-              }} >
-                {/* This should work at the frontend */}
-                {/* Created {moment.utc(job_created_at).fromNow()} */}
-                {/* {moment.utc(job_published_at)} */}
-                  🗓️ 
-                <span style={{
-                  marginLeft: "0.25rem",
-                }} >
-                  {/* Extract this to variables later? */}
-                    It will be public from {moment.utc(job_published_at).format("YYYY-MM-DD")} to {moment.utc(job_published_at).add(28, 'd').format("YYYY-MM-DD")}
                 </span>
-              </div>
-            </JobPostDetailWrapper>}
 
-            {hold && <JobPostResubmit>
-              <Link href={`/job/repost?&title=${formatPathTitle(job_title)}&id=${job_id}`}>
-                <div style={{
-                  display: "flex",
-                  alignItems: "center",
-
-                  marginRight: "auto",
-                  // opacity: "0.7",
-                  lineHeight: "1.25rem",
-
-                  marginLeft: "-0.1rem",
-                }} >
-                  <ErrorIcon style={{
-                    color: blue,
-                    width: "1rem",
-                  }} />
-                  <span style={{
-                    marginLeft: "0.25rem",
-                    color: blue,
-                  }} >
-                    {/* Please, submit your job post again */}
-                      Please, edit and repost your job ad
-                  </span>
-                </div>
-              </Link>
-                
-            </JobPostResubmit>}
-
-            {refund_job_post_tx && <JobPostReview>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
-
-                marginRight: "auto",
-                opacity: "0.7",
-                lineHeight: "1.25rem",
-
-                marginLeft: "-0.1rem",
-              }} >
-                <ErrorIcon style={{
-                  color: red,
-                  width: "1rem",
-                }} />
-                <span style={{
-                  marginLeft: "0.25rem",
-                  color: red,
-                }} >
-                    It was refunded by admins at {moment.utc(refund_job_post_at).format("YYYY-MM-DD")}
-                </span>
+                <ProfileJobStatus
+                  // job_status={"Paid"}
+                  job_status={job_status}
+                />
               </div>
 
-            </JobPostReview>}
+              <JobHeader>
+                {/* Should be the link to edit company */}
+                <Link
+                  href={`/user/${username}/companies?&company_name=${company_name}`}
+                >
+                  <div
+                    style={{
+                      display: "flex",
+                    }}
+                  >
+                    {company_logo && (
+                      <ProfileJobCompanyLogo src={company_logo} alt="logo" />
+                    )}
+                    <CompanyName>{company_name}</CompanyName>
+                  </div>
+                </Link>
+              </JobHeader>
 
-            {review && <JobPostReview>
-              <div style={{
-                display: "flex",
-                alignItems: "center",
+              <Title
+                $inherit={closed || hold || review}
+                onClick={(e) => {
+                  e.preventDefault();
 
-                marginRight: "auto",
-                opacity: "0.7",
-                lineHeight: "1.25rem",
+                  // Should handle all these for buttons, time and link etc.
+                  // DRAFT = "Draft"
+                  // PAID = "Paid"
 
-                marginLeft: "-0.1rem",
-              }} >
-                <ErrorIcon style={{
-                  // color: red,
-                  width: "1rem",
-                }} />
-                <span style={{
-                  marginLeft: "0.25rem",
-                  // color: red,
-                }} >
-                    It will be reviewed by admins 
-                </span>
-              </div>
-                
-            </JobPostReview>}
+                  // CONFIRMED = "Confirmed"
 
-            {authority_close_job_post_at && <JobPostDetailWrapper>
-              <div style={{
-                marginRight: "auto",
-                opacity: "0.7",
-                lineHeight: "1.25rem",
-              }} >
-                {/* This should work at the frontend */}
-                {/* Created {moment.utc(job_created_at).fromNow()} */}
-                {/* {moment.utc(job_published_at)} */}
-                  🗓️
-                <span style={{
-                  marginLeft: "0.25rem",
-                }} >
-                    Published on {moment.utc(job_published_at).format("YYYY-MM-DD")} and closed on {moment.utc(authority_close_job_post_at).format("YYYY-MM-DD")} by the authority
-                </span>
-              </div>
-            </JobPostDetailWrapper>}
+                  // HOLD = "Hold"
+                  // REVIEW = "Review"
 
-            {(job_post_public_key && !closed) && <JobPostDetailWrapper>
-              <ExternalLink
-                href={`${SOLSCAN}/account/${job_post_public_key}`}
+                  // CLOSED = "Closed"
+
+                  if (closed) {
+                    return;
+                  }
+
+                  if (review) {
+                    return;
+                  }
+
+                  if (draft) {
+                    router.push(
+                      `/job/post/preview?&title=${formatPathTitle(
+                        job_title
+                      )}&id=${job_id}`
+                    );
+                  } else if (confirmed) {
+                    router.push(
+                      `/job?&title=${formatPathTitle(job_title)}&id=${job_id}`
+                    );
+                  } else if (paid) {
+                    router.push(
+                      `/job?&title=${formatPathTitle(job_title)}&id=${job_id}`
+                    );
+                  }
+                }}
               >
-                <SolanaJobPostPaymentTx>
-                  <SolanaImage
-                    width="0.75rem"
-                    height="0.75rem"
-                  />
-                  <span style={{
-                    marginLeft: "0.25rem",
-                  }} >
-                    {/* Job: {shortenAddress(job_post_public_key)} */}
-                      Job Post: {shortenAddress(job_post_public_key)}
-                  </span>
-                </SolanaJobPostPaymentTx>
-              </ExternalLink>
-            </JobPostDetailWrapper>}
+                {job_title}
+              </Title>
 
-            {user_public_key && <JobPostDetailWrapper>
-              <ExternalLink
-                href={`${SOLSCAN}/account/${user_public_key}`}
-              >
-                <SolanaJobPostPaymentTx>
-                  <SolanaImage
-                    width="0.75rem"
-                    height="0.75rem"
-                  />
-                  <span style={{
-                    marginLeft: "0.25rem",
-                  }} >
-                      Payer Wallet: {shortenAddress(user_public_key)}
-                    {/* User Wallet: {shortenAddress("8LEaQsb1cCypqaGFQERw9kybV7Bs96EeXqFELafCj6bq")} */}
-                    {/* Payer: {shortenAddress(solana_user_public_key)} */}
-                    {/* User: {shortenAddress("8LEaQsb1cCypqaGFQERw9kybV7Bs96EeXqFELafCj6bq")} */}
-                  </span>
-                </SolanaJobPostPaymentTx>
-              </ExternalLink>
-            </JobPostDetailWrapper>}
+              {showJobPost && (
+                <JobPostDetailWrapper>
+                  <div
+                    style={{
+                      marginRight: "auto",
+                      opacity: "0.7",
+                      lineHeight: "1.25rem",
+                    }}
+                  >
+                    {/* This should work at the frontend */}
+                    {/* Created {moment.utc(job_created_at).fromNow()} */}
+                    {/* {moment.utc(job_published_at)} */}
+                    🗓️
+                    <span
+                      style={{
+                        marginLeft: "0.25rem",
+                      }}
+                    >
+                      {/* Extract this to variables later? */}
+                      It will be public from{" "}
+                      {moment
+                        .utc(job_published_at)
+                        .format("YYYY-MM-DD")} to{" "}
+                      {moment
+                        .utc(job_published_at)
+                        .add(28, "d")
+                        .format("YYYY-MM-DD")}
+                    </span>
+                  </div>
+                </JobPostDetailWrapper>
+              )}
 
-            {pay_job_post_tx && <JobPostDetailWrapper>
-              <ExternalLink
-                href={`${SOLSCAN}/tx/${pay_job_post_tx}`}
-              >
-                <SolanaJobPostPaymentTx>
-                  <SolanaImage 
-                    width="0.75rem"
-                    height="0.75rem"
-                  /> 
-                  <span style={{
-                    marginLeft: "0.25rem",
-                  }} >
-                    Payment Tx: {shortenAddress(pay_job_post_tx)} with {solana_payment_method === "Solana" ? "Solana" : "CODE token"}
-                  </span>
-                </SolanaJobPostPaymentTx>
-              </ExternalLink>
-            </JobPostDetailWrapper>}
+              {hold && (
+                <JobPostResubmit>
+                  <Link
+                    href={`/job/repost?&title=${formatPathTitle(
+                      job_title
+                    )}&id=${job_id}`}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
 
-            {hold_job_post_tx && <JobPostDetailWrapper>
-              <ExternalLink
-                href={`${SOLSCAN}/tx/${hold_job_post_tx}`}
-              >
-                <SolanaJobPostPaymentTx>
-                  <SolanaImage
-                    width="0.75rem"
-                    height="0.75rem"
-                  />
-                  <span style={{
-                    marginLeft: "0.25rem",
-                  }} >
-                      Hold Tx: {shortenAddress(hold_job_post_tx)}
-                  </span>
-                </SolanaJobPostPaymentTx>
-              </ExternalLink>
-            </JobPostDetailWrapper>}
+                        marginRight: "auto",
+                        // opacity: "0.7",
+                        lineHeight: "1.25rem",
 
-            {edit_job_post_tx && <JobPostDetailWrapper>
-              <ExternalLink
-                href={`${SOLSCAN}/tx/${edit_job_post_tx}`}
-              >
-                <SolanaJobPostPaymentTx>
-                  <SolanaImage
-                    width="0.75rem"
-                    height="0.75rem"
-                  />
-                  <span style={{
-                    marginLeft: "0.25rem",
-                  }} >
-                      Edit Tx: {shortenAddress(edit_job_post_tx)}
-                  </span>
-                </SolanaJobPostPaymentTx>
-              </ExternalLink>
-            </JobPostDetailWrapper>}
+                        marginLeft: "-0.1rem",
+                      }}
+                    >
+                      <ErrorIcon
+                        style={{
+                          color: blue,
+                          width: "1rem",
+                        }}
+                      />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                          color: blue,
+                        }}
+                      >
+                        {/* Please, submit your job post again */}
+                        Please, edit and repost your job ad
+                      </span>
+                    </div>
+                  </Link>
+                </JobPostResubmit>
+              )}
 
-            {confirmed && <JobPostDetailWrapper>
-              <ExternalLink
-                href={`${SOLSCAN}/tx/${confirmed}`}
-              >
-                <SolanaJobPostPaymentTx>
-                  <SolanaImage 
-                    width="0.75rem"
-                    height="0.75rem"
-                  /> 
-                  <span style={{
-                    marginLeft: "0.25rem",
-                  }} >
-                    {review_to_confirmed_job_post_tx ? "Review" : "Confirmation"} Tx: {shortenAddress(confirmed)}
-                    {/* {review_to_confirmed_job_post_tx && "Review"} Confirmation Tx: {shortenAddress(confirmed)} */}
-                  </span>
-                </SolanaJobPostPaymentTx>
-              </ExternalLink>
-            </JobPostDetailWrapper>}
+              {refund_job_post_tx && (
+                <JobPostReview>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
 
-            {refund_job_post_tx && <JobPostDetailWrapper>
-              <ExternalLink
-                href={`${SOLSCAN}/tx/${refund_job_post_tx}`}
-              >
-                <SolanaJobPostPaymentTx>
-                  <SolanaImage
-                    width="0.75rem"
-                    height="0.75rem"
-                  />
-                  <span style={{
-                    marginLeft: "0.25rem",
-                  }} >
-                      Refund Tx: {shortenAddress(refund_job_post_tx)}
-                  </span>
-                </SolanaJobPostPaymentTx>
-              </ExternalLink>
-            </JobPostDetailWrapper>}
+                      marginRight: "auto",
+                      opacity: "0.7",
+                      lineHeight: "1.25rem",
 
-            {authority_close_job_post_tx && <JobPostDetailWrapper>
-              <ExternalLink
-                href={`${SOLSCAN}/tx/${authority_close_job_post_tx}`}
-              >
-                <SolanaJobPostPaymentTx>
-                  <SolanaImage
-                    width="0.75rem"
-                    height="0.75rem"
-                  />
-                  <span style={{
-                    marginLeft: "0.25rem",
-                  }} >
-                      Close Tx: {shortenAddress(authority_close_job_post_tx)}
-                  </span>
-                </SolanaJobPostPaymentTx>
-              </ExternalLink>
-            </JobPostDetailWrapper>}
+                      marginLeft: "-0.1rem",
+                    }}
+                  >
+                    <ErrorIcon
+                      style={{
+                        color: red,
+                        width: "1rem",
+                      }}
+                    />
+                    <span
+                      style={{
+                        marginLeft: "0.25rem",
+                        color: red,
+                      }}
+                    >
+                      It was refunded by admins at{" "}
+                      {moment.utc(refund_job_post_at).format("YYYY-MM-DD")}
+                    </span>
+                  </div>
+                </JobPostReview>
+              )}
 
-            {/* {closed && <JobPostDetailWrapper>
+              {review && (
+                <JobPostReview>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+
+                      marginRight: "auto",
+                      opacity: "0.7",
+                      lineHeight: "1.25rem",
+
+                      marginLeft: "-0.1rem",
+                    }}
+                  >
+                    <ErrorIcon
+                      style={{
+                        // color: red,
+                        width: "1rem",
+                      }}
+                    />
+                    <span
+                      style={{
+                        marginLeft: "0.25rem",
+                        // color: red,
+                      }}
+                    >
+                      It will be reviewed by admins
+                    </span>
+                  </div>
+                </JobPostReview>
+              )}
+
+              {authority_close_job_post_at && (
+                <JobPostDetailWrapper>
+                  <div
+                    style={{
+                      marginRight: "auto",
+                      opacity: "0.7",
+                      lineHeight: "1.25rem",
+                    }}
+                  >
+                    {/* This should work at the frontend */}
+                    {/* Created {moment.utc(job_created_at).fromNow()} */}
+                    {/* {moment.utc(job_published_at)} */}
+                    🗓️
+                    <span
+                      style={{
+                        marginLeft: "0.25rem",
+                      }}
+                    >
+                      Published on{" "}
+                      {moment.utc(job_published_at).format("YYYY-MM-DD")} and
+                      closed on{" "}
+                      {moment
+                        .utc(authority_close_job_post_at)
+                        .format("YYYY-MM-DD")}{" "}
+                      by the authority
+                    </span>
+                  </div>
+                </JobPostDetailWrapper>
+              )}
+
+              {job_post_public_key && !closed && (
+                <JobPostDetailWrapper>
+                  <ExternalLink
+                    href={`${SOLSCAN}/account/${job_post_public_key}`}
+                  >
+                    <SolanaJobPostPaymentTx>
+                      <SolanaImage width="0.75rem" height="0.75rem" />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        {/* Job: {shortenAddress(job_post_public_key)} */}
+                        Job Post: {shortenAddress(job_post_public_key)}
+                      </span>
+                    </SolanaJobPostPaymentTx>
+                  </ExternalLink>
+                </JobPostDetailWrapper>
+              )}
+
+              {user_public_key && (
+                <JobPostDetailWrapper>
+                  <ExternalLink href={`${SOLSCAN}/account/${user_public_key}`}>
+                    <SolanaJobPostPaymentTx>
+                      <SolanaImage width="0.75rem" height="0.75rem" />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        Payer Wallet: {shortenAddress(user_public_key)}
+                        {/* User Wallet: {shortenAddress("8LEaQsb1cCypqaGFQERw9kybV7Bs96EeXqFELafCj6bq")} */}
+                        {/* Payer: {shortenAddress(solana_user_public_key)} */}
+                        {/* User: {shortenAddress("8LEaQsb1cCypqaGFQERw9kybV7Bs96EeXqFELafCj6bq")} */}
+                      </span>
+                    </SolanaJobPostPaymentTx>
+                  </ExternalLink>
+                </JobPostDetailWrapper>
+              )}
+
+              {pay_job_post_tx && (
+                <JobPostDetailWrapper>
+                  <ExternalLink href={`${SOLSCAN}/tx/${pay_job_post_tx}`}>
+                    <SolanaJobPostPaymentTx>
+                      <SolanaImage width="0.75rem" height="0.75rem" />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        Payment Tx: {shortenAddress(pay_job_post_tx)} with{" "}
+                        {solana_payment_method === "Solana"
+                          ? "Solana"
+                          : "CODE token"}
+                      </span>
+                    </SolanaJobPostPaymentTx>
+                  </ExternalLink>
+                </JobPostDetailWrapper>
+              )}
+
+              {hold_job_post_tx && (
+                <JobPostDetailWrapper>
+                  <ExternalLink href={`${SOLSCAN}/tx/${hold_job_post_tx}`}>
+                    <SolanaJobPostPaymentTx>
+                      <SolanaImage width="0.75rem" height="0.75rem" />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        Hold Tx: {shortenAddress(hold_job_post_tx)}
+                      </span>
+                    </SolanaJobPostPaymentTx>
+                  </ExternalLink>
+                </JobPostDetailWrapper>
+              )}
+
+              {edit_job_post_tx && (
+                <JobPostDetailWrapper>
+                  <ExternalLink href={`${SOLSCAN}/tx/${edit_job_post_tx}`}>
+                    <SolanaJobPostPaymentTx>
+                      <SolanaImage width="0.75rem" height="0.75rem" />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        Edit Tx: {shortenAddress(edit_job_post_tx)}
+                      </span>
+                    </SolanaJobPostPaymentTx>
+                  </ExternalLink>
+                </JobPostDetailWrapper>
+              )}
+
+              {confirmed && (
+                <JobPostDetailWrapper>
+                  <ExternalLink href={`${SOLSCAN}/tx/${confirmed}`}>
+                    <SolanaJobPostPaymentTx>
+                      <SolanaImage width="0.75rem" height="0.75rem" />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        {review_to_confirmed_job_post_tx
+                          ? "Review"
+                          : "Confirmation"}{" "}
+                        Tx: {shortenAddress(confirmed)}
+                        {/* {review_to_confirmed_job_post_tx && "Review"} Confirmation Tx: {shortenAddress(confirmed)} */}
+                      </span>
+                    </SolanaJobPostPaymentTx>
+                  </ExternalLink>
+                </JobPostDetailWrapper>
+              )}
+
+              {refund_job_post_tx && (
+                <JobPostDetailWrapper>
+                  <ExternalLink href={`${SOLSCAN}/tx/${refund_job_post_tx}`}>
+                    <SolanaJobPostPaymentTx>
+                      <SolanaImage width="0.75rem" height="0.75rem" />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        Refund Tx: {shortenAddress(refund_job_post_tx)}
+                      </span>
+                    </SolanaJobPostPaymentTx>
+                  </ExternalLink>
+                </JobPostDetailWrapper>
+              )}
+
+              {authority_close_job_post_tx && (
+                <JobPostDetailWrapper>
+                  <ExternalLink
+                    href={`${SOLSCAN}/tx/${authority_close_job_post_tx}`}
+                  >
+                    <SolanaJobPostPaymentTx>
+                      <SolanaImage width="0.75rem" height="0.75rem" />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        Close Tx: {shortenAddress(authority_close_job_post_tx)}
+                      </span>
+                    </SolanaJobPostPaymentTx>
+                  </ExternalLink>
+                </JobPostDetailWrapper>
+              )}
+
+              {/* {closed && <JobPostDetailWrapper>
                 <ExternalLink
                   href={`${SOLSCAN}/tx/${confirm_tx}`}
                 >
@@ -755,7 +839,7 @@ const ProfileJobsForOwner = ({
                 </ExternalLink>
               </JobPostDetailWrapper>} */}
 
-            {/* <div style={{
+              {/* <div style={{
                 display: "flex",
                 marginTop: "0.5rem",
                 fontSize: "0.75rem",
@@ -778,28 +862,24 @@ const ProfileJobsForOwner = ({
 
               </div> */}
 
-              
-            <ProfileJobsOwnerButtons
-              // job_status="Paid"
-              job_status={job_status}
-              job_id={job_id}
+              <ProfileJobsOwnerButtons
+                // job_status="Paid"
+                job_status={job_status}
+                job_id={job_id}
+                job_title={job_title}
+                company_name={company_name}
+                setJobList={setJobList}
+              />
 
-              job_title={job_title}
-              company_name={company_name}
-
-              setJobList={setJobList}
-            />
-
-            {/* <div style={{
+              {/* <div style={{
                 marginBottom: "0.5rem",
               }}>
                 {jobTimeForOwner(job_published_at, job_updated_at, job_created_at)}
               </div> */}
-
-          </ProfileListCardContainer>
-        );
-      })
-      }
+            </ProfileListCardContainer>
+          );
+        }
+      )}
     </ProfileList>
   );
 };

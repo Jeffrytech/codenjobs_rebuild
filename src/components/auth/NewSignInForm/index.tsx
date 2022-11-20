@@ -22,7 +22,6 @@ import {
   // nameMaxLength,
   usernameMinLength,
   usernameMaxLength,
-  
   passwordMinLength,
   passwordMaxLength,
 } from "../../../validators";
@@ -34,17 +33,35 @@ import LinkToRegister from "../LinkToRegister";
 
 import LoginSpinner from "../../spinners/LoginSpinner";
 import { COMPANY_NAME, ReCAPTCHA_PUBLIC } from "../../../config/environment";
-import { LoginCompanyLogo, LoginFormInputWrapper, LoginFormLabel, LoginFormTextInput, Submit, } from "../login/LoginCSS";
+import {
+  LoginCompanyLogo,
+  LoginFormInputWrapper,
+  LoginFormLabel,
+  LoginFormTextInput,
+  Submit,
+} from "../login/LoginCSS";
 import Required from "../../form/Required";
 import { shadowBlue } from "../../../design/colors";
-import { SignInDesktop, Frame, Vector, SignInFormContainer, SignInFormWrapper, SignInForm, SignInLogoWrapper, SignInFormPrimary, SignInFormSecondary, SignInSection, SignInFormSecondaryIllustration, SignInFormSecondaryDescription, SignInFormSecondaryDescriptionButton } from "./NewSignInFormCSS";
+import {
+  SignInDesktop,
+  Frame,
+  Vector,
+  SignInFormContainer,
+  SignInFormWrapper,
+  SignInForm,
+  SignInLogoWrapper,
+  SignInFormPrimary,
+  SignInFormSecondary,
+  SignInSection,
+  SignInFormSecondaryIllustration,
+  SignInFormSecondaryDescription,
+  SignInFormSecondaryDescriptionButton,
+} from "./NewSignInFormCSS";
 import ExternalLink from "../../ExternalLink";
 // import CompanyLogo from "../../company/CompanyLogo";
 // import { useEffect } from "react";
 
-const NewSignInForm = ({
-  from,
-}) => {
+const NewSignInForm = ({ from }) => {
   const recaptchaRef = React.createRef();
 
   const {
@@ -79,9 +96,7 @@ const NewSignInForm = ({
   return (
     <SignInDesktop>
       <Frame>
-        <Vector 
-          src="/static/design/vector.svg" 
-        />
+        <Vector src="/static/design/vector.svg" />
       </Frame>
 
       <SignInFormContainer>
@@ -89,14 +104,10 @@ const NewSignInForm = ({
           <SignInFormPrimary>
             <SignInSection>
               <SignInLogoWrapper>
-                <LoginCompanyLogo 
-                  src="/static/logo.png"
-                />
+                <LoginCompanyLogo src="/static/logo.svg" />
               </SignInLogoWrapper>
 
-              <SignInForm
-                onSubmit={handleSubmit}
-              >
+              <SignInForm onSubmit={handleSubmit}>
                 <h1
                   style={{
                     // margin: "1rem 0 1rem 0",
@@ -106,11 +117,13 @@ const NewSignInForm = ({
                   {COMPANY_NAME}
                 </h1>
 
-                <div style={{
-                  display: "flex",
-                  flexFlow: "column",
-                }}>
-                  <LoginFormLabel htmlFor="username" >
+                <div
+                  style={{
+                    display: "flex",
+                    flexFlow: "column",
+                  }}
+                >
+                  <LoginFormLabel htmlFor="username">
                     Username
                     <Required />
                   </LoginFormLabel>
@@ -119,14 +132,10 @@ const NewSignInForm = ({
                       id="username"
                       name="username"
                       type="text"
-
                       required
-
                       placeholder={"username"}
-
                       minLength={usernameMinLength}
                       maxLength={usernameMaxLength}
-
                       onChange={handleChange}
                       onBlur={handleBlur}
                       // value={username}
@@ -139,7 +148,7 @@ const NewSignInForm = ({
                     formTouch={touched.username}
                   /> */}
 
-                  <LoginFormLabel htmlFor="password" >
+                  <LoginFormLabel htmlFor="password">
                     Password
                     <Required />
                   </LoginFormLabel>
@@ -148,14 +157,10 @@ const NewSignInForm = ({
                       id="password"
                       name="password"
                       type="password"
-
                       placeholder={"••••••••••••"}
-
                       required
-
                       minLength={passwordMinLength}
                       maxLength={passwordMaxLength}
-
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={password}
@@ -170,7 +175,6 @@ const NewSignInForm = ({
                   <Submit
                     // <Button
                     disabled={isSubmitting}
-
                     // style={{
                     //   marginTop: "1rem",
                     //   marginBottom: "0.5rem",
@@ -190,10 +194,10 @@ const NewSignInForm = ({
                       recaptchaRef.current.execute();
                     }}
 
-                  // fullWidth
-                  // variant="contained"
-                  // color="primary"
-                  // className={classes.submit}
+                    // fullWidth
+                    // variant="contained"
+                    // color="primary"
+                    // className={classes.submit}
                   >
                     {isSubmitting && <LoginSpinner />}
                     Sign In
@@ -204,9 +208,11 @@ const NewSignInForm = ({
                     <LinkToRegister />
                   </Grid>
 
-                  <div style={{
-                    marginTop: "0.5rem",
-                  }} >
+                  <div
+                    style={{
+                      marginTop: "0.5rem",
+                    }}
+                  >
                     <ReCAPTCHA
                       // id="recaptcha-login"
 
@@ -220,7 +226,6 @@ const NewSignInForm = ({
 
                         submitForm();
                       }}
-
                       onErrored={(errors) => {
                         // Show error at frontend?
                         console.log("errors");
@@ -238,37 +243,38 @@ const NewSignInForm = ({
                 aria-describedby="SignIn form error"
               >
                 <DialogTitle id="signin-error">
-                  <div style={{
-                    display: "flex",
-                    alignItems: "center",
-                    color: "#ff1676",
-                  }}>
-                    <ErrorIcon /> <span style={{ marginLeft: "0.25rem" }}>Error</span>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      color: "#ff1676",
+                    }}
+                  >
+                    <ErrorIcon />{" "}
+                    <span style={{ marginLeft: "0.25rem" }}>Error</span>
                   </div>
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="signin-form-error-description">
-                    Something went wrong at your login attempt, the server or Internet connection.
+                    Something went wrong at your login attempt, the server or
+                    Internet connection.
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                   <Button
                     onClick={handleClose}
                     color="primary"
-                  // autoFocus
+                    // autoFocus
                   >
                     Close
                   </Button>
                 </DialogActions>
               </Dialog>
-
             </SignInSection>
           </SignInFormPrimary>
 
           <SignInFormSecondary>
-            <SignInFormSecondaryIllustration
-              src="/static/design/login_illustration.svg"
-            />
+            <SignInFormSecondaryIllustration src="/static/design/login_illustration.svg" />
             <SignInFormSecondaryDescription>
               <h2
                 style={{
@@ -289,11 +295,10 @@ const NewSignInForm = ({
                 }}
               >
                 {/* Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam eget eros suscipit purus consequat aliquet at a lectus.  */}
-                Show your skills with your portfolios and blog posts. Find job seekers and recruiters and pay and earn cryptocurrency.
+                Show your skills with your portfolios and blog posts. Find job
+                seekers and recruiters and pay and earn cryptocurrency.
               </p>
-              <ExternalLink
-                href={`https://docs.codenjobs.com/en`}
-              >
+              <ExternalLink href={`https://docs.codenjobs.com/en`}>
                 <SignInFormSecondaryDescriptionButton>
                   <span
                     style={{
@@ -305,14 +310,11 @@ const NewSignInForm = ({
                   <img src="/static/design/link.svg" />
                 </SignInFormSecondaryDescriptionButton>
               </ExternalLink>
-              
             </SignInFormSecondaryDescription>
           </SignInFormSecondary>
         </SignInFormWrapper>
       </SignInFormContainer>
-
     </SignInDesktop>
-   
   );
 };
 

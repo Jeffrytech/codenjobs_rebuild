@@ -10,7 +10,6 @@ import React, { useEffect, useState } from "react";
 // import SettingsIcon from '@material-ui/icons/Settings';
 // import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 
-
 // // https://react-icons.github.io/react-icons/search?q=heart
 // import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
 // import MoneyRoundedIcon from '@material-ui/icons/MoneyRounded';
@@ -44,7 +43,7 @@ import PrimarySpinner from "../../spinners/PrimarySpinner";
 const BlogVoteMoneyUsers = ({
   id,
 
-  showBlogVoteMoneyUsers, 
+  showBlogVoteMoneyUsers,
   setShowBlogVoteMoneyUsers,
 
   totalMoneyVote,
@@ -70,17 +69,18 @@ const BlogVoteMoneyUsers = ({
   // ):
 
   useEffect(() => {
-    findBlogVoteMoneyUsers(id).then(({ data }) => {
-      setBlogVoteMoneyUserList(data);
-      // alert(data);
-      // console.log("data");
-      // console.log(data);
-      // username, created_at, profile_image
-    }).catch(error => {
-      console.log("findBlogVoteMoneyUser error");
-      console.error(error);
-    });
-    
+    findBlogVoteMoneyUsers(id)
+      .then(({ data }) => {
+        setBlogVoteMoneyUserList(data);
+        // alert(data);
+        // console.log("data");
+        // console.log(data);
+        // username, created_at, profile_image
+      })
+      .catch((error) => {
+        console.log("findBlogVoteMoneyUser error");
+        console.error(error);
+      });
   }, [totalMoneyVote]);
   // }, [user])
 
@@ -91,28 +91,37 @@ const BlogVoteMoneyUsers = ({
   // This should come from the backend
   // const moneyVote = false;
   return (
-    <Dialog open={showBlogVoteMoneyUsers} onClose={closeBlogVoteMoneyUsers} aria-labelledby="show-blog-vote-money-users">
+    <Dialog
+      open={showBlogVoteMoneyUsers}
+      onClose={closeBlogVoteMoneyUsers}
+      aria-labelledby="show-blog-vote-money-users"
+    >
       {/* Include image here */}
       <DialogTitle id="show-blog-vote-money-users">
-        <div style={{
-          //  display: "flex",
-          //  alignItems: "center",
+        <div
+          style={{
+            //  display: "flex",
+            //  alignItems: "center",
 
-          display: "flex",
-          alignItems: "center",
-          // justifyContent: "center",
-          // marginTop: "1rem",
-          // marginLeft: "-0.5rem",
-        }}>
+            display: "flex",
+            alignItems: "center",
+            // justifyContent: "center",
+            // marginTop: "1rem",
+            // marginLeft: "-0.5rem",
+          }}
+        >
           {/* <div>
             <Avatar
               alt={username}
-              src={image || "/static/logo.png"}
+              src={image || "/static/logo.svg"}
             />
           </div> */}
 
           {/* {!blogVoteMoneyUserList ? "1 Voter" : `${blogVoteMoneyUserList.length} Voters`} */}
-          {blogVoteMoneyUserList && `${blogVoteMoneyUserList.length} ${blogVoteMoneyUserList.length < 2 ? "Voter" : "Voters"}`}
+          {blogVoteMoneyUserList &&
+            `${blogVoteMoneyUserList.length} ${
+              blogVoteMoneyUserList.length < 2 ? "Voter" : "Voters"
+            }`}
           {/* {blogVoteMoneyUserList !== null && `${blogVoteMoneyUserList.length} ${blogVoteMoneyUserList.length < 2 ? "Voter" : "Voters"}`} */}
         </div>
       </DialogTitle>
@@ -122,65 +131,66 @@ const BlogVoteMoneyUsers = ({
           Post a new blog or job post.
         </DialogContentText> */}
 
-        <div style={{
-          display: "flex",
-          flexFlow: "column",
-          minWidth: "17rem",
-        }}>
-          {blogVoteMoneyUserList?.map(({
-            username,
-            profile_name,
-            profile_image
-          }) => {
-            // alert(username);
-            return (
-              <BlogVoteMoneyuserListCardContainer key={username} >
-                <Link
-                  href={`/user/${username}`}
-                >
-                  <div style={{
-                    display: "flex",
-                    marginLeft: "-0.15rem",
-                  }}>
-                    <Avatar
-                      name={username}
-                      size="1.25rem"
-                      src={profile_image || ""}
-                    />
-                    <span style={{
-                      marginLeft: "0.25rem",
-                    }}>
-                      {profile_name || username}
-                    </span>
-                  </div>
+        <div
+          style={{
+            display: "flex",
+            flexFlow: "column",
+            minWidth: "17rem",
+          }}
+        >
+          {blogVoteMoneyUserList?.map(
+            ({ username, profile_name, profile_image }) => {
+              // alert(username);
+              return (
+                <BlogVoteMoneyuserListCardContainer key={username}>
+                  <Link href={`/user/${username}`}>
+                    <div
+                      style={{
+                        display: "flex",
+                        marginLeft: "-0.15rem",
+                      }}
+                    >
+                      <Avatar
+                        name={username}
+                        size="1.25rem"
+                        src={profile_image || ""}
+                      />
+                      <span
+                        style={{
+                          marginLeft: "0.25rem",
+                        }}
+                      >
+                        {profile_name || username}
+                      </span>
+                    </div>
+                  </Link>
+                </BlogVoteMoneyuserListCardContainer>
 
-                </Link>
-              </BlogVoteMoneyuserListCardContainer>
+                // <div>
+                //   <Link
+                //     href={`/user/${username}`}
+                //   >
+                //     <div style={{
+                //       display: "flex",
+                //       marginLeft: "-0.15rem",
+                //     }}>
+                //       <Avatar
+                //         name={username}
+                //         size="1.25rem"
+                //         src={profile_image || ""}
+                //       />
+                //       <span style={{
+                //         marginLeft: "0.25rem",
+                //       }}>
+                //         u/{username}
+                //       </span>
+                //     </div>
 
-            // <div>
-            //   <Link
-            //     href={`/user/${username}`}
-            //   >
-            //     <div style={{
-            //       display: "flex",
-            //       marginLeft: "-0.15rem",
-            //     }}>
-            //       <Avatar
-            //         name={username}
-            //         size="1.25rem"
-            //         src={profile_image || ""}
-            //       />
-            //       <span style={{
-            //         marginLeft: "0.25rem",
-            //       }}>
-            //         u/{username}
-            //       </span>
-            //     </div>
-
-            //   </Link>
-            // </div>
-            );
-          })}
+                //   </Link>
+                // </div>
+              );
+            }
+          )}
         </div>
 
         {/* <NewBlogPostButton href="/blog/post" >
@@ -200,7 +210,6 @@ const BlogVoteMoneyUsers = ({
               Post a job
             </span>
           </NewJobPostButton> */}
-
       </DialogContent>
 
       <DialogActions>

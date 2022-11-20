@@ -17,7 +17,6 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 
 import {
   FollowerListCardContainer,
-
   FollowerName,
   ProfileFollowerListHeader,
   ProfileImage,
@@ -39,14 +38,18 @@ import { useAuth } from "../../../contexts/auth";
 import ProfileList from "../ProfileList";
 import CentralizeChildren from "../../CentralizeChildren";
 import useProfileFollowerListForm from "./useProfileFollowerListForm";
-import { ListPaginationButtonsContainer, ListPaginationPrevButton, ListPaginationNextButton } from "../../job/ListPagination/ListPaginationCSS";
+import {
+  ListPaginationButtonsContainer,
+  ListPaginationPrevButton,
+  ListPaginationNextButton,
+} from "../../job/ListPagination/ListPaginationCSS";
 import { useRouter } from "next/router";
 import { scrollToTop } from "../../../browser/scroll";
 
 const formatProfileFollowerListTitle = (
   numberOfFollowers: Number,
   currentPage: Number,
-  totalPage: Number,
+  totalPage: Number
 ) => {
   // const prefix = "Code";
 
@@ -61,12 +64,13 @@ const formatProfileFollowerListTitle = (
   const followerListTitle = `${numberOfFollowers} ${suffix}`;
   // const followerListState = `(${currentPage} / ${totalPage})`;
 
-  return <div>
-    {/* {followerListTitle} <FollowerListState>{followerListState}</FollowerListState> */}
-    {followerListTitle}
-  </div>;
+  return (
+    <div>
+      {/* {followerListTitle} <FollowerListState>{followerListState}</FollowerListState> */}
+      {followerListTitle}
+    </div>
+  );
 };
-
 
 // Should include edit and delete.
 const ProfileFollowers = ({
@@ -84,7 +88,7 @@ const ProfileFollowers = ({
   } = useAuth();
 
   // alert(user);
-  
+
   const [followerList, setFollowerList] = useState(null);
   const [totalFollowerList, setTotalFollowerList] = useState(null);
 
@@ -115,12 +119,11 @@ const ProfileFollowers = ({
 
     // alert(skip);
     // alert(limit);
-    
+
     if (user === null) {
       // findFollowersForNotUsers(username, sort, skip, limit)
       findFollowersForNotUsers(username, skip, limit)
         .then(({ data, error }) => {
-          
           if (error) {
             console.log("findFollowersForNotUsers server error");
             console.error(error);
@@ -138,8 +141,8 @@ const ProfileFollowers = ({
             setFollowerList(followerList);
             setTotalFollowerList(totalFollowerList);
           }
-
-        }).catch(error => {
+        })
+        .catch((error) => {
           console.log("findFollowersForNotUsers catch error");
           console.error(error);
         });
@@ -148,7 +151,6 @@ const ProfileFollowers = ({
       // findFollowersForUsers(username, sort, skip, limit)
       findFollowersForUsers(username, skip, limit)
         .then(({ data, error }) => {
-
           // alert(data);
 
           // alert("users");
@@ -165,178 +167,191 @@ const ProfileFollowers = ({
             setFollowerList(followerList);
             setTotalFollowerList(totalFollowerList);
           }
-          
-        }).catch(error => {
+        })
+        .catch((error) => {
           console.log("findFollowersForUsers catch error");
           console.error(error);
         });
     }
-
   }, [
-    user, 
+    user,
     // sort,
-    page
+    page,
   ]);
 
-  const {
-    setFieldValue,
-    submitForm,
-  } = useProfileFollowerListForm({
+  const { setFieldValue, submitForm } = useProfileFollowerListForm({
     username,
     // sort,
   });
 
   // No data from server
-  if (followerList === null) { 
-    return <ProfileList>
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-    </ProfileList>;
+  if (followerList === null) {
+    return (
+      <ProfileList>
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+      </ProfileList>
+    );
   }
 
   if (followerList.length === 0) {
-    return (<ProfileList>
-      <NoFollower username={username} isOwner={isOwner} />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-      <ProfileFollowerSkeleton />
-    </ProfileList>);
+    return (
+      <ProfileList>
+        <NoFollower username={username} isOwner={isOwner} />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+        <ProfileFollowerSkeleton />
+      </ProfileList>
+    );
   }
 
   return (
     <ProfileList>
-      <ProfileFollowerListHeader $isFollow={true} >
+      <ProfileFollowerListHeader $isFollow={true}>
         <CentralizeChildren>
           <span
             style={{
               padding: "0.5rem 0 0.5rem 0",
             }}
           >
-            {formatProfileFollowerListTitle(totalFollowerList, currentPage, totalPage)}
+            {formatProfileFollowerListTitle(
+              totalFollowerList,
+              currentPage,
+              totalPage
+            )}
           </span>
         </CentralizeChildren>
       </ProfileFollowerListHeader>
 
-      {followerList.map(({
-        username,
-        profile_name,
-        profile_image,
-        profile_job,
-        // profile_location,
-        following,
-      }) => {
-        // alert(following);
-        return (
-          <FollowerListCardContainer key={username} >
-            <Link
-              href={`/user/${username}`}
-            >
-              <ProfileImage>
-                <Avatar
-                  name={username}
-                  size="2.75rem"
-                  src={profile_image || ""}
-                  // src={profile_image ? `${API}/${profile_image}` : ""}
-                />
-              </ProfileImage>
-            </Link>
-                
-            <div>
-              <Link
-                href={`/user/${username}`}
-              >
-                <FollowerName>
-                  {profile_name || username}
-                </FollowerName>
+      {followerList.map(
+        ({
+          username,
+          profile_name,
+          profile_image,
+          profile_job,
+          // profile_location,
+          following,
+        }) => {
+          // alert(following);
+          return (
+            <FollowerListCardContainer key={username}>
+              <Link href={`/user/${username}`}>
+                <ProfileImage>
+                  <Avatar
+                    name={username}
+                    size="2.75rem"
+                    src={profile_image || ""}
+                    // src={profile_image ? `${API}/${profile_image}` : ""}
+                  />
+                </ProfileImage>
               </Link>
-                  
-              {profile_job && <div style={{
-                margin: "0.25rem",
-                display: "flex",
-                alignItems: "center"
-              }}>
-                <AccountBoxIcon /> <span style={{
-                  marginLeft: "0.25rem",
-                }}>{profile_job}</span>
-                {/* <LocationOnIcon /> <span>New York, USA</span> */}
-              </div>}
-            </div>
 
-            <Follow 
-              user={user} 
-              username={username} 
-              following={following} 
+              <div>
+                <Link href={`/user/${username}`}>
+                  <FollowerName>{profile_name || username}</FollowerName>
+                </Link>
 
-              // setFollowerList={setFollowerList}
-              // setTotalFollowerList={setTotalFollowerList}
-            />
-          </FollowerListCardContainer>
-        );
-      })
-      }
+                {profile_job && (
+                  <div
+                    style={{
+                      margin: "0.25rem",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <AccountBoxIcon />{" "}
+                    <span
+                      style={{
+                        marginLeft: "0.25rem",
+                      }}
+                    >
+                      {profile_job}
+                    </span>
+                    {/* <LocationOnIcon /> <span>New York, USA</span> */}
+                  </div>
+                )}
+              </div>
 
-      {followerList.length > 0 && totalPage > 1 && <ListPaginationButtonsContainer>
-        {currentPage.toString() !== "1" && <ListPaginationPrevButton
-          onClick={(e) => {
-            e.preventDefault();
+              <Follow
+                user={user}
+                username={username}
+                following={following}
 
-            const prevPage = +(new Number(currentPage)) - 1;
+                // setFollowerList={setFollowerList}
+                // setTotalFollowerList={setTotalFollowerList}
+              />
+            </FollowerListCardContainer>
+          );
+        }
+      )}
 
-            const queries = new URLSearchParams(window.location.search);
-            queries.set("page", prevPage.toString());
+      {followerList.length > 0 && totalPage > 1 && (
+        <ListPaginationButtonsContainer>
+          {currentPage.toString() !== "1" && (
+            <ListPaginationPrevButton
+              onClick={(e) => {
+                e.preventDefault();
 
-            const query = Object.fromEntries(queries);
-            router.push({
-              pathname: window.location.pathname,
-              query,
-            });
-            scrollToTop();
-          }}
-        >
-          Prev
-        </ListPaginationPrevButton>}
-        {currentPage.toString() !== totalPage.toString() && <ListPaginationNextButton
-          onClick={(e) => {
-            e.preventDefault();
+                const prevPage = +new Number(currentPage) - 1;
 
-            const nextPage = +(new Number(currentPage)) + 1;
+                const queries = new URLSearchParams(window.location.search);
+                queries.set("page", prevPage.toString());
 
-            const queries = new URLSearchParams(window.location.search);
-            queries.set("page", nextPage.toString());
+                const query = Object.fromEntries(queries);
+                router.push({
+                  pathname: window.location.pathname,
+                  query,
+                });
+                scrollToTop();
+              }}
+            >
+              Prev
+            </ListPaginationPrevButton>
+          )}
+          {currentPage.toString() !== totalPage.toString() && (
+            <ListPaginationNextButton
+              onClick={(e) => {
+                e.preventDefault();
 
-            const query = Object.fromEntries(queries);
-            router.push({
-              pathname: window.location.pathname,
-              query,
-            });
-            scrollToTop();
+                const nextPage = +new Number(currentPage) + 1;
 
-          }}
-        >
-          Next
-        </ListPaginationNextButton>}
-      </ListPaginationButtonsContainer>}
+                const queries = new URLSearchParams(window.location.search);
+                queries.set("page", nextPage.toString());
+
+                const query = Object.fromEntries(queries);
+                router.push({
+                  pathname: window.location.pathname,
+                  query,
+                });
+                scrollToTop();
+              }}
+            >
+              Next
+            </ListPaginationNextButton>
+          )}
+        </ListPaginationButtonsContainer>
+      )}
     </ProfileList>
   );
 };
@@ -374,7 +389,7 @@ export default ProfileFollowers;
 //       input: (provided) => ({
 //         ...provided,
 //         // backgroundColor: "blue",
-//         backgroundImage: "url('/static/logo.png')",
+//         backgroundImage: "url('/static/logo.svg')",
 //         backgroundRepaet: "no-repeat",
 //         backgroundSize: "cover",
 

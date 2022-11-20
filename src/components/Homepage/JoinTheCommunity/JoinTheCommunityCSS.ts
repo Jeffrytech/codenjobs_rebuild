@@ -3,33 +3,37 @@ import { darkBlue, white } from "../../../design/colors";
 import { hover } from "../../../design/common";
 
 const JoinTheCommunitySection = styled("section", {
-  height: "11rem",
+  minHeight: "11rem",
   // background: "rgb(17, 160, 245)"
   background: darkBlue,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  paddingBlock: "70px",
 });
 
 const JoinTheCommunityTitle = styled("h2", {
   color: white,
-  fontWeight: "normal",
+  fontWeight: "bold",
   marginTop: "0",
   fontSize: "2rem",
+  padding: "20px",
 });
 
 const JoinTheCommunityRegisterButton = styled("button", {
   color: darkBlue,
   backgroundColor: white,
   border: "none",
-  borderRadius: "0.25rem",
+  borderRadius: "6px",
   // padding: "0.5rem 1rem",
-  padding: "0.75rem 1rem",
+  padding: "16px 24px",
   marginRight: "1rem",
+  fontWeight: "500",
+  height: "45px",
 
   ":hover": {
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 });
 
 const JoinTheCommunityDocsButton = styled("button", {
@@ -43,13 +47,13 @@ const JoinTheCommunityDocsButton = styled("button", {
   borderRadius: "0.25rem",
   // padding: "0.5rem 0.5rem",
   // padding: "0.5rem 1rem 0.5rem 1rem",
-  padding: "0.75rem 1rem 0.75rem 1rem",
-  marginRight: "1rem",
-  display: "flex",
+  padding: "16px 24px",
+  fontWeight: "500",
+  height: "45px",
 
   ":hover": {
-    cursor: "pointer"
-  }
+    cursor: "pointer",
+  },
 });
 
 export {

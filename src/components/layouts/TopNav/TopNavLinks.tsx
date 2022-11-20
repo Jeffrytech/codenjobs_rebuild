@@ -18,37 +18,39 @@ import NFTProjectListLink from "./NFTProjectListLink";
 
 // Categories and others?
 const TopNavLinks = () => {
-  return <>
-    {/* <CompanyCategories /> */}
-    {/* <CryptoCategories /> */}
-        
-    {/* <Whitepaper /> */}
+  return (
+    <>
+      {/* <CompanyCategories /> */}
+      {/* <CryptoCategories /> */}
 
-    {/* <Roadmap /> */}
+      {/* <Whitepaper /> */}
 
-    {/* <CompanyCategories /> */}
+      {/* <Roadmap /> */}
 
-    {/* <Docs /> */}
-    <div
-      style={{
-        marginRight: "auto",
-        marginLeft: "1rem",
-      }}
-    >
-      {/* <SwapLink /> */}
-      <NFTProjectListLink />
-    </div>
+      {/* <CompanyCategories /> */}
 
-    <Docs />
-    <Blogs />
-    <JobCategories />
-        
-    {/* <CommunityCategories /> */}
-    {/* <BlogCategories /> */}
+      {/* <Docs /> */}
+      <div
+        style={{
+          marginRight: "auto",
+          marginLeft: "1rem",
+        }}
+      >
+        {/* <SwapLink /> */}
+        {/* <NFTProjectListLink /> */}
+      </div>
 
-    {/* Improve listing first and reinclude */}
-    <PeopleCategories />
-  </>;
+      <Docs />
+      <Blogs />
+      {/* <JobCategories /> */}
+
+      {/* <CommunityCategories /> */}
+      {/* <BlogCategories /> */}
+
+      {/* Improve listing first and reinclude */}
+      <PeopleCategories />
+    </>
+  );
 };
 
 export default TopNavLinks;

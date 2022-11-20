@@ -4,24 +4,18 @@ import moment from "moment";
 
 import axios from "axios";
 
-import {
-  Box, Button,
-  Typography
-} from "@mui/material";
+import { Box, Button, Typography } from "@mui/material";
 
 import styled from "@emotion/styled";
 
-import {
-  black, white,
-  solana, green
-} from "../../../design/colors";
+import { black, white, solana, green } from "../../../design/colors";
 
-// TODO, 
+// TODO,
 // Show warning that user needs some Solana?
 // Previous Balance at mainnet 10 Solana
 // -0.00204 Sol and less than 0.00001 network fee
 // -0.00207 Sol and less than 0.00001 network fee
-// about 0.00422 spent? 
+// about 0.00422 spent?
 // 9.9958786 0.004121400000000719 spent?
 const JobPostCodePaymentCheckout = ({
   // userSolanaWallet,
@@ -44,8 +38,6 @@ const JobPostCodePaymentCheckout = ({
 
   const router = useRouter();
 
-  
-
   // let socket;
   // useEffect(() => {
   //   socket = new WebSocket("wss://stream.binance.com:9443/ws/solusdt@aggTrade");
@@ -56,7 +48,8 @@ const JobPostCodePaymentCheckout = ({
 
   useEffect(() => {
     const findCodePrice = async () => {
-      const CODE_TOKEN_PRICE_API = "https://api.solscan.io/amm/market?address=Code7hV6DaK5Werof8c7vPwBxLvhmEWVUbU2AfhBZArB&sort_by=liquidity&sort_type=desc";
+      const CODE_TOKEN_PRICE_API =
+        "https://api.solscan.io/amm/market?address=Code7hV6DaK5Werof8c7vPwBxLvhmEWVUbU2AfhBZArB&sort_by=liquidity&sort_type=desc";
       const { data } = await axios.get(CODE_TOKEN_PRICE_API);
       // console.log("data");
       // console.log(data);
@@ -64,7 +57,8 @@ const JobPostCodePaymentCheckout = ({
       const { price: codeTokenPriceUSDT } = data.data[0]; // CODE/USDT
       const { price: codeTokenPriceUSDC } = data.data[1]; // CODE/USDC
       // The last one is from Serum
-      const codeTokenPriceInFloat = (codeTokenPriceUSDT + codeTokenPriceUSDC) / 2;
+      const codeTokenPriceInFloat =
+        (codeTokenPriceUSDT + codeTokenPriceUSDC) / 2;
       // alert(codeTokenPriceInFloat);
 
       setCodePrice(codeTokenPriceInFloat);
@@ -154,22 +148,38 @@ const JobPostCodePaymentCheckout = ({
 
   const currentCodePrice = (codePrice * 1).toFixed(10);
 
-  const currentJobPostPriceInDollar = (codePrice * job_post_price_in_code).toFixed(2);
-  const currentJobPostPriceInDollarDiscount = (codePrice * (job_post_price_in_code - job_post_price_in_code_with_discount)).toFixed(2);
+  const currentJobPostPriceInDollar = (
+    codePrice * job_post_price_in_code
+  ).toFixed(2);
+  const currentJobPostPriceInDollarDiscount = (
+    codePrice *
+    (job_post_price_in_code - job_post_price_in_code_with_discount)
+  ).toFixed(2);
 
-  const totalPrice = (codePrice * job_post_price_in_code_with_discount).toFixed(2);
-  const userCodeTokenBalanceInDollar = (codePrice * userCodeTokenBalance).toFixed(0);
+  const totalPrice = (codePrice * job_post_price_in_code_with_discount).toFixed(
+    2
+  );
+  const userCodeTokenBalanceInDollar = (
+    codePrice * userCodeTokenBalance
+  ).toFixed(0);
   // const userCodeTokenBalanceInDollar = (codePrice * userCodeTokenBalance).toFixed(2);
 
   return (
     <>
       <Box>
-        <ContentBox style={{
-          padding: "1rem",
-        }}>
-          <Title align="center" style={{
-            marginBottom: "0.5rem",
-          }} >Your Order Summary</Title>
+        <ContentBox
+          style={{
+            padding: "1rem",
+          }}
+        >
+          <Title
+            align="center"
+            style={{
+              marginBottom: "0.5rem",
+            }}
+          >
+            Your Order Summary
+          </Title>
 
           {/* <Box>
             <IndividualBox>
@@ -183,12 +193,14 @@ const JobPostCodePaymentCheckout = ({
           </Box> */}
 
           {/* <Box mt={"1.2rem"} > */}
-          <Box >
-            <div style={{
-              display: "flex",
-              alignItems: "center",
-              // justifyContent: "center",
-            }} >
+          <Box>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                // justifyContent: "center",
+              }}
+            >
               {/* <img src="/static/logo_no_white.png" style={{
                 width: "1rem",
                 height: "1rem",
@@ -211,22 +223,32 @@ const JobPostCodePaymentCheckout = ({
             </div>
 
             <IndividualBox>
-              <Item>1 Job Post</Item> <Value>${currentJobPostPriceInDollar}</Value>
+              <Item>1 Job Post</Item>{" "}
+              <Value>${currentJobPostPriceInDollar}</Value>
             </IndividualBox>
             <IndividualBox>
-              <Label style={{
-                color: green,
-                // fontWeight: "bold",
-              }} >🎉 Discount 5%</Label> <TotalPrice style={{
-                marginLeft: "-0.25rem",
-                color: green,
-                fontWeight: "bold",
-              }} >
-                <span style={{
-                  marginLeft: "0.1rem",
-                }} >
-                  {/* -${currentJobPostPriceInDollarDiscount} */}
-                  ${currentJobPostPriceInDollarDiscount}
+              <Label
+                style={{
+                  color: green,
+                  // fontWeight: "bold",
+                }}
+              >
+                🎉 Discount 5%
+              </Label>{" "}
+              <TotalPrice
+                style={{
+                  marginLeft: "-0.25rem",
+                  color: green,
+                  fontWeight: "bold",
+                }}
+              >
+                <span
+                  style={{
+                    marginLeft: "0.1rem",
+                  }}
+                >
+                  {/* -${currentJobPostPriceInDollarDiscount} */}$
+                  {currentJobPostPriceInDollarDiscount}
                 </span>
               </TotalPrice>
             </IndividualBox>
@@ -238,19 +260,28 @@ const JobPostCodePaymentCheckout = ({
               <Label>Total Price</Label> <TotalPrice>${totalPrice}</TotalPrice>
             </IndividualBox>
             <IndividualBox>
-              <CodeLabel style={{
-                color: black,
-                display: "flex",
-                alignItems: "center",
-              }} >
-                In CODE <img src="/static/logo_no_white.png" style={{
-                  width: "1rem",
-                  height: "1rem",
-                  marginLeft: "0.25rem",
-                  marginRight: "0.25rem",
-                }} /><span style={{
-                  marginRight: "1.25rem",
-                }} >
+              <CodeLabel
+                style={{
+                  color: black,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                In CODE{" "}
+                <img
+                  src="/static/logo_no_white.png"
+                  style={{
+                    width: "1rem",
+                    height: "1rem",
+                    marginLeft: "0.25rem",
+                    marginRight: "0.25rem",
+                  }}
+                />
+                <span
+                  style={{
+                    marginRight: "1.25rem",
+                  }}
+                >
                   {job_post_price_in_code_with_discount?.toFixed(0)}
                 </span>
               </CodeLabel>
@@ -274,22 +305,34 @@ const JobPostCodePaymentCheckout = ({
             </IndividualBox>
 
             <IndividualBox>
-              <Label>Your Balance</Label> <UserTokenBalanceInDollar>${userCodeTokenBalanceInDollar}</UserTokenBalanceInDollar>
+              <Label>Your Balance</Label>{" "}
+              <UserTokenBalanceInDollar>
+                ${userCodeTokenBalanceInDollar}
+              </UserTokenBalanceInDollar>
             </IndividualBox>
             <IndividualBox>
-              <CodeLabel style={{
-                color: black,
-                display: "flex",
-                alignItems: "center",
-              }} >
-                In CODE <img src="/static/logo_no_white.png" style={{
-                  width: "1rem",
-                  height: "1rem",
-                  marginLeft: "0.25rem",
-                  marginRight: "0.25rem",
-                }} /><span style={{
-                  marginRight: "1.5rem",
-                }} >
+              <CodeLabel
+                style={{
+                  color: black,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                In CODE{" "}
+                <img
+                  src="/static/logo_no_white.png"
+                  style={{
+                    width: "1rem",
+                    height: "1rem",
+                    marginLeft: "0.25rem",
+                    marginRight: "0.25rem",
+                  }}
+                />
+                <span
+                  style={{
+                    marginRight: "1.5rem",
+                  }}
+                >
                   {userCodeTokenBalance?.toFixed(0)}
                 </span>
               </CodeLabel>
@@ -311,27 +354,28 @@ const JobPostCodePaymentCheckout = ({
                 </span>
               </CodeValue> */}
             </IndividualBox>
-
           </Box>
 
-          <div style={{
-            marginTop: "0.5rem",
-            opacity: 0.6,
-            fontSize: "0.75rem",
-            lineHeight: "1rem",
-            padding: "0.25rem",
-          }} >
+          <div
+            style={{
+              marginTop: "0.5rem",
+              opacity: 0.6,
+              fontSize: "0.75rem",
+              lineHeight: "1rem",
+              padding: "0.25rem",
+            }}
+          >
             <span>
-              The last update for the CODE price in the contract was {moment.utc(last_updated).fromNow()}. (Update happens every 10 minutes if there were differences in prices.)
+              The last update for the CODE price in the contract was{" "}
+              {moment.utc(last_updated).fromNow()}. (Update happens every 10
+              minutes if there were differences in prices.)
               {/* The last update for the Solana price in the contract was {moment.utc(new Date(last_updated)).fromNow()}.  */}
             </span>
           </div>
         </ContentBox>
 
-        <Box border={"1px solid #d3d3d3"} borderRadius="0 0 0.5rem 0.5rem" >
-          <Box
-            m={"1rem 1rem 0 1rem"}
-          >
+        <Box border={"1px solid #d3d3d3"} borderRadius="0 0 0.5rem 0.5rem">
+          <Box m={"1rem 1rem 0 1rem"}>
             <Typography
               sx={{
                 fontWeight: "bold",
@@ -348,29 +392,29 @@ const JobPostCodePaymentCheckout = ({
                   opacity: "0.7",
                   transition: "all 0.2s",
                   cursor: "pointer",
-                }
+                },
               }}
-
               onClick={() => {
-                router.push(
-                  {
-                    pathname: router.pathname,
-                    query: {
-                      ...router.query,
-                      method: "solana"
-                    }
-                  }
-                );
+                router.push({
+                  pathname: router.pathname,
+                  query: {
+                    ...router.query,
+                    method: "solana",
+                  },
+                });
               }}
             >
-              Use <img src="/static/solana.png"
+              Use{" "}
+              <img
+                src="/static/solana.png"
                 style={{
                   width: "1rem",
                   height: "1rem",
                   marginLeft: "0.25rem",
                   marginRight: "0.25rem",
                 }}
-              /> Solana without discount
+              />{" "}
+              Solana without discount
             </Typography>
           </Box>
 
@@ -394,8 +438,8 @@ const JobPostCodePaymentCheckout = ({
                 },
                 "&:hover": {
                   color: black,
-                  border: "1px solid black"
-                }
+                  border: "1px solid black",
+                },
               }}
             >
               <Box
@@ -412,8 +456,8 @@ const JobPostCodePaymentCheckout = ({
                   src={code_logo}
                   alt="code logo"
                 /> */}
-                <img 
-                  src="/static/logo.png"
+                <img
+                  src="/static/logo.svg"
                   style={{
                     width: "1rem",
                     height: "1rem",

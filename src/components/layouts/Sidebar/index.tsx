@@ -4,9 +4,9 @@ import Link from "next/link";
 
 import { useOnOutsideClick } from "../../../useOutsideClick";
 
-import NoteIcon from '@material-ui/icons/Note';
+import NoteIcon from "@material-ui/icons/Note";
 
-import LaunchIcon from '@mui/icons-material/Launch';
+import LaunchIcon from "@mui/icons-material/Launch";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 // import WorkIcon from '@material-ui/icons/Work';
 // import SearchIcon from "@material-ui/icons/Search";
@@ -18,17 +18,20 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import {
   SidebarListCotnainer,
   SidebarDropdownContainer,
-
   SidebarDropdownWrapper,
   SidebarDropdownLabel,
-
   SidebarMobileLinksContainer,
 } from "./SidebarCSS";
 
 // import env from "../../../config/environment";
 import ExternalLink from "../../ExternalLink";
 
-import { CODE_SOLANA_TOKEN, COMPANY_DOCS_WEBSITE, COMPANY_NAME, SOLSCAN } from "../../../config/environment";
+import {
+  CODE_SOLANA_TOKEN,
+  COMPANY_DOCS_WEBSITE,
+  COMPANY_NAME,
+  SOLSCAN,
+} from "../../../config/environment";
 import { useSidebar } from "../../../contexts/sidebar";
 // import { useShadow } from "../../../contexts/shadow";
 import { useSolanaCodeTokenDetails } from "../../../contexts/solanaCodeToken";
@@ -42,7 +45,8 @@ const Sidebar = () => {
   // const { showShadow, setShowShadow } = useShadow();
 
   // @ts-ignore
-  const { solanaCodeTokenTotalHolders, solanaCodeTokenPrice  } = useSolanaCodeTokenDetails();
+  const { solanaCodeTokenTotalHolders, solanaCodeTokenPrice } =
+    useSolanaCodeTokenDetails();
 
   const closeSidebar = () => {
     setShowSidebar(false);
@@ -58,27 +62,30 @@ const Sidebar = () => {
 
   // const solanaCodeTokenPrice = "0.00000003";
 
-  return (<>
-    {/* <Shadow /> */}
-    <SidebarListCotnainer ref={innerBorderRef} >
-      {
-        showSidebar && (<SidebarDropdownContainer>
-          <SidebarMobileLinksContainer>
-            <div onClick={closeSidebar} >
-              <Link href="/" >
-                <SidebarDropdownWrapper>
-                  {/* <SearchIcon /> */}
-                  <b style={{
-                    color: blue,
-                  }}>
-                    {COMPANY_NAME}
-                  </b>
-                </SidebarDropdownWrapper>
-              </Link>
-            </div>
-          </SidebarMobileLinksContainer> 
+  return (
+    <>
+      {/* <Shadow /> */}
+      <SidebarListCotnainer ref={innerBorderRef}>
+        {showSidebar && (
+          <SidebarDropdownContainer>
+            <SidebarMobileLinksContainer>
+              <div onClick={closeSidebar}>
+                <Link href="/">
+                  <SidebarDropdownWrapper>
+                    {/* <SearchIcon /> */}
+                    <b
+                      style={{
+                        color: blue,
+                      }}
+                    >
+                      {COMPANY_NAME}
+                    </b>
+                  </SidebarDropdownWrapper>
+                </Link>
+              </div>
+            </SidebarMobileLinksContainer>
 
-          {/* <div onClick={() => {
+            {/* <div onClick={() => {
             // setShowShadow(false);
           }}>
             <ExternalLink href={`${SOLSCAN}/token/${CODE_SOLANA_TOKEN}`} >
@@ -98,32 +105,35 @@ const Sidebar = () => {
             </ExternalLink>
           </div> */}
 
-          <div onClick={closeSidebar} >
-            {/* <Link href="/settings/profile" > */}
-            {/* <ExternalLink href={`${SOLSCAN}/token/${CODE_SOLANA_TOKEN}#holders`} > */}
-            <ExternalLink href={`${SOLSCAN}/token/${CODE_SOLANA_TOKEN}`} >
-              <SidebarDropdownWrapper>
-                {/* <Settings /> */}
-                {/* <MonetizationOnIcon /> */}
-                <img src="/static/logos/solana.png" style={{
-                  width: "1.25rem",
-                  height: "1.25rem",
-                  marginLeft: "0.15rem",
-                  marginRight: "0.1rem",
-                }} />
-                <SidebarDropdownLabel>
-                  <span>
-                    {/* {solanaCodeTokenTotalHolders} Holders */}
-                    ${solanaCodeTokenPrice}
-                  </span>
-                </SidebarDropdownLabel>
-              </SidebarDropdownWrapper>
-            </ExternalLink>
+            <div onClick={closeSidebar}>
+              {/* <Link href="/settings/profile" > */}
+              {/* <ExternalLink href={`${SOLSCAN}/token/${CODE_SOLANA_TOKEN}#holders`} > */}
+              <ExternalLink href={`${SOLSCAN}/token/${CODE_SOLANA_TOKEN}`}>
+                <SidebarDropdownWrapper>
+                  {/* <Settings /> */}
+                  {/* <MonetizationOnIcon /> */}
+                  <img
+                    src="/static/logos/solana.png"
+                    style={{
+                      width: "1.25rem",
+                      height: "1.25rem",
+                      marginLeft: "0.15rem",
+                      marginRight: "0.1rem",
+                    }}
+                  />
+                  <SidebarDropdownLabel>
+                    <span>
+                      {/* {solanaCodeTokenTotalHolders} Holders */}$
+                      {solanaCodeTokenPrice}
+                    </span>
+                  </SidebarDropdownLabel>
+                </SidebarDropdownWrapper>
+              </ExternalLink>
 
-            {/* </Link> */}
-          </div>
+              {/* </Link> */}
+            </div>
 
-          {/* <div onClick={closeSidebar} >
+            {/* <div onClick={closeSidebar} >
             <Link href="/company/whitepaper" >
               <SidebarDropdownWrapper>
                 <NoteIcon />
@@ -134,18 +144,16 @@ const Sidebar = () => {
             </Link>
           </div> */}
 
-          <div onClick={closeSidebar} >
-            <ExternalLink href={`${COMPANY_DOCS_WEBSITE}`} >
-              <SidebarDropdownWrapper>
-                <NoteIcon />
-                <SidebarDropdownLabel>
-                  Docs
-                </SidebarDropdownLabel>
-              </SidebarDropdownWrapper>
-            </ExternalLink>
-          </div>
+            <div onClick={closeSidebar}>
+              <ExternalLink href={`${COMPANY_DOCS_WEBSITE}`}>
+                <SidebarDropdownWrapper>
+                  <NoteIcon />
+                  <SidebarDropdownLabel>Docs</SidebarDropdownLabel>
+                </SidebarDropdownWrapper>
+              </ExternalLink>
+            </div>
 
-          {/* <div
+            {/* <div
             onClick={closeSidebar}
           >
             <ExternalLink href={`${SOLANA_DEX}/swap?inputCurrency=SOL&outputCurrency=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`} >
@@ -158,31 +166,27 @@ const Sidebar = () => {
             </ExternalLink>
           </div> */}
 
-          <div
-            onClick={closeSidebar}
-          >
-            {/* <ExternalLink href={`${SOLANA_DEX}/swap?inputCurrency=SOL&outputCurrency=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`} > */}
-            {/* <ExternalLink href="https://solana.codenjobs.com/nft/projects" > */}
-            <ExternalLink href="/nft/projects" >
-              <SidebarDropdownWrapper>
-                <LaunchIcon />
-                <SidebarDropdownLabel>
-                  NFT
-                </SidebarDropdownLabel>
-              </SidebarDropdownWrapper>
-            </ExternalLink>
-          </div>
-    
-          <SidebarDropdownWrapper>
-            <ExitToAppIcon />
-            <SidebarDropdownLabel onClick={closeSidebar} >
-              Close
-            </SidebarDropdownLabel>
-          </SidebarDropdownWrapper>
-        </SidebarDropdownContainer>)
-      }
-    </SidebarListCotnainer>
-  </>
+            <div onClick={closeSidebar}>
+              {/* <ExternalLink href={`${SOLANA_DEX}/swap?inputCurrency=SOL&outputCurrency=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v`} > */}
+              {/* <ExternalLink href="https://solana.codenjobs.com/nft/projects" > */}
+              <ExternalLink href="/nft/projects">
+                <SidebarDropdownWrapper>
+                  <LaunchIcon />
+                  <SidebarDropdownLabel>NFT</SidebarDropdownLabel>
+                </SidebarDropdownWrapper>
+              </ExternalLink>
+            </div>
+
+            <SidebarDropdownWrapper>
+              <ExitToAppIcon />
+              <SidebarDropdownLabel onClick={closeSidebar}>
+                Close
+              </SidebarDropdownLabel>
+            </SidebarDropdownWrapper>
+          </SidebarDropdownContainer>
+        )}
+      </SidebarListCotnainer>
+    </>
   );
 };
 

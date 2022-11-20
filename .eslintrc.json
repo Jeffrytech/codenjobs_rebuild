@@ -1,13 +1,8 @@
 {
   "extends": "next/core-web-vitals",
   "rules": {
-    "semi": [
-      "error",
-      "always"
-    ],
-    "indent": [
-      "error",
-      2
-    ]
+    "semi": ["error", "always"],
+    "@next/next/no-img-element": "off",
+    "indent": ["error", 2]
   }
 }

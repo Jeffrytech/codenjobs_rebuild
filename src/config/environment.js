@@ -7,12 +7,14 @@ const config = {
   ADMIN_URL: process.env.NEXT_PUBLIC_ADMIN_URL,
 
   COMPANY_NAME: "Code&Jobs",
-  COMPANY_LOGO: "https://www.codenjobs.com/static/logo.png",
+  COMPANY_LOGO: "https://www.codenjobs.com/static/logo.svg",
   COMPANY_LOGO_WHITE: "https://www.codenjobs.com/static/logo_white.png",
   COMPANY_COVER: "https://www.codenjobs.com/static/main_money.jpg",
 
-  COMPANY_DESCRIPTION: "The worldwide network to help you find a job and candidate",
-  LOGIN_DESCRIPTION: "Be a part of the worldwide network to help you find a job and candidate",
+  COMPANY_DESCRIPTION:
+    "The worldwide network to help you find a job and candidate",
+  LOGIN_DESCRIPTION:
+    "Be a part of the worldwide network to help you find a job and candidate",
 
   COMPANY_WEBSITE: "codenjobs.com",
   COMPANY_DOCS_WEBSITE: "https://docs.codenjobs.com",
@@ -41,7 +43,8 @@ const config = {
 
   // TODO
   // Use our own DEX Swap code
-  BUY_CODE: "https://raydium.io/swap/?inputCurrency=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&outputCurrency=Code7hV6DaK5Werof8c7vPwBxLvhmEWVUbU2AfhBZArB&inputAmount=0&outputAmount=0&fixed=out",
+  BUY_CODE:
+    "https://raydium.io/swap/?inputCurrency=EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v&outputCurrency=Code7hV6DaK5Werof8c7vPwBxLvhmEWVUbU2AfhBZArB&inputAmount=0&outputAmount=0&fixed=out",
 
   // Crypto
   SOLSCAN: "https://solscan.io",

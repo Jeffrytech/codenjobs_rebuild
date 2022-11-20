@@ -1,20 +1,16 @@
 // Extract these later?
-import { useEffect, useRef } from "react";
+import React, { MutableRefObject, useEffect, useRef } from "react";
 
-export const useMountEffect = fun => useEffect(fun, []);
+export const useMountEffect = (fun) => useEffect(fun, []);
 
-export const useOnOutsideClick = handleOutsideClick => {
-  const innerBorderRef = useRef();
+export const useOnOutsideClick = (handleOutsideClick) => {
+  const innerBorderRef = useRef(null);
 
-  const onClick = event => {
+  const onClick = (event) => {
     if (
       innerBorderRef.current &&
-            // @ts-ignore
-            !innerBorderRef.current.contains(event.target)
+      !innerBorderRef.current.contains(event.target)
     ) {
-      console.log("event");
-      console.log(event);
-            
       handleOutsideClick();
     }
   };
@@ -28,4 +24,3 @@ export const useOnOutsideClick = handleOutsideClick => {
 
   return { innerBorderRef };
 };
-

@@ -13,10 +13,7 @@ import useRemoveUserForm from "./useRemoveUserForm";
 import RemoveUserForm from "./RemoveUserForm";
 import { COMPANY_NAME } from "../../../../../config/environment";
 
-const RemoveUser = ({
-  removeUser,
-  setRemoveUser,
-}) => {
+const RemoveUser = ({ removeUser, setRemoveUser }) => {
   const {
     handleSubmit,
 
@@ -43,28 +40,35 @@ const RemoveUser = ({
   };
 
   return (
-    <Dialog open={removeUser} onClose={handleClose} aria-labelledby="Delete account">
+    <Dialog
+      open={removeUser}
+      onClose={handleClose}
+      aria-labelledby="Delete account"
+    >
       {/* Include image here */}
-      <div style={{
-        minHeight: "21rem",
-      }}>
+      <div
+        style={{
+          minHeight: "21rem",
+        }}
+      >
         <DialogTitle id="delete-account">
-          <div style={{
-            //  display: "flex",
-            //  alignItems: "center",
+          <div
+            style={{
+              //  display: "flex",
+              //  alignItems: "center",
 
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: "1rem",
-          }}>
-            <Avatar
-              alt={COMPANY_NAME}
-              src="/static/logo.png"
-            />
-            <span style={{
-              marginLeft: "0.5rem"
-            }}>
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: "1rem",
+            }}
+          >
+            <Avatar alt={COMPANY_NAME} src="/static/logo.svg" />
+            <span
+              style={{
+                marginLeft: "0.5rem",
+              }}
+            >
               Delete Your Account
             </span>
           </div>
@@ -82,19 +86,13 @@ const RemoveUser = ({
             handleSubmit={handleSubmit}
             handleChange={handleChange}
             handleBlur={handleBlur}
-
             values={values}
             errors={errors}
             touched={touched}
           />
-
         </DialogContent>
         <DialogActions>
-          <Button
-            disabled={isSubmitting}
-            onClick={handleClose}
-            color="primary"
-          >
+          <Button disabled={isSubmitting} onClick={handleClose} color="primary">
             Cancel
           </Button>
           <Button
@@ -110,7 +108,6 @@ const RemoveUser = ({
           </Button>
         </DialogActions>
       </div>
-      
     </Dialog>
   );
 };

@@ -14,10 +14,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 
 // import CreateIcon from "@material-ui/icons/Create";
 
-import {
-  NewPortfolioButton,
-  NewPortfolioButtonText,
-} from "./NewPortfolioCSS";
+import { NewPortfolioButton, NewPortfolioButtonText } from "./NewPortfolioCSS";
 
 import PortfolioForm from "./NewPortfolioForm";
 import usePortfolioForm from "./useNewPortfolioForm";
@@ -25,10 +22,7 @@ import usePortfolioForm from "./useNewPortfolioForm";
 import { findTotalPortfolios } from "../../../api/user";
 import CentralizeChildren from "../../CentralizeChildren";
 
-const Portfolio = ({
-  username,
-  profile_image,
-}) => {
+const Portfolio = ({ username, profile_image }) => {
   // const portFolioFormContent = useRef(null);
 
   const maxTotalPortfolio = 10;
@@ -47,7 +41,8 @@ const Portfolio = ({
           console.log("error");
           console.error(error);
         }
-      }).catch(error => {
+      })
+      .catch((error) => {
         console.log("error");
         console.error(error);
       });
@@ -109,7 +104,7 @@ const Portfolio = ({
   return (
     // <Link href={"/job/post"}>
     <>
-      <NewPortfolioButton 
+      <NewPortfolioButton
         // disabled={totalPortfolio === maxTotalPortfolio}
 
         onClick={(e) => {
@@ -118,45 +113,55 @@ const Portfolio = ({
           if (totalPortfolio <= maxTotalPortfolio) {
             setShowPortfolioForm(true);
           } else {
-            alert("Please, remove a portfolio first before you upload new one.");
+            alert(
+              "Please, remove a portfolio first before you upload new one."
+            );
             // alert("Only 10 portfolios are allowed currently. Please, remove a portfolio first before you upload new one.")
           }
         }}
       >
-        <CentralizeChildren >
+        <CentralizeChildren>
           {/* <CreateIcon /> */}
-          <NewPortfolioButtonText>
-            New Portfolio
-          </NewPortfolioButtonText>
+          <NewPortfolioButtonText>New Portfolio</NewPortfolioButtonText>
         </CentralizeChildren>
       </NewPortfolioButton>
 
-      <Dialog open={showPortfolioForm} onClose={handleClose} aria-labelledby="create-new-portfolio">
+      <Dialog
+        open={showPortfolioForm}
+        onClose={handleClose}
+        aria-labelledby="create-new-portfolio"
+      >
         {/* Include image here */}
-        <div style={{
-          minHeight: "18rem",
-        }}>
+        <div
+          style={{
+            minHeight: "18rem",
+          }}
+        >
           <DialogTitle id="create-portfolio">
-            <div style={{
-              //  display: "flex",
-              //  alignItems: "center",
+            <div
+              style={{
+                //  display: "flex",
+                //  alignItems: "center",
 
-              display: "flex",
-              alignItems: "center",
-              // justifyContent: "center",
-              // marginTop: "1rem",
-              marginLeft: "-0.5rem",
-            }}>
+                display: "flex",
+                alignItems: "center",
+                // justifyContent: "center",
+                // marginTop: "1rem",
+                marginLeft: "-0.5rem",
+              }}
+            >
               <div>
                 <Avatar
                   alt={username}
-                  src={profile_image || "/static/logo.png"}
+                  src={profile_image || "/static/logo.svg"}
                 />
               </div>
 
-              <span style={{
-                marginLeft: "0.5rem"
-              }}>
+              <span
+                style={{
+                  marginLeft: "0.5rem",
+                }}
+              >
                 New Portfolio
               </span>
             </div>
@@ -164,7 +169,8 @@ const Portfolio = ({
 
           <DialogContent>
             <DialogContentText>
-              Share your portfoilo to show your skills. ({totalPortfolio}/{maxTotalPortfolio})
+              Share your portfoilo to show your skills. ({totalPortfolio}/
+              {maxTotalPortfolio})
               {/* Share your portfoilo to show your ability. */}
               {/* You will need to login again with a new password after you change your current one. */}
               {/* Saving your new email will log you out. Then, we will send a notification to it in a few minutes. Please, confirm it and login again. */}
@@ -176,21 +182,21 @@ const Portfolio = ({
               handleSubmit={handleSubmit}
               handleChange={handleChange}
               handleBlur={handleBlur}
-
               values={values}
               errors={errors}
               touched={touched}
-
               setFieldValue={setFieldValue}
 
-            // ref={portFolioFormContent}
+              // ref={portFolioFormContent}
             />
           </DialogContent>
 
-          <DialogActions style={{
-            marginRight: "1rem",
-            // marginBottom: "2rem",
-          }} >
+          <DialogActions
+            style={{
+              marginRight: "1rem",
+              // marginBottom: "2rem",
+            }}
+          >
             <Button
               // disabled={isSubmitting}
               onClick={handleClose}
@@ -201,7 +207,6 @@ const Portfolio = ({
 
             <Button
               disabled={isSubmitting}
-
               onClick={async (e) => {
                 e.preventDefault();
 
@@ -216,7 +221,6 @@ const Portfolio = ({
             </Button>
           </DialogActions>
         </div>
-        
       </Dialog>
     </>
     // </Link>

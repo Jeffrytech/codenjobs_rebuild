@@ -2,10 +2,12 @@ import { Button, Typography } from "@material-ui/core";
 import { makeStyles, StylesContext } from "@material-ui/styles";
 import React, { useState } from "react";
 
-import { 
-  CardWrapper, 
-  // Top, Mid, 
-  JobPostPaymentCardHeader, JobPostPaymentCardIntro, JobPostPaymentDetails 
+import {
+  CardWrapper,
+  // Top, Mid,
+  JobPostPaymentCardHeader,
+  JobPostPaymentCardIntro,
+  JobPostPaymentDetails,
 } from "./JobPostPaymentCardCSS";
 import { styled } from "@mui/material/styles";
 import { green } from "@material-ui/core/colors";
@@ -40,7 +42,7 @@ interface PaymentProps {
     features: { allowed: boolean; title: string }[];
   };
   selected: boolean;
-  method: string,
+  method: string;
   // handleClicked: ( id: any) => void;
 }
 
@@ -54,22 +56,24 @@ const JobPostPaymentCard: React.FC<PaymentProps> = ({
   return (
     <CardWrapper>
       <JobPostPaymentCardHeader>
-        <ExternalLink 
+        <ExternalLink
           // TODO
           // Use another referral instead
-          // href={method === "code" ? BUY_CODE : FTX_RFERRAL} 
-          href={BUY_CODE } 
+          // href={method === "code" ? BUY_CODE : FTX_RFERRAL}
+          href={BUY_CODE}
         >
           <JobPostPaymentCardIntro>
             <img
-              src={method === "code" ? "/static/logo.png" : "/static/solana.png"}
+              src={
+                method === "code" ? "/static/logo.svg" : "/static/solana.png"
+              }
               style={{
                 width: "1.5rem",
                 height: "1.5rem",
                 marginRight: "0.5rem",
               }}
             />
-            {method === "code" ? "Use CODE Token" : "Use Solana"} 
+            {method === "code" ? "Use CODE Token" : "Use Solana"}
           </JobPostPaymentCardIntro>
         </ExternalLink>
       </JobPostPaymentCardHeader>
@@ -83,7 +87,6 @@ const JobPostPaymentCard: React.FC<PaymentProps> = ({
             />
           ))}
       </JobPostPaymentDetails>
-
     </CardWrapper>
   );
 };

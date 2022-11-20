@@ -28,7 +28,10 @@ const LoginRequired = () => {
     });
   };
 
-  const loginRedirect = loginRequired.from === null ? "/signin" : `/signin?from=${loginRequired.from}`;
+  const loginRedirect =
+    loginRequired.from === null
+      ? "/signin"
+      : `/signin?from=${loginRequired.from}`;
 
   return (
     <Dialog
@@ -38,17 +41,19 @@ const LoginRequired = () => {
       aria-describedby="Login required modal"
     >
       <DialogTitle id="login-required-modal">
-        <div style={{
-          display: "flex",
-          alignItems: "center",
-          // color: red,
-          // color: blue,
-          marginLeft: "-0.25rem",
-        }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            // color: red,
+            // color: blue,
+            marginLeft: "-0.25rem",
+          }}
+        >
           <div>
             <Avatar
               // alt={username}
-              src={"/static/logo.png"}
+              src={"/static/logo.svg"}
             />
           </div>
           <span style={{ marginLeft: "0.25rem" }}>{loginRequired.title}</span>
@@ -60,24 +65,30 @@ const LoginRequired = () => {
           {loginRequired.description}
         </DialogContentText>
 
-        <div style={{
-          display: "flex",
-          flexFlow: "column",
-        }}>
-          <SignInButton href={loginRedirect} >
+        <div
+          style={{
+            display: "flex",
+            flexFlow: "column",
+          }}
+        >
+          <SignInButton href={loginRedirect}>
             {/* <CodeIcon /> */}
-            <span style={{
-              marginLeft: "0.25rem",
-            }} >
+            <span
+              style={{
+                marginLeft: "0.25rem",
+              }}
+            >
               Sign In
             </span>
           </SignInButton>
 
-          <SignUpButton href="/register" >
+          <SignUpButton href="/register">
             {/* <MonetizationOnIcon /> */}
-            <span style={{
-              marginLeft: "0.25rem",
-            }} >
+            <span
+              style={{
+                marginLeft: "0.25rem",
+              }}
+            >
               Sign Up
             </span>
           </SignUpButton>
