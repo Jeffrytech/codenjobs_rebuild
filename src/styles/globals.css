@@ -133,10 +133,14 @@ h6 {
 
 .glow-icon {
   border-radius: 50%;
-  background-color: #58ab4d;
-  filter: blur(4px);
+  /* background-color: #58ab4d; */
+  /* filter: blur(4px); */
+  border: 2px solid #58ab4d;
   width: 28px;
   height: 28px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   -webkit-animation: anim-glow 1s ease infinite;
   animation: anim-glow 1s ease infinite;
 }
@@ -146,14 +150,14 @@ h6 {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  width: 20px;
-  height: 20px;
+  width: 18px;
+  height: 18px;
   position: absolute;
 }
 .glow-icon i {
   border-radius: 50%;
   border: 2px solid #58ab4d;
-  width: 19px;
+  width: 20px;
   height: 20px;
   display: inline-block;
   vertical-align: 6px;
