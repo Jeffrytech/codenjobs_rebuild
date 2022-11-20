@@ -52,15 +52,15 @@ const socials = [
 
 const Footer = () => {
   return (
-    <footer className="flex items-center min-h-[80px] px-5 sm:px-3 sm:flex-row flex-col sm: gap-5 flex-wrap justify-between bg-white full-bleed py-5">
+    <footer className="flex items-center min-h-[80px] px-5 sm:px-8 sm:justify-evenly sm:flex-row flex-col sm: gap-5 flex-wrap justify-between bg-white full-bleed py-5">
       <div className="w-full sm:w-fit">
         <div className="flex items-center gap-4">
-          <ul className="sm:flex hidden sm:gap-2 lg:gap-4">
+          <ul className="sm:flex hidden sm:gap-2 sm:text-sm lg:gap-4">
             <li>Browse Jobs</li>
             <li>Contact Us</li>
             <li>About</li>
           </ul>
-          <div className="sm:w-fit w-full flex gap-3 items-center">
+          <div className="sm:w-fit w-full sm:flex hidden gap-3 items-center">
             {socials.map(({ name, link }) => (
               <a href={link} target="_blank" rel="noreferrer" key={name}>
                 <img src={`/static/icons/${name}.svg`} alt={name} />
@@ -77,8 +77,15 @@ const Footer = () => {
             </div>
           ))}
         </div>
+        <div className="sm:w-fit w-full sm:hidden flex my-5 gap-3 items-center">
+          {socials.map(({ name, link }) => (
+            <a href={link} target="_blank" rel="noreferrer" key={name}>
+              <img src={`/static/icons/${name}.svg`} alt={name} />
+            </a>
+          ))}
+        </div>
       </div>
-      <div className="sm:w-fit w-full">
+      <div className="sm:w-fit w-full sm:text-sm">
         <p>© 2022 Code & Jobs. All Rights Reserved</p>
       </div>
       <div className="gap-2 sm:border-t-0 pt-5 sm:pt-0 border-t items-center flex justify-between md:w-fit w-full">

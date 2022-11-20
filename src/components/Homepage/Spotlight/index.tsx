@@ -1,6 +1,5 @@
 import moment from "moment";
 import { JobResponse } from "../../../pages";
-import BgImage from "../../../../public/static/spiral-bg.jpg";
 
 const Card = ({
   company_logo,
@@ -65,7 +64,7 @@ const Card = ({
 
 const Spotlight = ({ jobs }: { jobs: JobResponse[] }) => {
   return (
-    <section className="bg-cover sm:space-y-16 space-y-10 sm:px-6 sm:py-16 px-5 py-10 sm:bg-[url('/static/spiral-bg.jpg')] bg-[url('/static/sm-spiral-bg.jpg')] bg-no-repeat bg-center bg-fixed">
+    <section className="bg-cover sm:space-y-16 space-y-10 sm:px-6 sm:py-16 px-5 py-10 sm:bg-[url('/static/spiral-bg.jpg')] bg-[url('/static/sm-spiral-bg.jpg')] bg-no-repeat bg-center sm:bg-fixed">
       <h3 className="font-semibold text-center  text-[35px] leading-9 tracking-[15px] sm:tracking-[21px]">
         Spotlight
       </h3>

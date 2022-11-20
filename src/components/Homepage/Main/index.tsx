@@ -123,8 +123,8 @@ const Main = () => {
               />
             </MainFormInputWrapper>
 
-            <MainFormInputButton type="submit">
-              <img src="/static/design/link_white.svg" />
+            <MainFormInputButton className="bg-primary" type="submit">
+              <img src="/static/design/link_white.svg" alt="" />
             </MainFormInputButton>
           </MainFormInputContainer>
 

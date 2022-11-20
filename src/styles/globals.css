@@ -110,7 +110,7 @@ h6 {
 }
 @-webkit-keyframes anim-glow {
   0% {
-    box-shadow: 0 0 #61ef61;
+    box-shadow: 0 0 #58ab4d;
   }
   100% {
     box-shadow: 0 0 10px 8px transparent;
@@ -119,7 +119,7 @@ h6 {
 }
 @keyframes anim-glow {
   0% {
-    box-shadow: 0 0 #61ef61;
+    box-shadow: 0 0 #58ab4d;
   }
   100% {
     box-shadow: 0 0 10px 8px transparent;
@@ -127,27 +127,37 @@ h6 {
   }
 }
 
+.glow-container {
+  position: relative;
+}
+
 .glow-icon {
   border-radius: 50%;
-  border: 2px solid #61ef61;
+  background-color: #58ab4d;
+  filter: blur(4px);
   width: 28px;
   height: 28px;
-  text-align: center;
-  position: relative;
-  -webkit-animation: anim-glow 1.5s ease infinite;
-  animation: anim-glow 1.5s ease infinite;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-animation: anim-glow 1s ease infinite;
+  animation: anim-glow 1s ease infinite;
+}
+.glow-sqr {
+  border-radius: 50%;
+  background-color: #58ab4d;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  position: absolute;
 }
 .glow-icon i {
   border-radius: 50%;
-  border: 2px solid #61ef61;
-  width: 20px;
+  border: 2px solid #58ab4d;
+  width: 19px;
   height: 20px;
   display: inline-block;
   vertical-align: 6px;
-  background-color: #61ef61;
+  background-color: #58ab4d;
 }
 
 .blockchain-list .slick-active img {

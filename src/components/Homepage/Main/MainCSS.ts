@@ -161,7 +161,7 @@ const MainFormInputButton = styled("button", {
 
   ":hover": hover,
 
-  [DESKTOP]: {
+  [MOBILE]: {
     display: "none",
   },
 });
