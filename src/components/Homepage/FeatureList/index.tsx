@@ -77,7 +77,10 @@ const options = [
 
 const FeatureList = () => {
   return (
-    <FeatureListSection className="feature-section" id="feature-list-section">
+    <FeatureListSection
+      className="feature-section sm:py-10 sm:pb-20 py-20"
+      id="feature-list-section"
+    >
       <FeatureListTitle>What We Do</FeatureListTitle>
 
       <FeatureListNav className="hidden sm:flex">
@@ -243,10 +246,7 @@ const FeatureList = () => {
                     className="bg-[#26619C] text-white"
                   >
                     {btnText}
-                    <ArrowForwardIosOutlined
-                      fontWeight="300"
-                      fontSize="inherit"
-                    />
+                    <ArrowForwardIosOutlined fontSize="inherit" />
                   </FeatureListNavLinkListButton>
                 </Link>
               </div>

@@ -5,17 +5,12 @@ import { disabled, hover } from "../../../design/common";
 
 const FeatureListSection = styled("section", {
   // height: "44rem",
-  paddingBottom: "3.75rem",
 
   // background: whiteGrey,
   background: "#F3F0EB",
 
   display: "flex",
   flexFlow: "column",
-
-  [MOBILE]: {
-    paddingBottom: 0,
-  },
 });
 
 const FeatureListTitle = styled("h2", {
