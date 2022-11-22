@@ -101,8 +101,11 @@ const TopNav = () => {
               )}
             </div>
             <Tooltip placement="top" title="Sign In">
-              <div className="glow-icon">
-                <i></i>
+              <div className="glow-container cursor-pointer">
+                <div className="glow-icon">
+                  <i />
+                </div>
+                {/* <div className="glow-sqr" /> */}
               </div>
             </Tooltip>
             <div ref={walletRef} className="relative">
@@ -118,16 +121,22 @@ const TopNav = () => {
               {showWallets && (
                 <div className="absolute w-[300px] mt-7 m-5 mr-0 bg-white right-0 p-5 space-y-4 shadow-xx rounded-[10px]">
                   <div className="px-3">
-                    <div className="w-fit text-xs ml-auto">
+                    <div
+                      onClick={() => setShowWallets((c) => !c)}
+                      className="w-fit text-xs ml-auto  cursor-pointer mb-2"
+                    >
                       <CloseOutlined fontSize="small" />
                     </div>
                     <h2 className="text-black font-semibold">
                       Connect a wallet to continue
                     </h2>
                   </div>
-                  <div className="space-y-3">
+                  <div className="space-y-1">
                     {options.map(({ idx, name }) => (
-                      <div className="flex items-center gap-2" key={idx}>
+                      <div
+                        className="flex items-center gap-2 hover:outline-2 hover:outline focus:outline-2 focus:outline rounded-lg outline-primary cursor-pointer px-3 py-1.5"
+                        key={idx}
+                      >
                         <Image
                           src={`/static/icons/${name}.svg`}
                           width={20}

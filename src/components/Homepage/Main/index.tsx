@@ -66,7 +66,7 @@ const Main = () => {
   return (
     <MainSection>
       <MainContainer>
-        <MainJobSearchForm onSubmit={handleSubmit}>
+        <MainJobSearchForm className="lg:pr-[20%]" onSubmit={handleSubmit}>
           <MainCompanyName>Code & Jobs</MainCompanyName>
           <MainCompanyDescription>
             An all-in-one cryptocurrency marketplace
@@ -123,8 +123,8 @@ const Main = () => {
               />
             </MainFormInputWrapper>
 
-            <MainFormInputButton type="submit">
-              <img src="/static/design/link_white.svg" />
+            <MainFormInputButton className="bg-primary" type="submit">
+              <img src="/static/design/link_white.svg" alt="" />
             </MainFormInputButton>
           </MainFormInputContainer>
 
@@ -169,10 +169,12 @@ const Main = () => {
           </MainJobSearchListContainer>
         </MainJobSearchForm>
       </MainContainer>
-      <MainDesktopImage
-        id="main-desktop-image"
-        src="/static/design/main_desktop.svg"
-      />
+      <div className="p-10 lg:block hidden w-4/5">
+        <MainDesktopImage
+          id="main-desktop-image"
+          src="/static/design/main_desktop.svg"
+        />
+      </div>
       {/* <div> */}
       <MainMobileImage
         id="main-mobile-image"

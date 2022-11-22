@@ -1,6 +1,6 @@
 // Extract this file from the current folder and reuse?
 
-// https://www.striphtml.com/ 
+// https://www.striphtml.com/
 // Paste job description with this.
 
 import React, {
@@ -11,7 +11,7 @@ import React, {
 
 import Select from "react-select";
 
-import CreatableSelect from 'react-select/creatable';
+import CreatableSelect from "react-select/creatable";
 
 // https://jpuri.github.io/react-draft-wysiwyg/#/docs
 // https://blog.logrocket.com/building-rich-text-editors-in-react-using-draft-js-and-react-draft-wysiwyg/
@@ -28,7 +28,7 @@ import draftToHtml from "draftjs-to-html";
 // import htmlToDraft from "html-to-draftjs"; // Equal to convertFromHTML
 import DOMPurify from "dompurify";
 
-import showdown from 'showdown';
+import showdown from "showdown";
 
 import Required from "../../../form/Required";
 
@@ -37,24 +37,20 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import CodeIcon from '@material-ui/icons/Code';
+import CodeIcon from "@material-ui/icons/Code";
 
 import Chip from "@material-ui/core/Chip";
 
 import {
   editorStyles,
-
   JobPostFormLabel,
   JobPostFormInputWrapper,
   JobPostFormTextInput,
   // JobPostFormTextarea,
-
   CharactersLeftWrapper,
   SkillsLeftWrapper,
-
   JobTypeRadioGroupWrapper,
   JobCategoryWrapper,
-  
   JobPostSkillsWrapper,
   JobPostSkill,
   JobPostFormDetailText,
@@ -65,18 +61,15 @@ import UrlOrEmailFieldErrorMessage from "../../../error/UrlOrEmailFieldErrorMess
 
 import {
   locationMaxLength,
-  
   jobTitleMaxLength,
   jobDescriptionMaxLength,
-  
   salaryMaxLength,
   urlMaxLength,
-  
   skillMaxLength,
   skillsValidatorError,
 } from "../../../../validators";
 
-import style from '../../../../styles/editor-styles.module.css';
+import style from "../../../../styles/editor-styles.module.css";
 
 import {
   charactersLeft,
@@ -85,22 +78,28 @@ import {
   // tagsLeft
 } from "../../../../form";
 
-import { 
-  jobCategoryOptions, 
-  // findJobCategoryValue, 
-  findJobCategoryLabelValue 
+import {
+  jobCategoryOptions,
+  // findJobCategoryValue,
+  findJobCategoryLabelValue,
 } from "../../../../typeDefinitions/job";
 import { Tooltip } from "@material-ui/core";
-import { 
-  skillRegex,
-  styleRegex, 
-} from "../../../../validators/regex";
+import { skillRegex, styleRegex } from "../../../../validators/regex";
 
-import { returnYesOrNo, toLabelValue, yesOrNo } from "../../../../typeDefinitions/select";
+import {
+  returnYesOrNo,
+  toLabelValue,
+  yesOrNo,
+} from "../../../../typeDefinitions/select";
 import DropdownErrorMessage from "../../../error/DropdownErrorMessage";
 import { findJobSkillListForOwner } from "../../../../api/privateJob";
 import ExternalLink from "../../../ExternalLink";
-import { MarkdownForm, MarkdownFormWrapper, MarkdownLabelWrapper, MarkdownSwitch } from "../../../markdown/MarkdownCSS";
+import {
+  MarkdownForm,
+  MarkdownFormWrapper,
+  MarkdownLabelWrapper,
+  MarkdownSwitch,
+} from "../../../markdown/MarkdownCSS";
 import { COMPANY_CODE_OF_CONDUCT } from "../../../../config/environment";
 
 // import { englishOnly } from "../../validators/regex";
@@ -125,12 +124,12 @@ const JobForm = ({
 
   jobDescription,
   jobDescriptionMarkdown,
-  
+
   jobLocation,
 
   type,
   category,
-  
+
   salary,
   pay_in_cryptocurrency,
 
@@ -146,15 +145,16 @@ const JobForm = ({
   // setActiveStep,
 }) => {
   const converter = new showdown.Converter();
-  
-  const { 
-    wrapperStyle, 
-    toolbarStyle, 
+
+  const {
+    wrapperStyle,
+    toolbarStyle,
     // editorStyle
   } = editorStyles;
 
-  let html = editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()));
-  html = html.replace(styleRegex, '$1'); // Remove style attribute.
+  let html =
+    editorState && draftToHtml(convertToRaw(editorState.getCurrentContent()));
+  html = html.replace(styleRegex, "$1"); // Remove style attribute.
   // console.log(html);
   // console.log("replaced");
   // console.log(html.replace(/style="[^"]*"/, ""));
@@ -163,11 +163,11 @@ const JobForm = ({
   // alert(html.length);
 
   const [useMarkdown, setUseMarkdown] = useState(false);
-  
+
   const [skillInput, setSkillinput] = useState(""); // Use the function and value from formik.
 
   const removeSkill = (index) => {
-    if ((skills.length - 1) >= index) {
+    if (skills.length - 1 >= index) {
       const newSkills = [...skills];
       newSkills.splice(index, 1);
       setFieldValue("skills", newSkills);
@@ -177,15 +177,19 @@ const JobForm = ({
   const [skillOptions, setSkillOptions] = useState([]);
 
   useEffect(() => {
-    findJobSkillListForOwner().then(({ data }) => {
-      setSkillOptions(data.map(skill => {
-        return toLabelValue(skill);
-      }));
-      // setSkillOptions()
-    }).catch(error => {
-      console.log("error");
-      console.error(error);
-    });
+    findJobSkillListForOwner()
+      .then(({ data }) => {
+        setSkillOptions(
+          data.map((skill) => {
+            return toLabelValue(skill);
+          })
+        );
+        // setSkillOptions()
+      })
+      .catch((error) => {
+        console.log("error");
+        console.error(error);
+      });
   }, []);
 
   // const handleTagInput = (e) => {
@@ -207,7 +211,7 @@ const JobForm = ({
 
   return (
     <>
-      <JobPostFormLabel htmlFor="jobTitle" >
+      <JobPostFormLabel htmlFor="jobTitle">
         Job Title
         <Required />
       </JobPostFormLabel>
@@ -216,14 +220,11 @@ const JobForm = ({
           id="jobTitle"
           name="jobTitle"
           type="text"
-
           placeholder={"Job title(required)"}
           maxLength={jobTitleMaxLength}
-
           onChange={handleChange}
           onBlur={handleBlur}
           value={jobTitle}
-
           required
         />
       </JobPostFormInputWrapper>
@@ -240,25 +241,28 @@ const JobForm = ({
 
       <MarkdownLabelWrapper>
         <div>
-          <JobPostFormLabel style={{
-            marginBottom: "1rem",
-          }}
-          htmlFor="jobDescriptionMarkdown"
+          <JobPostFormLabel
+            style={{
+              marginBottom: "1rem",
+            }}
+            htmlFor="jobDescriptionMarkdown"
           >
             Job Description
             <Required />
           </JobPostFormLabel>
         </div>
 
-        <Tooltip title={!useMarkdown ? "Use markdown" : "Unuse markdown"} arrow >
+        <Tooltip title={!useMarkdown ? "Use markdown" : "Unuse markdown"} arrow>
           <MarkdownSwitch
             $useMarkdown={useMarkdown}
             onClick={(e) => {
               e.preventDefault();
 
               if (!useMarkdown) {
-
-                setFieldValue("jobDescriptionMarkdown", converter.makeMarkdown(jobDescription));
+                setFieldValue(
+                  "jobDescriptionMarkdown",
+                  converter.makeMarkdown(jobDescription)
+                );
               }
               setUseMarkdown(!useMarkdown);
             }}
@@ -268,126 +272,131 @@ const JobForm = ({
         </Tooltip>
       </MarkdownLabelWrapper>
 
-      <MarkdownFormWrapper $useMarkdown={useMarkdown} >
-        {!useMarkdown ? <Editor
-          editorState={editorState}
-          onEditorStateChange={(editorState)=> {
-            if (html.length < jobDescriptionMaxLength) {
+      <MarkdownFormWrapper $useMarkdown={useMarkdown}>
+        {!useMarkdown ? (
+          <Editor
+            editorState={editorState}
+            onEditorStateChange={(editorState) => {
+              if (html.length < jobDescriptionMaxLength) {
+                // console.log(html);
 
-              // console.log(html);
+                setEditorState(editorState);
 
-              setEditorState(editorState);
+                // setFieldValue("jobDescription", DOMPurify.sanitize(html));
 
-              // setFieldValue("jobDescription", DOMPurify.sanitize(html));
+                // setEditorState(
+              }
+            }}
+            // onEditorStateChange={(editorState) => {
+            //   if (html.length < jobDescriptionMaxLength) {
+            //     setEditorState(editorState);
+            //   }
+            // }}
 
-              // setEditorState(
-                
-            }
+            // decorators doesn't work here.
+            customDecorators={decorators}
+            placeholder="You can use markdown instead with < > button."
+            onChange={(e) => {
+              // alert("onchange");
+              // if (html.length < blogPostBodyMaxLength) {
+              setFieldValue("jobDescription", DOMPurify.sanitize(html));
+              // }
+              // const stateWithTemporaryHtml = EditorState.createWithContent(ContentState.createFromBlockArray(
+              //   convertFromHTML(html)
+              // ), decorator);
 
-            
-          }}
-          // onEditorStateChange={(editorState) => {
-          //   if (html.length < jobDescriptionMaxLength) {
-          //     setEditorState(editorState);
-          //   }
-          // }}
+              // // setEditorState(EditorState.createWithContent(editorState.getCurrentContent()));
+              // setEditorState(stateWithTemporaryHtml);
+            }}
+            // onChange={handleChange}
+            // onBlur={handleBlur}
 
-          // decorators doesn't work here.
-          customDecorators={decorators}
+            wrapperStyle={wrapperStyle}
+            toolbarStyle={toolbarStyle}
+            // editorStyle={editorStyle}
 
-          placeholder="You can use markdown instead with < > button."
+            editorClassName={style.reactMarkDown}
+            maxLength={jobDescriptionMaxLength}
+            toolbar={{
+              options: [
+                "inline",
+                "blockType",
+                "fontSize",
+                "list",
+                "textAlign",
+                "link",
+                "embedded",
+                "image",
+                "remove",
+                "history",
+              ],
+              blockType: {
+                inDropdown: true,
+                options: [
+                  "Normal",
+                  "H1",
+                  "H2",
+                  "H3",
+                  "H4",
+                  "H5",
+                  "H6",
+                  "Blockquote",
+                  "Code",
+                ],
+                // Find how to include codesnippets?
+                // options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'Blockquote'],
+                className: undefined,
+                component: undefined,
+                dropdownClassName: undefined,
+              },
+            }}
+          />
+        ) : (
+          <MarkdownForm
+            id="jobDescriptionMarkdown"
+            name="jobDescriptionMarkdown"
+            rows={16}
+            // Show value with markdown
+            // Make it to markdown
+            // value={markdownValue} // html to makrdown
+            value={jobDescriptionMarkdown} // html to makrdown
+            // value={body} // html to makrdown
+            // value={converter.makeMarkdown('<h1>a heading</h1>')} // html to makrdown
 
-          onChange={(e) => {
-            // alert("onchange");
-            // if (html.length < blogPostBodyMaxLength) {
-            setFieldValue("jobDescription", DOMPurify.sanitize(html));
-            // }
-            // const stateWithTemporaryHtml = EditorState.createWithContent(ContentState.createFromBlockArray(
-            //   convertFromHTML(html)
-            // ), decorator);
+            // placeholder="You can use markdown here."
+            placeholder="Use markdown here."
+            maxLength={jobDescriptionMaxLength}
+            // onBlur={handleBlur}
 
-            // // setEditorState(EditorState.createWithContent(editorState.getCurrentContent()));
-            // setEditorState(stateWithTemporaryHtml);
-          }}
-          // onChange={handleChange}
-          // onBlur={handleBlur}
+            // Save html value.
+            // Then, when valeu changes, set it from markdown to html.
+            onBlur={handleBlur}
+            onChange={async (e) => {
+              setFieldValue("jobDescriptionMarkdown", e.target.value);
 
-          wrapperStyle={wrapperStyle}
-          toolbarStyle={toolbarStyle}
-          // editorStyle={editorStyle}
+              const html = converter.makeHtml(e.target.value);
+              setFieldValue("jobDescription", html);
 
-          editorClassName={style.reactMarkDown}
-
-          maxLength={jobDescriptionMaxLength}
-
-          toolbar={{
-            options: [
-              "inline",
-              "blockType",
-              "fontSize",
-              "list",
-              "textAlign",
-              "link",
-              "embedded",
-              "image",
-              "remove",
-              "history"
-            ],
-            blockType: {
-              inDropdown: true,
-              options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'Blockquote', 'Code'],
-              // Find how to include codesnippets?
-              // options: ['Normal', 'H1', 'H2', 'H3', 'H4', 'H5', 'H6', 'Blockquote'],
-              className: undefined,
-              component: undefined,
-              dropdownClassName: undefined,
-            },
-          }}
-        /> : <MarkdownForm
-          id="jobDescriptionMarkdown"
-          name="jobDescriptionMarkdown"
-
-          rows={16}
-
-          // Show value with markdown
-          // Make it to markdown
-          // value={markdownValue} // html to makrdown
-          value={jobDescriptionMarkdown} // html to makrdown
-          // value={body} // html to makrdown
-          // value={converter.makeMarkdown('<h1>a heading</h1>')} // html to makrdown
-
-          // placeholder="You can use markdown here."
-          placeholder="Use markdown here."
-          maxLength={jobDescriptionMaxLength}
-
-          // onBlur={handleBlur}
-
-          // Save html value.
-          // Then, when valeu changes, set it from markdown to html.
-          onBlur={handleBlur}
-          onChange={async (e) => {
-            setFieldValue("jobDescriptionMarkdown", e.target.value);
-
-            const html = converter.makeHtml(e.target.value);
-            setFieldValue("jobDescription", html);
-
-            setEditorState(EditorState.createWithContent(ContentState.createFromBlockArray(
-              convertFromHTML(html)
-            )));
-          }}
-        />}
+              setEditorState(
+                EditorState.createWithContent(
+                  ContentState.createFromBlockArray(convertFromHTML(html))
+                )
+              );
+            }}
+          />
+        )}
       </MarkdownFormWrapper>
 
       <CharactersLeftWrapper>
         {charactersUsedPercent(jobDescriptionMaxLength, jobDescription)}
         <CodeOfConductWrapper>
-          <ExternalLink href={COMPANY_CODE_OF_CONDUCT} >
+          <ExternalLink href={COMPANY_CODE_OF_CONDUCT}>
             Code of Conduct
           </ExternalLink>
         </CodeOfConductWrapper>
       </CharactersLeftWrapper>
 
-      <JobPostFormLabel htmlFor="jobLocation" >
+      <JobPostFormLabel htmlFor="jobLocation">
         Job Location
         <Required />
       </JobPostFormLabel>
@@ -400,12 +409,10 @@ const JobForm = ({
           id="jobLocation"
           name="jobLocation"
           type="text"
-
           placeholder={"Where an employee will work"}
           maxLength={locationMaxLength}
-
           // onChange={handleChange}
-          onChange={e => {
+          onChange={(e) => {
             e.preventDefault();
 
             // Find the better solution later.
@@ -416,7 +423,6 @@ const JobForm = ({
           }}
           onBlur={handleBlur}
           value={jobLocation}
-
           required
         />
       </JobPostFormInputWrapper>
@@ -424,7 +430,7 @@ const JobForm = ({
         {charactersLeft(locationMaxLength, jobLocation)}
       </CharactersLeftWrapper>
 
-      <JobPostFormLabel htmlFor="type" >
+      <JobPostFormLabel htmlFor="type">
         Type
         <Required />
       </JobPostFormLabel>
@@ -435,19 +441,39 @@ const JobForm = ({
           aria-label="type"
           name="type"
           value={type}
-          onChange={e => {
+          onChange={(e) => {
             setFieldValue("type", e.target.value);
           }}
         >
-          <FormControlLabel value="Full-Time" control={<Radio />} label="Full-Time" />
-          <FormControlLabel value="Part-Time" control={<Radio />} label="Part-Time" />
-          <FormControlLabel value="Contract" control={<Radio />} label="Contract" />
-          <FormControlLabel value="Freelance" control={<Radio />} label="Freelance" />
-          <FormControlLabel value="Internship" control={<Radio />} label="Internship" />
+          <FormControlLabel
+            value="Full-Time"
+            control={<Radio />}
+            label="Full-Time"
+          />
+          <FormControlLabel
+            value="Part-Time"
+            control={<Radio />}
+            label="Part-Time"
+          />
+          <FormControlLabel
+            value="Contract"
+            control={<Radio />}
+            label="Contract"
+          />
+          <FormControlLabel
+            value="Freelance"
+            control={<Radio />}
+            label="Freelance"
+          />
+          <FormControlLabel
+            value="Internship"
+            control={<Radio />}
+            label="Internship"
+          />
         </RadioGroup>
       </JobTypeRadioGroupWrapper>
 
-      <JobPostFormLabel htmlFor="category" >
+      <JobPostFormLabel htmlFor="category">
         Category
         <Required />
       </JobPostFormLabel>
@@ -456,7 +482,6 @@ const JobForm = ({
         <Select
           id="category"
           name="category"
-
           styles={{
             control: (provided) => ({
               ...provided,
@@ -465,25 +490,23 @@ const JobForm = ({
               // opacity: "0.7",
             }),
           }}
-          
           // value={findJobCategoryValue(category)}
           value={findJobCategoryLabelValue(category)}
           // value={{
           //   label: category,
           //   value: category,
           // }}
-          onChange={e => {
+          onChange={(e) => {
             // console.log(e);
             setFieldValue("category", e.value);
             // setFieldValue("category", e.value);
           }}
-
           options={jobCategoryOptions}
           // placeholder="Category"
         />
       </JobCategoryWrapper>
 
-      <JobPostFormLabel htmlFor="salary" >
+      <JobPostFormLabel htmlFor="salary">
         Salary
         <Required />
       </JobPostFormLabel>
@@ -496,13 +519,11 @@ const JobForm = ({
           id="salary"
           name="salary"
           type="text"
-
           placeholder={"$100000 format or Not listed"}
           // placeholder={"$160k or $160/h format"}
           maxLength={salaryMaxLength}
-
           // onChange={handleChange}
-          onChange={e => {
+          onChange={(e) => {
             e.preventDefault();
 
             // const result = dollarOnlyNotRequired.test(e.target.value);
@@ -517,11 +538,9 @@ const JobForm = ({
             } else {
               setFieldValue("salary", e.target.value);
             }
-           
           }}
           onBlur={handleBlur}
           value={salary}
-
           required
         />
       </JobPostFormInputWrapper>
@@ -529,7 +548,7 @@ const JobForm = ({
         {charactersLeft(salaryMaxLength, salary)}
       </CharactersLeftWrapper>
 
-      <JobPostFormLabel htmlFor="pay_in_cryptocurrency" >
+      <JobPostFormLabel htmlFor="pay_in_cryptocurrency">
         Pay in cryptocurrency
         <Required />
       </JobPostFormLabel>
@@ -539,7 +558,6 @@ const JobForm = ({
         <Select
           id="pay_in_cryptocurrency"
           name="pay_in_cryptocurrency"
-
           styles={{
             control: (provided) => ({
               ...provided,
@@ -557,7 +575,7 @@ const JobForm = ({
               ...provided,
               // backgroundColor: "red",
               marginLeft: "1.75rem",
-              opacity: "0.7"
+              opacity: "0.7",
             }),
             input: (provided) => ({
               ...provided,
@@ -576,19 +594,17 @@ const JobForm = ({
               marginLeft: "1.75rem",
             }),
           }}
-
           value={returnYesOrNo(pay_in_cryptocurrency)}
-          onChange={e => {
+          onChange={(e) => {
             // console.log(e);
             setFieldValue("pay_in_cryptocurrency", e.value);
             // setFieldValue("category", e.value);
           }}
-
           options={yesOrNo}
         />
       </JobCategoryWrapper>
 
-      <JobPostFormLabel htmlFor="howToApply" >
+      <JobPostFormLabel htmlFor="howToApply">
         How to apply
         <Required />
       </JobPostFormLabel>
@@ -597,10 +613,8 @@ const JobForm = ({
           id="howToApply"
           name="howToApply"
           type="text"
-
           placeholder={"Your contact email or a webpage to apply"}
           maxLength={urlMaxLength}
-
           onChange={handleChange}
           onBlur={handleBlur}
           value={howToApply}
@@ -612,26 +626,25 @@ const JobForm = ({
         formTouch={touched.howToApply}
       />
 
-      <JobPostFormLabel htmlFor="skills" >
-        Required Skills
-      </JobPostFormLabel>
+      <JobPostFormLabel htmlFor="skills">Required Skills</JobPostFormLabel>
 
-      <DropdownErrorMessage 
+      <DropdownErrorMessage
         formValue={skillInput}
         formError={errors.skills}
         // formTouch={touched.skills}
       />
       {/* Include English characters only description below. */}
       <JobPostFormInputWrapper>
-        <div style={{
-          marginTop: "1rem",
-        }}>
+        <div
+          style={{
+            marginTop: "1rem",
+          }}
+        >
           <CreatableSelect
             id="skills"
             name="skills"
             // @ts-ignore
             type="text"
-
             placeholder="Select a skill"
             // placeholder="Enter a skill"
 
@@ -643,14 +656,10 @@ const JobForm = ({
                 // opacity: "0.7",
               }),
             }}
-
             backspaceRemovesValue={true}
             isClearable
-
             inputValue={skillInput}
-
             onInputChange={(e) => {
-
               const result = skillRegex.test(e);
 
               if (result) {
@@ -667,53 +676,49 @@ const JobForm = ({
                 setFieldError("skills", skillsValidatorError);
               }
             }}
-
             onChange={(e) => {
               if (e === null) {
                 // alert("No value");
                 // Delete a skill with this.
                 if (skills.length > 0) {
-                  setFieldValue("skills", skills.slice(0, (skills.length - 1)));
+                  setFieldValue("skills", skills.slice(0, skills.length - 1));
                 }
               } else {
-                if (skills.find(skill => skill.toLowerCase() === e.value.toLowerCase())) {
+                if (
+                  skills.find(
+                    (skill) => skill.toLowerCase() === e.value.toLowerCase()
+                  )
+                ) {
                   return;
                 }
 
                 setFieldValue("skills", [...skills, e.value]);
               }
-              
             }}
-
             options={skillOptions}
-
             required
           />
         </div>
-      </JobPostFormInputWrapper> 
+      </JobPostFormInputWrapper>
 
-      <SkillsLeftWrapper>
-        {skillsLeft(5, skills.length)}
-      </SkillsLeftWrapper>
+      <SkillsLeftWrapper>{skillsLeft(5, skills.length)}</SkillsLeftWrapper>
 
       <JobPostSkillsWrapper>
-        {
-          skills.map((skill, index) => {
-            return (
-              <JobPostSkill key={skill} >
-                <Chip
-                  variant="outlined"
-                  label={skill}
-                  onDelete={(e) => {
-                    e.preventDefault();
+        {skills.map((skill, index) => {
+          return (
+            <JobPostSkill key={skill}>
+              <Chip
+                variant="outlined"
+                label={skill}
+                onDelete={(e) => {
+                  e.preventDefault();
 
-                    removeSkill(index);
-                  }}
-                />
-              </JobPostSkill>
-            );
-          })
-        }
+                  removeSkill(index);
+                }}
+              />
+            </JobPostSkill>
+          );
+        })}
       </JobPostSkillsWrapper>
     </>
   );

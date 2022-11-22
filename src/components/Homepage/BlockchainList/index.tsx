@@ -1,5 +1,5 @@
 import { white } from "../../../design/colors";
-import Carousel from "../../carousel";
+import Carousel, { CSSOnlyCarousel } from "../../Elements/carousel";
 import { BlockchainListLogo, BlockchainListSection } from "./BlockchainListCSS";
 
 const options = [
@@ -13,39 +13,43 @@ const options = [
   "fantom",
 ];
 
-const BlockchainList = () => {
-  return (
-    <div className="bg-white p-5 sm:px-20 blockchain-list">
-      <Carousel
+/* 
+
         autoplay
-        autoplaySpeed={2000}
+        autoplaySpeed={1000}
         infinite
-        slidesToScroll={1}
+        slidesToScroll={2}
         slidesToShow={6}
         responsive={[
           {
             breakpoint: 1024,
             settings: {
               slidesToShow: 4,
-              slidesToScroll: 1,
+              slidesToScroll: 2,
             },
           },
           {
             breakpoint: 600,
             settings: {
               slidesToShow: 3,
-              slidesToScroll: 1,
+              slidesToScroll: 2,
             },
           },
           {
             breakpoint: 480,
             settings: {
               slidesToShow: 2,
-              slidesToScroll: 1,
+              slidesToScroll: 2,
             },
           },
         ]}
-      >
+
+*/
+
+const BlockchainList = () => {
+  return (
+    <div className="bg-white p-5 sm:px-20 blockchain-list">
+      <CSSOnlyCarousel>
         {options.map((c) => (
           <div key={c}>
             <img
@@ -55,7 +59,7 @@ const BlockchainList = () => {
             />
           </div>
         ))}
-      </Carousel>
+      </CSSOnlyCarousel>
     </div>
   );
 };
