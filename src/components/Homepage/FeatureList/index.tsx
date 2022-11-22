@@ -15,7 +15,7 @@ import {
   FeatureListTitle,
 } from "./FeatureListCSS";
 import { ArrowForwardIosOutlined } from "@material-ui/icons";
-import Carousel from "../../carousel";
+import Carousel from "../../Elements/carousel";
 
 const JOBS = "Post or find a job.";
 const FOR_HIRE = "Find candidates.";
