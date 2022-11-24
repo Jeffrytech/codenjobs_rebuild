@@ -1,5 +1,4 @@
 import Link from "next/link";
-import ExternalLink from "../../ExternalLink";
 import { COMPANY_ENGLISH_DOCS_WEBSITE } from "../../../config/environment";
 import {
   FeatureListNav,
@@ -93,7 +92,7 @@ const FeatureList = () => {
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <ExternalLink href="/jobs">
+              <Link passHref href="/jobs">
                 <FeatureListNavLinkListButton>
                   Find a job
                   <ArrowForwardIosOutlined
@@ -101,7 +100,7 @@ const FeatureList = () => {
                     fontSize="inherit"
                   />
                 </FeatureListNavLinkListButton>
-              </ExternalLink>
+              </Link>
             </FeatureListNavLinkListButtonWrapper>
           </FeatureListNavLinkList>
 
@@ -113,7 +112,7 @@ const FeatureList = () => {
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <ExternalLink href="/forhire">
+              <Link passHref href="/forhire">
                 <FeatureListNavLinkListButton>
                   {/* Learn More */}
                   People For Hire
@@ -122,7 +121,7 @@ const FeatureList = () => {
                     fontSize="inherit"
                   />
                 </FeatureListNavLinkListButton>
-              </ExternalLink>
+              </Link>
             </FeatureListNavLinkListButtonWrapper>
           </FeatureListNavLinkList>
 
@@ -158,7 +157,7 @@ const FeatureList = () => {
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <ExternalLink href="/nft/projects">
+              <Link passHref href="/nft/projects">
                 <FeatureListNavLinkListButton>
                   New Projects
                   <ArrowForwardIosOutlined
@@ -166,7 +165,7 @@ const FeatureList = () => {
                     fontSize="inherit"
                   />
                 </FeatureListNavLinkListButton>
-              </ExternalLink>
+              </Link>
             </FeatureListNavLinkListButtonWrapper>
           </FeatureListNavLinkList>
 
@@ -196,7 +195,7 @@ const FeatureList = () => {
             </FeatureListNavLinkListDescription>
 
             <FeatureListNavLinkListButtonWrapper>
-              <ExternalLink href="/blogs">
+              <Link passHref href="/blogs">
                 <FeatureListNavLinkListButton>
                   Read a blog
                   <ArrowForwardIosOutlined
@@ -204,7 +203,7 @@ const FeatureList = () => {
                     fontSize="inherit"
                   />
                 </FeatureListNavLinkListButton>
-              </ExternalLink>
+              </Link>
             </FeatureListNavLinkListButtonWrapper>
           </FeatureListNavLinkList>
         </FeatureListNavLinkListContainer>
@@ -240,7 +239,7 @@ const FeatureList = () => {
                 <h4 className="mb-2 text-lg font-semibold">{name}</h4>
                 <p className="mb-3">{text}</p>
 
-                <Link href={disabled ? "" : to} passHref>
+                <Link passHref href={disabled ? "" : to}>
                   <FeatureListNavLinkListButton
                     disabled={disabled}
                     className="bg-[#26619C] text-white"

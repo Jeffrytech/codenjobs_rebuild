@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from "next/router";
 
 import {
-  // BlogViewBody, 
+  // BlogViewBody,
   BlogViewBodyWrapper,
 } from "./BlogPostPrimaryCSS";
 
@@ -33,7 +33,7 @@ const BlogPostPrimary = ({
   title,
   published_at,
   category,
-  
+
   body,
   tags,
 
@@ -52,8 +52,8 @@ const BlogPostPrimary = ({
     user,
     // isOwner,
   } = useAuth();
-  const isOwner = (user && user.username === username);
-  
+  const isOwner = user && user.username === username;
+
   //   alert(job_status);
   const router = useRouter();
 
@@ -72,28 +72,25 @@ const BlogPostPrimary = ({
   return (
     <BlogPrimaryWrapper>
       <BlogCover cover={cover} />
-      <BlogHeader 
-        id={id} 
-        status={status} 
+      <BlogHeader
+        id={id}
+        status={status}
         commentable={commentable}
-        
-        user={user} 
-        isOwner={isOwner} 
-        username={username} title={title} published_at={published_at} 
-        
+        user={user}
+        isOwner={isOwner}
+        username={username}
+        title={title}
+        published_at={published_at}
         category={category}
-      
         userProfile={userProfile}
         setUserProfile={setUserProfile}
-
         totalBlogComments={totalBlogComments}
-
         showVoters={showVoters}
       />
       <BlogViewBodyWrapper>
         <PostRenderer input={body} />
       </BlogViewBodyWrapper>
-     
+
       <BlogPostTags tags={tags} isPreview={false} />
     </BlogPrimaryWrapper>
   );
