@@ -1,9 +1,9 @@
 import React from "react";
-import { 
+import {
   ListBySortNavbarOption,
   ListBySortNavbarOptionContainer,
-  ListBySortOptionNavbarContainer, 
-  ListBySortOptionNavbarWrapper
+  ListBySortOptionNavbarContainer,
+  ListBySortOptionNavbarWrapper,
 } from "./ListBySortOptionNavbarCSS";
 
 const ListBySortOptionNavbar = ({
@@ -21,16 +21,13 @@ const ListBySortOptionNavbar = ({
         <ListBySortNavbarOptionContainer>
           <ListBySortNavbarOption
             $selected={sortQuery === null}
-
             $first={true}
-
             onClick={async () => {
               if (setFieldValue && submitForm) {
                 setFieldValue("sort", "");
 
                 await submitForm();
               } else {
-
                 queries.delete("sort");
 
                 // await submitForm();
@@ -45,33 +42,34 @@ const ListBySortOptionNavbar = ({
           >
             All
           </ListBySortNavbarOption>
-          {includeTopOption && <ListBySortNavbarOption
-            // style={{
-            //   opacity: 0.5,
-            //   marginRight: "1rem",
-            // }}
-            $selected={sortQuery === "top"}
+          {includeTopOption && (
+            <ListBySortNavbarOption
+              // style={{
+              //   opacity: 0.5,
+              //   marginRight: "1rem",
+              // }}
+              $selected={sortQuery === "top"}
+              onClick={async () => {
+                if (setFieldValue && submitForm) {
+                  setFieldValue("sort", "top");
+                  await submitForm();
+                } else {
+                  queries.set("sort", "top");
 
-            onClick={async () => {
-              if (setFieldValue && submitForm) {
-                setFieldValue("sort", "top");
-                await submitForm();
-              } else {
+                  // await submitForm();
+                  const redirect = `${
+                    window.location.pathname
+                  }?${queries.toString()}`;
+                  // alert(redirect);
 
-                queries.set("sort", "top");
-
-                // await submitForm();
-                const redirect = `${window.location.pathname}?${queries.toString()}`;
-                // alert(redirect);
-
-                // @ts-ignore
-                window.location = redirect;
-              }
-              
-            }}
-          >
-            Top
-          </ListBySortNavbarOption>}
+                  // @ts-ignore
+                  window.location = redirect;
+                }
+              }}
+            >
+              Top
+            </ListBySortNavbarOption>
+          )}
           <ListBySortNavbarOption
             $selected={sortQuery === "new"}
             // style={{
@@ -89,31 +87,33 @@ const ListBySortOptionNavbar = ({
                 queries.set("sort", "new");
 
                 // await submitForm();
-                const redirect = `${window.location.pathname}?${queries.toString()}`;
+                const redirect = `${
+                  window.location.pathname
+                }?${queries.toString()}`;
                 // alert(redirect);
 
                 // @ts-ignore
                 window.location = redirect;
               }
-
             }}
           >
             New
           </ListBySortNavbarOption>
           <ListBySortNavbarOption
             $selected={sortQuery === "old"}
-
             onClick={async () => {
               if (setFieldValue && submitForm) {
                 setFieldValue("sort", "old");
                 await submitForm();
               } else {
                 queries.set("sort", "old");
-  
+
                 // await submitForm();
-                const redirect = `${window.location.pathname}?${queries.toString()}`;
+                const redirect = `${
+                  window.location.pathname
+                }?${queries.toString()}`;
                 // alert(redirect);
-  
+
                 // @ts-ignore
                 window.location = redirect;
               }

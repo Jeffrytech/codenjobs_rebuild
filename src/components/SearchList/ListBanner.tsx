@@ -60,11 +60,11 @@ const posts: BlogPostType[] = [
 
 export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => {
   return (
-    <div className="border-y-4 relative z-50 bg-white ">
-      <Carousel>
+    <div className="z-50 px-10 py-10 list-banner">
+      <Carousel dots>
         {posts.map(({ id, category, cover, title }) => (
-          <div key={id}>
-            <div className="flex">
+          <div className="" key={id}>
+            <div className="flex bg-white border-y-4">
               <div>
                 <h3>{title}</h3>
                 <div>
@@ -73,8 +73,8 @@ export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => {
                   quas dolores harum.
                 </div>
               </div>
-              <div className="w-1/2">
-                <img src={cover} alt="" />
+              <div>
+                <img className="sm:h-[200px] object-cover" src={cover} alt="" />
               </div>
             </div>
           </div>
