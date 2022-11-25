@@ -50,12 +50,6 @@ import { findBlogList, findTotalBlogList } from "../../../api/blog";
 import { scrollToTop } from "../../../browser/scroll";
 import useBlogListForm from "../BlogListForm/useBlogListForm";
 import dynamic from "next/dynamic";
-import PrimarySpinner from "../../spinners/PrimarySpinner";
-
-const ListBySortOptionNavbar: any = dynamic(
-  () => import("../../ListBySortOptionNavbar"),
-  { ssr: false }
-);
 
 const BlogSearchListSecondary = () => {
   return (
@@ -110,7 +104,9 @@ const findBlogs = async ({
 // alert(totalPage);
 // const query = Object.fromEntries(queries);
 
-const sortOptions = ["All", "Top", "New", "Old"];
+const sortOptions = ["all", "top", "new", "old"] as const;
+
+type SortType = typeof sortOptions[number];
 
 const BlogList = ({ title, category, tag, sort, page }) => {
   const router = useRouter();
@@ -119,6 +115,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [sliderContent, setSliderContent] = useState([]);
+  const [activeSort, setActiveSort] = useState<SortType>("all");
 
   const blogsPerPage = 10;
 
@@ -152,6 +149,21 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     tag,
     sort,
   });
+
+  const handleSorting = async (name: SortType) => {
+    const queries = new URLSearchParams(window.location.search);
+    setActiveSort(name);
+
+    if (setFieldValue && submitForm) {
+      setFieldValue("sort", name === "all" ? "" : name);
+      await submitForm();
+    } else {
+      name === "all" ? queries.delete("sort") : queries.set("sort", "top");
+      /* const redirect = `${window.location.pathname}${
+        name !== "all" && `?${queries.toString()}`
+      }`; */
+    }
+  };
 
   const fetchSliderContent = () => {
     findBlogs({
@@ -193,281 +205,289 @@ const BlogList = ({ title, category, tag, sort, page }) => {
       {loading ? (
         <div className="h-screen w-screen flex items-center justify-center" />
       ) : (
-        <section className="container mx-auto sm:px-20">
+        <>
           <BlogPageBanner posts={sliderContent} />
+          <section className="container mx-auto px-8 sm:px-20 font-manrope">
+            <div className="flex px-5 pb-1.5 border-b-2">
+              +
+              {sortOptions.map((s) => (
+                <div onClick={() => handleSorting(s)} key={s}>
+                  <button
+                    className={`first-letter:capitalize pb-1.5 px-3 -mb-2 cursor-pointer ${
+                      s === activeSort && "border-b-[#818181] border-b-2 "
+                    }`}
+                  >
+                    {s}
+                  </button>
+                </div>
+              ))}
+            </div>
 
-          <div className="flex gap-4">
-            {sortOptions.map((s) => (
-              <div key={s}>{s}</div>
-            ))}
-          </div>
+            <BlogSearchListContainer>
+              <BlogSearchListContent>
+                <BlogSearchListPrimaryWrapper>
+                  {blogList.length !== 0 ? (
+                    <>
+                      {blogList.map(
+                        ({
+                          username,
+                          id,
+                          cover,
+                          title,
+                          category: blogListCategory,
+                          tags,
+                          published_at,
+                          total_blog_post_money_voters,
+                        }) => {
+                          // alert(blogListCategory);
+                          // const isCategroySelected = values.category === undefined ? false : values.category.value === blogListCategory;
+                          const isCategroySelected =
+                            values.category === blogListCategory;
+                          // alert(isCategroySelected);
+                          return (
+                            <BlogSearchListCardContainer key={id}>
+                              <BlogListContainer>
+                                <BlogListSection>
+                                  {cover && (
+                                    <BlogListCoverWrapper
+                                      href={`/blog?&title=${formatPathTitle(
+                                        title
+                                      )}&id=${id}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                    >
+                                      <Tooltip title={title} arrow>
+                                        <BlogListCover
+                                          alt={"cover"}
+                                          // title={title}
+                                          src={cover}
+                                        />
+                                      </Tooltip>
+                                    </BlogListCoverWrapper>
+                                  )}
 
-          <BlogSearchListContainer>
-            <BlogSearchListContent>
-              <BlogSearchListPrimaryWrapper>
-                {blogList.length !== 0 ? (
-                  <>
-                    {blogList.map(
-                      ({
-                        username,
-                        id,
-                        cover,
-                        title,
-                        category: blogListCategory,
-                        tags,
-                        published_at,
-                        total_blog_post_money_voters,
-                      }) => {
-                        // alert(blogListCategory);
-                        // const isCategroySelected = values.category === undefined ? false : values.category.value === blogListCategory;
-                        const isCategroySelected =
-                          values.category === blogListCategory;
-                        // alert(isCategroySelected);
+                                  <BlogListHeader>
+                                    <BlogListUsernamerWrapper>
+                                      <PostedBy
+                                        username={username}
+                                        published_at={published_at}
+                                      />
+                                    </BlogListUsernamerWrapper>
+                                  </BlogListHeader>
 
-                        return (
-                          <BlogSearchListCardContainer key={id}>
-                            <BlogListContainer>
-                              <BlogListSection>
-                                {cover && (
-                                  <BlogListCoverWrapper
+                                  <BlogCategory
+                                    $isCategorySelected={isCategroySelected}
+                                    onClick={async () => {
+                                      if (isCategroySelected) {
+                                        // // TODO
+                                        // // Improve this
+                                        // const queries = new URLSearchParams(window.location.search);
+                                        // queries.delete("category");
+                                        // queries.delete("page");
+                                        // // // const redirect = `${window.location.pathname}?${queries.toString()}`;
+                                        // const redirect = `/blogs?${queries.toString()}`;
+                                        // // // @ts-ignore
+                                        // // // window.location = redirect;
+                                        // router.push(redirect);
+                                        setFieldValue("category", "");
+
+                                        await submitForm();
+                                      } else {
+                                        // if (blogListCategory === "Else") {
+                                        //   setFieldValue("category", { label: "Not in the list", value: blogListCategory });
+                                        // } else {
+                                        //   setFieldValue("category", { label: blogListCategory, value: blogListCategory });
+                                        // }
+                                        setFieldValue(
+                                          "category",
+                                          blogListCategory
+                                        );
+
+                                        await submitForm();
+                                      }
+                                    }}
+                                  >
+                                    {blogListCategory === "Else"
+                                      ? "Not in the list"
+                                      : blogListCategory}
+                                  </BlogCategory>
+
+                                  <a
                                     href={`/blog?&title=${formatPathTitle(
                                       title
                                     )}&id=${id}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    style={{
+                                      color: "black",
+                                      textDecoration: "none",
+                                    }}
                                   >
-                                    <Tooltip title={title} arrow>
-                                      <BlogListCover
-                                        alt={"cover"}
-                                        // title={title}
-                                        src={cover}
+                                    <BlogListTitle>{title}</BlogListTitle>
+                                  </a>
+
+                                  <TotalMoneyVoteContainer>
+                                    <TotalMoneyVoteWrapper>
+                                      <img
+                                        src="/static/logo.svg"
+                                        style={{
+                                          width: "1rem",
+                                          height: "1rem",
+                                        }}
+                                        alt=""
                                       />
-                                    </Tooltip>
-                                  </BlogListCoverWrapper>
-                                )}
+                                      <span
+                                        style={{
+                                          marginLeft: "0.25rem",
+                                        }}
+                                      >
+                                        {!total_blog_post_money_voters
+                                          ? 0
+                                          : total_blog_post_money_voters}
+                                      </span>
+                                    </TotalMoneyVoteWrapper>
+                                  </TotalMoneyVoteContainer>
 
-                                <BlogListHeader>
-                                  <BlogListUsernamerWrapper>
-                                    <PostedBy
-                                      username={username}
-                                      published_at={published_at}
-                                    />
-                                  </BlogListUsernamerWrapper>
-                                </BlogListHeader>
+                                  <BlogListTagContainer>
+                                    {tags &&
+                                      tags.map((blog_tag: string) => {
+                                        const selected =
+                                          blog_tag === values.tag;
+                                        return (
+                                          <BlogListTag
+                                            key={blog_tag}
+                                            onClick={async (e) => {
+                                              e.preventDefault();
 
-                                <BlogCategory
-                                  $isCategorySelected={isCategroySelected}
-                                  onClick={async () => {
-                                    if (isCategroySelected) {
-                                      // // TODO
-                                      // // Improve this
-                                      // const queries = new URLSearchParams(window.location.search);
-                                      // queries.delete("category");
-                                      // queries.delete("page");
-
-                                      // // // const redirect = `${window.location.pathname}?${queries.toString()}`;
-                                      // const redirect = `/blogs?${queries.toString()}`;
-
-                                      // // // @ts-ignore
-                                      // // // window.location = redirect;
-                                      // router.push(redirect);
-
-                                      setFieldValue("category", "");
-
-                                      await submitForm();
-                                    } else {
-                                      // if (blogListCategory === "Else") {
-                                      //   setFieldValue("category", { label: "Not in the list", value: blogListCategory });
-                                      // } else {
-                                      //   setFieldValue("category", { label: blogListCategory, value: blogListCategory });
-                                      // }
-                                      setFieldValue(
-                                        "category",
-                                        blogListCategory
-                                      );
-
-                                      await submitForm();
-                                    }
-                                  }}
-                                >
-                                  {blogListCategory === "Else"
-                                    ? "Not in the list"
-                                    : blogListCategory}
-                                </BlogCategory>
-
-                                <a
-                                  href={`/blog?&title=${formatPathTitle(
-                                    title
-                                  )}&id=${id}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  style={{
-                                    color: "black",
-                                    textDecoration: "none",
-                                  }}
-                                >
-                                  <BlogListTitle>{title}</BlogListTitle>
-                                </a>
-
-                                <TotalMoneyVoteContainer>
-                                  <TotalMoneyVoteWrapper>
-                                    <img
-                                      src="/static/logo.svg"
-                                      style={{
-                                        width: "1rem",
-                                        height: "1rem",
-                                      }}
-                                      alt=""
-                                    />
-                                    <span
-                                      style={{
-                                        marginLeft: "0.25rem",
-                                      }}
-                                    >
-                                      {!total_blog_post_money_voters
-                                        ? 0
-                                        : total_blog_post_money_voters}
-                                    </span>
-                                  </TotalMoneyVoteWrapper>
-                                </TotalMoneyVoteContainer>
-
-                                <BlogListTagContainer>
-                                  {tags &&
-                                    tags.map((blog_tag: string) => {
-                                      const selected = blog_tag === values.tag;
-                                      return (
-                                        <BlogListTag
-                                          key={blog_tag}
-                                          onClick={async (e) => {
-                                            e.preventDefault();
-
-                                            if (!selected) {
-                                              setFieldValue("tag", blog_tag);
-                                              await submitForm();
-                                            }
-                                          }}
-                                        >
-                                          {!selected ? (
-                                            <Chip
-                                              key={blog_tag}
-                                              variant="outlined"
-                                              label={blog_tag}
-                                              style={{
-                                                cursor: "pointer",
-                                              }}
-                                            />
-                                          ) : (
-                                            <Chip
-                                              key={blog_tag}
-                                              variant="outlined"
-                                              label={blog_tag}
-                                              style={{
-                                                cursor: "pointer",
-                                                color: "rgb(17, 160, 245)",
-                                                border:
-                                                  "1px solid rgb(17, 160, 245)",
-                                              }}
-                                              onClick={async (e) => {
-                                                // e.preventDefault();
-                                                setFieldValue("tag", "");
+                                              if (!selected) {
+                                                setFieldValue("tag", blog_tag);
                                                 await submitForm();
-                                              }}
-                                              onDelete={async (e) => {
-                                                // e.preventDefault();
-                                                setFieldValue("tag", "");
-                                                await submitForm();
-                                              }}
-                                              deleteIcon={
-                                                <CancelIcon
-                                                  style={{
-                                                    color: "rgb(17, 160, 245)",
-                                                  }}
-                                                />
                                               }
-                                            />
-                                          )}
-                                        </BlogListTag>
-                                      );
-                                    })}
-                                </BlogListTagContainer>
-                              </BlogListSection>
-                            </BlogListContainer>
-                          </BlogSearchListCardContainer>
-                        );
-                      }
-                    )}
+                                            }}
+                                          >
+                                            {!selected ? (
+                                              <Chip
+                                                key={blog_tag}
+                                                variant="outlined"
+                                                label={blog_tag}
+                                                style={{
+                                                  cursor: "pointer",
+                                                }}
+                                              />
+                                            ) : (
+                                              <Chip
+                                                key={blog_tag}
+                                                variant="outlined"
+                                                label={blog_tag}
+                                                style={{
+                                                  cursor: "pointer",
+                                                  color: "rgb(17, 160, 245)",
+                                                  border:
+                                                    "1px solid rgb(17, 160, 245)",
+                                                }}
+                                                onClick={async (e) => {
+                                                  // e.preventDefault();
+                                                  setFieldValue("tag", "");
+                                                  await submitForm();
+                                                }}
+                                                onDelete={async (e) => {
+                                                  // e.preventDefault();
+                                                  setFieldValue("tag", "");
+                                                  await submitForm();
+                                                }}
+                                                deleteIcon={
+                                                  <CancelIcon
+                                                    style={{
+                                                      color:
+                                                        "rgb(17, 160, 245)",
+                                                    }}
+                                                  />
+                                                }
+                                              />
+                                            )}
+                                          </BlogListTag>
+                                        );
+                                      })}
+                                  </BlogListTagContainer>
+                                </BlogListSection>
+                              </BlogListContainer>
+                            </BlogSearchListCardContainer>
+                          );
+                        }
+                      )}
 
-                    {blogList && totalPage > 1 && (
-                      <BlogListPaginationButtonsContainer
-                        style={{
-                          paddingLeft: "2rem",
-                          background: "none",
-                          borderRadius: "0.5rem",
-                          marginBottom: "1rem",
-                          border: "none",
-                          padding: "0.25rem",
-                        }}
-                      >
-                        {page !== 1 && (
-                          <BlogListPaginationPrevButton
-                            onClick={async (e) => {
-                              e.preventDefault();
+                      {blogList && totalPage > 1 && (
+                        <BlogListPaginationButtonsContainer
+                          style={{
+                            paddingLeft: "2rem",
+                            background: "none",
+                            borderRadius: "0.5rem",
+                            marginBottom: "1rem",
+                            border: "none",
+                            padding: "0.25rem",
+                          }}
+                        >
+                          {page !== 1 && (
+                            <BlogListPaginationPrevButton
+                              onClick={async (e) => {
+                                e.preventDefault();
 
-                              const prevPage = page - 1;
-                              const queries = new URLSearchParams(
-                                window.location.search
-                              );
-                              queries.set("page", prevPage.toString());
+                                const prevPage = page - 1;
+                                const queries = new URLSearchParams(
+                                  window.location.search
+                                );
+                                queries.set("page", prevPage.toString());
 
-                              const query = Object.fromEntries(queries);
-                              router.push({
-                                pathname: window.location.pathname,
-                                query,
-                              });
-                              scrollToTop();
-                            }}
-                          >
-                            Prev
-                          </BlogListPaginationPrevButton>
-                        )}
-                        {page !== totalPage && (
-                          <BlogListPaginationNextButton
-                            onClick={async (e) => {
-                              e.preventDefault();
+                                const query = Object.fromEntries(queries);
+                                router.push({
+                                  pathname: window.location.pathname,
+                                  query,
+                                });
+                                scrollToTop();
+                              }}
+                            >
+                              Prev
+                            </BlogListPaginationPrevButton>
+                          )}
+                          {page !== totalPage && (
+                            <BlogListPaginationNextButton
+                              onClick={async (e) => {
+                                e.preventDefault();
 
-                              const nextPage = page + 1;
-                              const queries = new URLSearchParams(
-                                window.location.search
-                              );
-                              queries.set("page", nextPage.toString());
+                                const nextPage = page + 1;
+                                const queries = new URLSearchParams(
+                                  window.location.search
+                                );
+                                queries.set("page", nextPage.toString());
 
-                              const query = Object.fromEntries(queries);
-                              router.push({
-                                pathname: window.location.pathname,
-                                query,
-                              });
-                              scrollToTop();
-                            }}
-                          >
-                            Next
-                          </BlogListPaginationNextButton>
-                        )}
-                      </BlogListPaginationButtonsContainer>
-                    )}
-                  </>
-                ) : (
-                  <BlogNoSearchListHeader>
-                    <CentralizeChildren>
-                      <NoSearchList href="/blogs" message="No results" />
-                    </CentralizeChildren>
-                  </BlogNoSearchListHeader>
-                )}
-              </BlogSearchListPrimaryWrapper>
+                                const query = Object.fromEntries(queries);
+                                router.push({
+                                  pathname: window.location.pathname,
+                                  query,
+                                });
+                                scrollToTop();
+                              }}
+                            >
+                              Next
+                            </BlogListPaginationNextButton>
+                          )}
+                        </BlogListPaginationButtonsContainer>
+                      )}
+                    </>
+                  ) : (
+                    <BlogNoSearchListHeader>
+                      <CentralizeChildren>
+                        <NoSearchList href="/blogs" message="No results" />
+                      </CentralizeChildren>
+                    </BlogNoSearchListHeader>
+                  )}
+                </BlogSearchListPrimaryWrapper>
 
-              <BlogSearchListSecondary />
-            </BlogSearchListContent>
-          </BlogSearchListContainer>
-        </section>
+                <BlogSearchListSecondary />
+              </BlogSearchListContent>
+            </BlogSearchListContainer>
+          </section>
+        </>
       )}
     </main>
   );

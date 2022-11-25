@@ -60,18 +60,19 @@ const posts: BlogPostType[] = [
 ];
 
 export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
-  <header className="sm:p-10 list-banner pb-10 sm:bg-transparent bg-white">
+  <header className="sm:py-10 list-banner pb-10 sm:bg-transparent bg-white container mx-auto sm:px-20">
     <Carousel
       autoplay
       slidesToScroll={1}
       infinite
-      autoplaySpeed={2000}
+      autoplaySpeed={2500}
       slidesToShow={1}
       dots
+      arrows={false}
     >
       {posts.map(({ id, cover, title, username, published_at }) => (
-        <div className="bg-white p-10 sm:p-5 text-manrope" key={id}>
-          <div className="sm:flex sm:border-y-4 sm:p-5 gap-5 space-y-5">
+        <div className="bg-white p-8 sm:p-5 text-manrope" key={id}>
+          <div className="sm:flex sm:border-y-[3px] sm:p-5 gap-5 space-y-5">
             <div className="flex flex-col sm:w-1/2 justify-center gap-4">
               <h3 className="font-manrope font-extrabold text-[22px] leading-8 sm:text-3xl sm-clamp-2">
                 {title}
@@ -90,7 +91,7 @@ export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
                 <div className="flex flex-col sm:text-xs space-y-1">
                   <p className="sm:text-black first-letter:capitalize w-fit">
                     {username}
-                    <span className="sm:pl-0 pl-2">
+                    <span className="sm:pl-0 pl-2  w-fit">
                       {" "}
                       . {moment.utc(published_at).format("DD MMM")}
                     </span>
