@@ -2,7 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BlogPostType } from "../../../types/blog.type";
 
 import {
-  BlogSearchListSecondaryWrapper,
   BlogNoSearchListHeader,
   BlogListPaginationButtonsContainer,
   BlogListPaginationNextButton,
@@ -25,14 +24,46 @@ import { findBlogList, findTotalBlogList } from "../../../api/blog";
 import { scrollToTop } from "../../../browser/scroll";
 import useBlogListForm from "../BlogListForm/useBlogListForm";
 import moment from "moment";
+import { Search } from "@material-ui/icons";
 
-const BlogSearchListSecondary = () => {
+type Props = {
+  topPosts: BlogPostType[];
+  handleSubmit: (e: React.SyntheticEvent) => void;
+  value: string;
+  onBlur: (e) => void;
+  handleChange: (e) => void;
+};
+
+const BlogSearchListSecondary = ({
+  topPosts,
+  handleSubmit,
+  handleChange,
+  onBlur,
+  value,
+}: Props) => {
   return (
-    <BlogSearchListSecondaryWrapper>
-      <Community list={"blog"} />
-
+    <aside className="bg-white w-full p-10 space-y-10">
+      <form onSubmit={handleSubmit}>
+        <div className="border border-black p-5 rounded-full">
+          <Search />
+          <input
+            className="outline-none px-5 text-sm"
+            type="text"
+            name="title"
+            placeholder="Search for blog post..."
+            id="title"
+            onChange={handleChange}
+            value={value}
+            onBlur={onBlur}
+          />
+        </div>
+      </form>
+      <div className="px-5 space-y-5 font-medium">
+        <h3 className="text-sm text-black">Top Posts</h3>
+        <Community list={topPosts} />
+      </div>
       <TopUsersForHire limit={10} list={"blog"} />
-    </BlogSearchListSecondaryWrapper>
+    </aside>
   );
 };
 
@@ -76,21 +107,21 @@ const findBlogs = async ({
 
 /*
 
-  check if tag is selected by destructuring from values
+check if tag is selected by destructuring from values
 onClick={async (e) => {
-                                              e.preventDefault();
+e.preventDefault();
 
-                                              if (!selected) {
-                                                setFieldValue("tag", blog_tag);
-                                                await submitForm();
-                                              }
+if (!selected) {
+setFieldValue("tag", blog_tag);
+await submitForm();
+}
 
-                                              if (selected) {
-                                                // e.preventDefault();
-                                                setFieldValue("tag", "");
-                                                await submitForm();
-                                              }
-                                            }} */
+if (selected) {
+// e.preventDefault();
+setFieldValue("tag", "");
+await submitForm();
+}
+}} */
 
 // alert(totalBlogList);
 // alert(data.length);
@@ -134,6 +165,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [sliderContent, setSliderContent] = useState([]);
+  const [topPosts, setTopPosts] = useState([]);
 
   console.log(sort);
   const blogsPerPage = 10;
@@ -198,6 +230,19 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     });
   };
 
+  const fetchTopPosts = () => {
+    findBlogs({
+      currentPage: 1,
+      blogsPerPage: 10,
+      title: "",
+      category: "",
+      tag: "",
+      sort: "top",
+      setBlogList: setTopPosts,
+      setTotalPage: () => {},
+    });
+  };
+
   const findBlogsMethod = useCallback(async () => {
     await findBlogs({
       currentPage,
@@ -212,8 +257,14 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     setLoading(false);
   }, [category, currentPage, sort, tag, title]);
 
+  const handleFormSubmit = async (e: React.SyntheticEvent) => {
+    e.preventDefault();
+    await submitForm();
+  };
+
   useEffect(() => {
     fetchSliderContent();
+    fetchTopPosts();
   }, []);
 
   useEffect(() => {
@@ -249,7 +300,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                   {blogList.length !== 0 ? (
                     <>
                       {blogList.map((blog) => (
-                        <div
+                        <article
                           className="flex items-center justify-between gap-4 py-8 pb-16 border-b-2"
                           key={blog.id}
                         >
@@ -296,7 +347,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                               />
                             </div>
                           )}
-                        </div>
+                        </article>
                       ))}
 
                       {blogList && totalPage > 1 && (
@@ -369,7 +420,13 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                 </div>
 
                 <div className="min-w-[300px] flex-[0.4] sm: pl-5">
-                  <BlogSearchListSecondary />
+                  <BlogSearchListSecondary
+                    handleSubmit={handleSubmit}
+                    topPosts={topPosts}
+                    value={values.title}
+                    handleChange={handleChange}
+                    onBlur={handleBlur}
+                  />
                 </div>
               </div>
             </>
@@ -443,41 +500,41 @@ aria-label="reset form"
 </BlogSearchListHeader>               
 
 <BlogCategory
-                                    $isCategorySelected={isCategroySelected}
-                                    onClick={async () => {
-                                      if (isCategroySelected) {
-                                        // // TODO
-                                        // // Improve this
-                                        // const queries = new URLSearchParams(window.location.search);
-                                        // queries.delete("category");
-                                        // queries.delete("page");
-                                        // // // const redirect = `${window.location.pathname}?${queries.toString()}`;
-                                        // const redirect = `/blogs?${queries.toString()}`;
-                                        // // // @ts-ignore
-                                        // // // window.location = redirect;
-                                        // router.push(redirect);
-                                        setFieldValue("category", "");
+$isCategorySelected={isCategroySelected}
+onClick={async () => {
+if (isCategroySelected) {
+// // TODO
+// // Improve this
+// const queries = new URLSearchParams(window.location.search);
+// queries.delete("category");
+// queries.delete("page");
+// // // const redirect = `${window.location.pathname}?${queries.toString()}`;
+// const redirect = `/blogs?${queries.toString()}`;
+// // // @ts-ignore
+// // // window.location = redirect;
+// router.push(redirect);
+setFieldValue("category", "");
 
-                                        await submitForm();
-                                      } else {
-                                        // if (blogListCategory === "Else") {
-                                        //   setFieldValue("category", { label: "Not in the list", value: blogListCategory });
-                                        // } else {
-                                        //   setFieldValue("category", { label: blogListCategory, value: blogListCategory });
-                                        // }
-                                        setFieldValue(
-                                          "category",
-                                          blogListCategory
-                                        );
+await submitForm();
+} else {
+// if (blogListCategory === "Else") {
+//   setFieldValue("category", { label: "Not in the list", value: blogListCategory });
+// } else {
+//   setFieldValue("category", { label: blogListCategory, value: blogListCategory });
+// }
+setFieldValue(
+"category",
+blogListCategory
+);
 
-                                        await submitForm();
-                                      }
-                                    }}
-                                  >
-                                    {blogListCategory === "Else"
-                                      ? "Not in the list"
-                                      : blogListCategory}
-                                  </BlogCategory>
+await submitForm();
+}
+}}
+>
+{blogListCategory === "Else"
+? "Not in the list"
+: blogListCategory}
+</BlogCategory>
 
 */
 }

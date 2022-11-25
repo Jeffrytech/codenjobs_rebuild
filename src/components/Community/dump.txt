@@ -1,0 +1,224 @@
+<CommunityList>
+            <a
+              href="/hiring"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              {/* <CommunityIcon /> */}
+              <MonetizationOnIcon />
+              <span
+                style={{
+                  marginLeft: "0.25rem",
+                }}
+              >
+                {totalRecruiters} Recruiters
+                {/* Channel for job notifications */}
+              </span>
+            </a>
+          </CommunityList>
+
+          <CommunityList>
+            <a
+              href="/forhire"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              <PeopleAltIcon />
+              <span
+                style={{
+                  marginLeft: "0.25rem",
+                }}
+              >
+                {totalCandidates} Candidates
+              </span>
+            </a>
+          </CommunityList>
+
+          {/* <CommunityList>
+            <a
+              href="https://www.nft.codenjobs.com/#/artists"
+              target="_blank"
+              rel="noopener noreferrer"
+
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              <span style={{
+                display: "flex",
+                alignItems: "center",
+                fontSize: "1.75rem",
+                justifyContent: "center",
+                marginLeft: "0.1rem",
+              }}>
+                ©️
+              </span>
+              <span style={{
+                marginLeft: "0.5rem",
+              }}>
+                2 NFT Creators
+              </span>
+            </a>
+          </CommunityList> */}
+
+          <CommunityList>
+            <a
+              href={TWITTER}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              <BsTwitter
+                style={{
+                  marginLeft: "0.225rem",
+                  color: blue,
+                }}
+              />
+              <span
+                style={{
+                  marginLeft: "0.5rem",
+                }}
+              >
+                {twitterTotalFollowers} Followers
+                {/* Channel for job notifications */}
+              </span>
+            </a>
+          </CommunityList>
+
+          <CommunityList>
+            <a
+              href={DISCORD_SERVER}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              <BsDiscord
+                style={{
+                  marginLeft: "0.225rem",
+                  color: discord,
+                }}
+              />
+              <span
+                style={{
+                  marginLeft: "0.5rem",
+                }}
+              >
+                Server with {discordServerMemberCount} members
+                {/* Channel for job notifications */}
+              </span>
+            </a>
+          </CommunityList>
+
+          <CommunityList>
+            <a
+              href={TELEGRAM_GROUP}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              <TelegramIcon
+                style={{
+                  color: telegram,
+                }}
+              />
+              <span
+                style={{
+                  marginLeft: "0.25rem",
+                }}
+              >
+                Group with {groupMemberCount} members
+                {/* Channel for job notifications */}
+              </span>
+            </a>
+          </CommunityList>
+
+          <CommunityList>
+            <a
+              href={TELEGRAM_CHANNEL}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              <TelegramIcon
+                style={{
+                  color: telegram,
+                }}
+              />
+              <span
+                style={{
+                  marginLeft: "0.25rem",
+                }}
+              >
+                Channel with {channelSubscriberCount} subscribers
+                {/* Channel for job notifications */}
+              </span>
+            </a>
+          </CommunityList>
+
+          <CommunityList>
+            <a
+              href={TELEGRAM_BOT}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                color: "black",
+                textDecoration: "none",
+              }}
+            >
+              <img
+                src="/static/logos/teloxide.png"
+                style={{
+                  width: "1.2rem",
+                  marginLeft: "0.1rem",
+                }}
+                alt="Teloxide"
+              />
+              <span
+                style={{
+                  marginLeft: "0.5rem",
+                }}
+              >
+                {/* Teloxide Rust bot to help you */}
+                {/* Bot to help you find a job */}
+                Rust bot to help you
+                {/* {title} */}
+              </span>
+            </a>
+          </CommunityList>
