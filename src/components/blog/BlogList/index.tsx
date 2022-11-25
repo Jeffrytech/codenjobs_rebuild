@@ -64,7 +64,7 @@ import Community from "../../Community";
 import TopUsersForHire from "../../TopUsersForHire";
 import { blogPostTitleMaxLength } from "../../../validators";
 import BlogSearchListSkeleton from "./BlogSearchListSkeleton";
-import ListBanner from "../../SearchList/ListBanner";
+import ListBanner, { BlogPageBanner } from "../../SearchList/ListBanner";
 import ListBySortOptionNavbar from "../../ListBySortOptionNavbar";
 import { findBlogList, findTotalBlogList } from "../../../api/blog";
 import PrimarySpinner from "../../spinners/PrimarySpinner";
@@ -126,7 +126,7 @@ const findBlogs = async ({
 const BlogList = ({ title, category, tag, sort, page }) => {
   const router = useRouter();
 
-  const [blogList, setBlogList] = useState(null);
+  const [blogList, setBlogList] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
 
   const blogsPerPage = 10;
@@ -184,52 +184,10 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     });
   }, [page, title, category, tag, sort]);
 
-  if (blogList === null) {
-    // if (true) {
-    return (
-      <>
-        <ListBanner />
-
-        <BlogSearchListContainer>
-          <BlogSearchListContent>
-            <BlogSearchListPrimaryWrapper>
-              <BlogNoSearchListHeader>
-                <CentralizeChildren>
-                  <span
-                    style={{
-                      width: "1rem",
-                      height: "1rem",
-                    }}
-                  >
-                    {/* <PrimarySpinner /> */}
-                  </span>
-                  {/* <PrimarySpinner 
-                  style={{
-                    width: "0.25rem",
-                    height: "0.25rem",
-                  }}
-                /> */}
-                </CentralizeChildren>
-              </BlogNoSearchListHeader>
-              <BlogSearchListSkeleton />
-              <BlogSearchListSkeleton />
-              <BlogSearchListSkeleton />
-              <BlogSearchListSkeleton />
-              <BlogSearchListSkeleton />
-              <BlogSearchListSkeleton />
-            </BlogSearchListPrimaryWrapper>
-
-            <BlogSearchListSecondary />
-          </BlogSearchListContent>
-        </BlogSearchListContainer>
-      </>
-    );
-  }
-
   if (blogList.length === 0) {
     return (
       <>
-        <ListBanner />
+        <BlogPageBanner posts={blogList.slice(0, 3)} />
 
         <ListBySortOptionNavbar
           includeTopOption={true}
@@ -264,7 +222,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
 
   return (
     <>
-      <ListBanner />
+      <BlogPageBanner posts={blogList.slice(0, 3)} />
 
       <ListBySortOptionNavbar
         includeTopOption={true}
@@ -439,6 +397,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                                 width: "1rem",
                                 height: "1rem",
                               }}
+                              alt=""
                             />
                             <span
                               style={{
@@ -458,6 +417,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                               const selected = blog_tag === values.tag;
                               return (
                                 <BlogListTag
+                                  key={blog_tag}
                                   onClick={async (e) => {
                                     e.preventDefault();
 

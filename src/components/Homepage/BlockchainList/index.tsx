@@ -48,7 +48,7 @@ const options = [
 
 const BlockchainList = () => {
   return (
-    <div className="bg-white p-5 sm:px-20 blockchain-list">
+    <div className="bg-white p-10 sm:px-20 blockchain-list">
       <CSSOnlyCarousel>
         {options.map((c) => (
           <div key={c}>

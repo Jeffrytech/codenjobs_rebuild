@@ -196,3 +196,23 @@ h6 {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.list-banner .slick-dots li button::before {
+  width: 15px;
+  height: 15px;
+  opacity: 0.5;
+  padding: 0;
+  margin: 0;
+  background: rgb(97, 97, 97);
+  border-radius: 50%;
+  content: "";
+}
+
+.list-banner .slick-dots li.slick-active button::before {
+  opacity: 1;
+}
+
+.list-banner {
+  /* margin-bottom: 30px; */
+  /* padding-block: 20px; */
+}

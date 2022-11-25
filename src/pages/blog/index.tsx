@@ -9,10 +9,7 @@ import Content from "../../components/Content";
 import BlogPostPrimary from "../../components/blog/BlogPostView/BlogPostPrimary";
 // import JobPostSecondary from "../../components/job/JobPostView/JobPostSecondary";
 
-import {
-  API, 
-  COMPANY_COVER, 
-  COMPANY_NAME} from "../../config/environment";
+import { API, COMPANY_COVER, COMPANY_NAME } from "../../config/environment";
 import BlogPostSecondary from "../../components/blog/BlogPostView/BlogPostSecondary";
 // import PrimarySection from "../../components/PrimayContainer";
 import PrimaryContainer from "../../components/PrimaryContainer";
@@ -34,6 +31,8 @@ import Metatags from "../../components/Metatags";
 //   return temporalDivElement.textContent || temporalDivElement.innerText || "";
 // }
 
+// makes api calls in getserver sideprops rehkmansa blog single
+
 const Blog = ({
   data,
   id,
@@ -43,32 +42,32 @@ const Blog = ({
   // commentResponse,
   showVoters,
 }) => {
-
   const [userProfile, setUserProfile] = useState(null);
-
   const [blogCommentList, setBlogCommentList] = useState(null); // null means loading from the server database
   const totalBlogComments = !blogCommentList ? 0 : blogCommentList.length;
 
   const [sortBlogCommentList, setSortBlogCommentList] = useState("new");
 
   useEffect(() => {
-    findBlogCommentList(id).then(({ data }) => {
-      // alert(data);
-      // console.log("findBlogCommentList");
-      // console.log(data);
-      
-      // No need for database for new, old options only yet
-      if (sortBlogCommentList === "new") {
-        setBlogCommentList(data);
-      } else {
-        setBlogCommentList(data.reverse());
-      }
-    }).catch(error => {
-      console.log("findBlogCommentList error");
-      console.error(error);
-    });
+    findBlogCommentList(id)
+      .then(({ data }) => {
+        // alert(data);
+        // console.log("findBlogCommentList");
+        // console.log(data);
+
+        // No need for database for new, old options only yet
+        if (sortBlogCommentList === "new") {
+          setBlogCommentList(data);
+        } else {
+          setBlogCommentList(data.reverse());
+        }
+      })
+      .catch((error) => {
+        console.log("findBlogCommentList error");
+        console.error(error);
+      });
   }, [sortBlogCommentList]);
-  
+
   if (!data || data.detail) {
     // TODO
     // Show better error page instead similar to 404 page
@@ -79,17 +78,16 @@ const Blog = ({
     username, // Just use user_username,
 
     cover,
-    
+
     title,
     published_at,
     category,
-    
+
     body,
     tags,
 
     status,
     commentable,
-
   } = data;
 
   // alert(commentable);
@@ -98,10 +96,11 @@ const Blog = ({
   //   return null;
   // }
 
-  const removeTag = body.replace(/<[^>]+>/g, '');
+  const removeTag = body.replace(/<[^>]+>/g, "");
   const limit = 160;
 
-  const meta_description = removeTag.length > limit ? `${removeTag.slice(0, limit)}...` : removeTag;
+  const meta_description =
+    removeTag.length > limit ? `${removeTag.slice(0, limit)}...` : removeTag;
   const meta_image = cover !== null ? cover : COMPANY_COVER;
 
   return (
@@ -137,26 +136,18 @@ const Blog = ({
             <PrimaryContainer>
               <BlogPostPrimary
                 id={id}
-                
                 username={username}
-
                 cover={cover}
-
                 title={title}
                 published_at={published_at}
                 category={category}
-
                 body={body}
                 tags={tags}
-
                 status={status}
                 commentable={commentable}
-
                 userProfile={userProfile}
                 setUserProfile={setUserProfile}
-
                 totalBlogComments={totalBlogComments}
-
                 showVoters={showVoters}
               />
 
@@ -173,35 +164,29 @@ const Blog = ({
 
               <MoreJobsByCategory category={category} job_id={null} />
             </PrimaryContainer>
-            
+
             {/* Use user information instead? */}
             <BlogPostSecondary
               status={status}
-
               id={id}
               username={username}
-
-              userProfile={userProfile} 
+              userProfile={userProfile}
               setUserProfile={setUserProfile}
             />
           </Content>
         </Container>
       </Layout>
 
-      <BlogCommentList 
-        blog_id={id} 
-        writer={username} 
-        
+      <BlogCommentList
+        blog_id={id}
+        writer={username}
         blogCommentList={blogCommentList}
         setBlogCommentList={setBlogCommentList}
         totalBlogComments={totalBlogComments}
-
         sortBlogCommentList={sortBlogCommentList}
         setSortBlogCommentList={setSortBlogCommentList}
-
         showComment={showComment}
         commentId={commentId}
-
         blogCommentable={commentable}
         // commentResponse={commentResponse}
       />
@@ -222,8 +207,8 @@ export async function getServerSideProps({ query }) {
   if (!id) {
     return {
       props: {
-        notFound: true
-      }
+        notFound: true,
+      },
     };
   }
 
@@ -233,9 +218,8 @@ export async function getServerSideProps({ query }) {
   // Use axios instead later?.
   // eslint-disable-next-line no-undef
   const res = await fetch(target);
-  const data = await res.json();
 
-  // console.log(data);
+  const data = await res.json();
 
   return {
     props: {
@@ -244,16 +228,17 @@ export async function getServerSideProps({ query }) {
 
       showComment: showComment || false,
       showVoters: showVoters || false,
-      
+
       commentId: commentId || null,
       // commentResponse: commentResponse || null,
-    }
+    },
   };
 }
 
 export default Blog;
 
-{/* <meta property="og:title" content="Building a Crypto Price Tracker with Flutter">
+{
+  /* <meta property="og:title" content="Building a Crypto Price Tracker with Flutter">
 <meta name="twitter:title" content="Building a Crypto Price Tracker with Flutter">
 <meta name="description" content=" Introduction In this article, we will be building a crypto currency price tracker using flutter and Coingecko API. Flutter is google UI framework used to deve...">
 <meta property="og:description" content=" Introduction In this article, we will be building a crypto currency price tracker using flutter and Coingecko API. Flutter is google UI framework used to deve...">
@@ -262,4 +247,5 @@ export default Blog;
 <meta name="twitter:image" content="https://res.cloudinary.com/codenjobs/image/upload/v1667147163/user/blog/cover/ssmjlqawnfmxdqzj3hrd.jpg">
 <meta name="image" content="https://res.cloudinary.com/codenjobs/image/upload/v1667147163/user/blog/cover/ssmjlqawnfmxdqzj3hrd.jpg">
 <meta property="og:type" content="article">
-<meta name="twitter:card" content="summary_large_image"></meta> */}
+<meta name="twitter:card" content="summary_large_image"></meta> */
+}

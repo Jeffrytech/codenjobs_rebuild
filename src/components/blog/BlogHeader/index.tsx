@@ -170,9 +170,9 @@ const BlogHeader = ({
                 marginRight: "0.25rem",
               }}
             >
-              Posted by
+              Posted by rehkmansa hahaha blog post page
             </span>
-            <Link href={`/user/${username}/posts`}>
+            <Link href={`/user/${username}/posts`} passHref>
               <UsernameWrapper>
                 <Username username={username} />
               </UsernameWrapper>
@@ -283,6 +283,7 @@ const BlogHeader = ({
                   marginLeft: "0.1rem",
                   // opacity: 0.8,
                 }}
+                alt=""
               />
               {/* <AttachMoneyIcon style={{
             fontSize: "1rem",
@@ -373,7 +374,10 @@ const BlogHeader = ({
 
         {isOwner && (
           <OwnerButtonsContainer>
-            <Link href={`/blog/post?&title=${formatPathTitle(title)}&id=${id}`}>
+            <Link
+              href={`/blog/post?&title=${formatPathTitle(title)}&id=${id}`}
+              passHref
+            >
               <OwnerEditButtonWrapper>
                 <CreateIcon
                   style={{
@@ -467,7 +471,6 @@ const BlogHeader = ({
             </span>
           </div>
         </DialogTitle>
-
         <DialogContent>
           <section
             style={{
@@ -493,7 +496,6 @@ const BlogHeader = ({
             Share this profile with others
           </DialogContentText> */}
         </DialogContent>
-
         <DialogActions>
           <Button
             // disabled={isSubmitting}
