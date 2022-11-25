@@ -65,7 +65,6 @@ import TopUsersForHire from "../../TopUsersForHire";
 import { blogPostTitleMaxLength } from "../../../validators";
 import BlogSearchListSkeleton from "./BlogSearchListSkeleton";
 import ListBanner, { BlogPageBanner } from "../../SearchList/ListBanner";
-import ListBySortOptionNavbar from "../../ListBySortOptionNavbar";
 import { findBlogList, findTotalBlogList } from "../../../api/blog";
 import PrimarySpinner from "../../spinners/PrimarySpinner";
 import { formatBlogListTitle } from "../../../title/blog";
@@ -73,6 +72,14 @@ import { black, green } from "../../../design/colors";
 import { scrollToTop } from "../../../browser/scroll";
 import useBlogListForm from "../BlogListForm/useBlogListForm";
 import { blue } from "@mui/material/colors";
+import dynamic from "next/dynamic";
+
+// import  from "../../ListBySortOptionNavbar";
+
+const ListBySortOptionNavbar = dynamic(
+  () => import("../../ListBySortOptionNavbar"),
+  { ssr: false }
+);
 
 const BlogSearchListSecondary = () => {
   return (
