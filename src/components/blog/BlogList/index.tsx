@@ -76,7 +76,7 @@ import dynamic from "next/dynamic";
 
 // import  from "../../ListBySortOptionNavbar";
 
-const ListBySortOptionNavbar = dynamic(
+const ListBySortOptionNavbar: any = dynamic(
   () => import("../../ListBySortOptionNavbar"),
   { ssr: false }
 );
@@ -193,7 +193,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
 
   if (blogList.length === 0) {
     return (
-      <>
+      <section className="container mx-auto">
         <BlogPageBanner posts={blogList.slice(0, 3)} />
 
         <ListBySortOptionNavbar
@@ -221,15 +221,15 @@ const BlogList = ({ title, category, tag, sort, page }) => {
             <BlogSearchListSecondary />
           </BlogSearchListContent>
         </BlogSearchListContainer>
-      </>
+      </section>
     );
   }
 
   // const classes = useStyles();
 
   return (
-    <>
-      <BlogPageBanner posts={blogList.slice(0, 3)} />
+    <section className="container mx-auto sm:px-20">
+      <BlogPageBanner posts={blogList.slice(0, 6)} />
 
       <ListBySortOptionNavbar
         includeTopOption={true}
@@ -545,7 +545,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
           <BlogSearchListSecondary />
         </BlogSearchListContent>
       </BlogSearchListContainer>
-    </>
+    </section>
   );
 };
 

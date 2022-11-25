@@ -1,4 +1,5 @@
 import { styled } from "baseui";
+import moment from "moment";
 import { XS } from "../../design/breakpoints";
 import { BlogPostType } from "../../types/blog.type";
 import Carousel from "../Elements/carousel";
@@ -58,31 +59,56 @@ const posts: BlogPostType[] = [
   },
 ];
 
-export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => {
-  return (
-    <div className="z-50 px-10 py-10 list-banner">
-      <Carousel dots>
-        {posts.map(({ id, category, cover, title }) => (
-          <div className="" key={id}>
-            <div className="flex bg-white border-y-4">
-              <div>
-                <h3>{title}</h3>
-                <div>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
-                  aliquam atque minus sint aliquid consequuntur, neque inventore
-                  quas dolores harum.
+export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
+  <header className="z-50 px-10 py-10 list-banner">
+    <Carousel
+      autoplay={true}
+      infinite
+      autoplaySpeed={2000}
+      speed={500}
+      slidesToShow={1}
+      slidesToScroll={1}
+      dots
+    >
+      {posts.map(({ id, cover, title, username, published_at }) => (
+        <div className="bg-white p-5 text-manrope" key={id}>
+          <div className="flex border-y-4 p-5 gap-5">
+            <div className="flex flex-col w-1/2 justify-center gap-4">
+              <h3 className="font-manrope font-extrabold text-3xl">{title}</h3>
+              <div className="text-base text-[#6B6868]">
+                Tools that you need as a programmer. - Every time i write code
+                across some sound blocks down my workflow sometimes i forget the
+                format need to use to create a cron job, metacharacter i need
+                to......
+              </div>
+              <div className="flex items-center gap-2 font-manrope text-[#6B6868]">
+                By
+                {/*  <div className="text-lg text-white font-manrope w-[30px] h-[30px] font-extrabold rounded-full flex items-center justify-center uppercase bg-blue-300">
+                    {username[0]}
+                  </div> */}
+                <img src="/static/icons/avatar.png" alt="" />
+                <div className="flex flex-col text-xs space-y-1">
+                  <p className="text-black first-letter:capitalize">
+                    {username} .
+                    <span> {moment.utc(published_at).format("DD MMM")}</span>
+                  </p>
+                  <div>Software Developer</div>
                 </div>
               </div>
-              <div>
-                <img className="sm:h-[200px] object-cover" src={cover} alt="" />
-              </div>
+            </div>
+            <div className="w-1/2">
+              <img
+                className="sm:h-[200px] w-full rounded-md object-cover"
+                src={cover}
+                alt=""
+              />
             </div>
           </div>
-        ))}
-      </Carousel>
-    </div>
-  );
-};
+        </div>
+      ))}
+    </Carousel>
+  </header>
+);
 
 const ListBanner = () => {
   return (
