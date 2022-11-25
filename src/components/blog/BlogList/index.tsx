@@ -58,10 +58,11 @@ const BlogSearchListSecondary = ({
           />
         </div>
       </form>
-      <div className="px-5 space-y-5 font-medium">
-        <h3 className="text-sm text-black">Top Posts</h3>
+      <div className="px-5 space-y-5">
+        <h3 className="text-sm text-black font-medium">Top Posts</h3>
         <Community list={topPosts} />
       </div>
+      <div className="border-b-2 mx-5" />
       <TopUsersForHire limit={10} list={"blog"} />
     </aside>
   );
