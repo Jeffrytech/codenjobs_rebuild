@@ -1,55 +1,30 @@
-import React, { useCallback, useEffect, useState } from "react";
-import CancelIcon from "@material-ui/icons/Cancel";
-import SearchIcon from "@material-ui/icons/Search";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { BlogPostType } from "../../../types/blog.type";
 
 import {
-  BlogListCoverWrapper,
-  BlogListCover,
-  BlogListHeader,
-  BlogListUsernamerWrapper,
-  BlogListTitle,
-  BlogCategory,
-  TotalMoneyVoteContainer,
-  TotalMoneyVoteWrapper,
-  BlogSearchListHeader,
-  BlogSearchListTextInput,
-  // useStyles,
-  BlogSearchListCardContainer,
   BlogSearchListSecondaryWrapper,
-  BlogSearchListPrimaryWrapper,
-  BlogSearchListContent,
-  BlogSearchListContainer,
   BlogNoSearchListHeader,
   BlogListPaginationButtonsContainer,
   BlogListPaginationNextButton,
   BlogListPaginationPrevButton,
-  BlogSearchListTextInputWrapper,
-  BlogListInputSearchButtonWrapper,
-  BlogListInputClearButtonWrapper,
-  BlogListSection,
-  BlogListContainer,
 } from "./BlogListCSS";
 import { Chip, makeStyles, Tooltip } from "@material-ui/core";
 
 import NoSearchList from "../../SearchList/NoSearchList";
 
-import {
-  BlogListTagContainer,
-  BlogListTag,
-} from "./BlogListTags/BlogListTagsCSS";
+// import { formatPathTitle } from "../../../title/path";
+// import dynamic from "next/dynamic";
+// import { blogPostTitleMaxLength } from "../../../validators";
 
-import PostedBy from "../../PostedBy";
-import { formatPathTitle } from "../../../title/path";
 import CentralizeChildren from "../../CentralizeChildren";
 import { useRouter } from "next/router";
 import Community from "../../Community";
 import TopUsersForHire from "../../TopUsersForHire";
-import { blogPostTitleMaxLength } from "../../../validators";
 import { BlogPageBanner } from "../../SearchList/ListBanner";
 import { findBlogList, findTotalBlogList } from "../../../api/blog";
 import { scrollToTop } from "../../../browser/scroll";
 import useBlogListForm from "../BlogListForm/useBlogListForm";
-import dynamic from "next/dynamic";
+import moment from "moment";
 
 const BlogSearchListSecondary = () => {
   return (
@@ -99,24 +74,68 @@ const findBlogs = async ({
   }
 };
 
+/*
+
+  check if tag is selected by destructuring from values
+onClick={async (e) => {
+                                              e.preventDefault();
+
+                                              if (!selected) {
+                                                setFieldValue("tag", blog_tag);
+                                                await submitForm();
+                                              }
+
+                                              if (selected) {
+                                                // e.preventDefault();
+                                                setFieldValue("tag", "");
+                                                await submitForm();
+                                              }
+                                            }} */
+
 // alert(totalBlogList);
 // alert(data.length);
 // alert(totalPage);
 // const query = Object.fromEntries(queries);
 
+// url for blogpost /blog?&title=${formatPathTitle(title)}&id=${id}
+
+// {!total_blog_post_money_voters ? 0 : total_blog_post_money_voters}
+
 const sortOptions = ["all", "top", "new", "old"] as const;
 
 type SortType = typeof sortOptions[number];
 
+type PostedByProps = {
+  username: string;
+  published_at: string;
+};
+const PostedBy = ({ username, published_at }: PostedByProps) => (
+  <div className="flex items-center gap-1.5 text-sm font-manrope text-[#6B6868]">
+    <div className="sm:block hidden">
+      <img src="/static/icons/avatar.png" alt="" />
+    </div>
+    <div className="flex flex-col sm:text-xs space-y-1">
+      <p className="sm:text-black first-letter:capitalize w-fit">
+        {username}
+        <span className="sm:pl-0 pl-2  w-fit">
+          {" "}
+          . {moment.utc(published_at).format("DD MMM")}
+        </span>
+      </p>
+      <div className="sm:block hidden">Software Developer</div>
+    </div>
+  </div>
+);
+
 const BlogList = ({ title, category, tag, sort, page }) => {
   const router = useRouter();
 
-  const [blogList, setBlogList] = useState([]);
+  const [blogList, setBlogList] = useState<BlogPostType[]>([]);
   const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState(true);
   const [sliderContent, setSliderContent] = useState([]);
-  const [activeSort, setActiveSort] = useState<SortType>("all");
 
+  console.log(sort);
   const blogsPerPage = 10;
 
   let currentPage: number;
@@ -152,18 +171,19 @@ const BlogList = ({ title, category, tag, sort, page }) => {
 
   const handleSorting = async (name: SortType) => {
     const queries = new URLSearchParams(window.location.search);
-    setActiveSort(name);
 
     if (setFieldValue && submitForm) {
       setFieldValue("sort", name === "all" ? "" : name);
       await submitForm();
     } else {
       name === "all" ? queries.delete("sort") : queries.set("sort", "top");
-      /* const redirect = `${window.location.pathname}${
-        name !== "all" && `?${queries.toString()}`
-      }`; */
     }
   };
+
+  const sortOption: SortType = useMemo(
+    () => values.sort || "all",
+    [values.sort]
+  );
 
   const fetchSliderContent = () => {
     findBlogs({
@@ -210,268 +230,133 @@ const BlogList = ({ title, category, tag, sort, page }) => {
           <section className="container mx-auto px-8 sm:px-20 font-manrope">
             <div className="flex px-5 pb-1.5 border-b-2">
               +
-              {sortOptions.map((s) => (
-                <div onClick={() => handleSorting(s)} key={s}>
+              {sortOptions.map((name) => (
+                <div onClick={() => handleSorting(name)} key={name}>
                   <button
                     className={`first-letter:capitalize pb-1.5 px-3 -mb-2 cursor-pointer ${
-                      s === activeSort && "border-b-[#818181] border-b-2 "
+                      name === sortOption && "border-b-[#818181] border-b-2"
                     }`}
                   >
-                    {s}
+                    {name}
                   </button>
                 </div>
               ))}
             </div>
 
-            <BlogSearchListContainer>
-              <BlogSearchListContent>
-                <BlogSearchListPrimaryWrapper>
+            <>
+              <div className="py-5 sm:flex justify-between gap-4">
+                <div className="space-y-5 sm:flex-[0.8] text-[#6B6868]">
                   {blogList.length !== 0 ? (
                     <>
-                      {blogList.map(
-                        ({
-                          username,
-                          id,
-                          cover,
-                          title,
-                          category: blogListCategory,
-                          tags,
-                          published_at,
-                          total_blog_post_money_voters,
-                        }) => {
-                          // alert(blogListCategory);
-                          // const isCategroySelected = values.category === undefined ? false : values.category.value === blogListCategory;
-                          const isCategroySelected =
-                            values.category === blogListCategory;
-                          // alert(isCategroySelected);
-                          return (
-                            <BlogSearchListCardContainer key={id}>
-                              <BlogListContainer>
-                                <BlogListSection>
-                                  {cover && (
-                                    <BlogListCoverWrapper
-                                      href={`/blog?&title=${formatPathTitle(
-                                        title
-                                      )}&id=${id}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                    >
-                                      <Tooltip title={title} arrow>
-                                        <BlogListCover
-                                          alt={"cover"}
-                                          // title={title}
-                                          src={cover}
-                                        />
-                                      </Tooltip>
-                                    </BlogListCoverWrapper>
-                                  )}
-
-                                  <BlogListHeader>
-                                    <BlogListUsernamerWrapper>
-                                      <PostedBy
-                                        username={username}
-                                        published_at={published_at}
-                                      />
-                                    </BlogListUsernamerWrapper>
-                                  </BlogListHeader>
-
-                                  <BlogCategory
-                                    $isCategorySelected={isCategroySelected}
-                                    onClick={async () => {
-                                      if (isCategroySelected) {
-                                        // // TODO
-                                        // // Improve this
-                                        // const queries = new URLSearchParams(window.location.search);
-                                        // queries.delete("category");
-                                        // queries.delete("page");
-                                        // // // const redirect = `${window.location.pathname}?${queries.toString()}`;
-                                        // const redirect = `/blogs?${queries.toString()}`;
-                                        // // // @ts-ignore
-                                        // // // window.location = redirect;
-                                        // router.push(redirect);
-                                        setFieldValue("category", "");
-
-                                        await submitForm();
-                                      } else {
-                                        // if (blogListCategory === "Else") {
-                                        //   setFieldValue("category", { label: "Not in the list", value: blogListCategory });
-                                        // } else {
-                                        //   setFieldValue("category", { label: blogListCategory, value: blogListCategory });
-                                        // }
-                                        setFieldValue(
-                                          "category",
-                                          blogListCategory
-                                        );
-
-                                        await submitForm();
-                                      }
-                                    }}
-                                  >
-                                    {blogListCategory === "Else"
-                                      ? "Not in the list"
-                                      : blogListCategory}
-                                  </BlogCategory>
-
-                                  <a
-                                    href={`/blog?&title=${formatPathTitle(
-                                      title
-                                    )}&id=${id}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    style={{
-                                      color: "black",
-                                      textDecoration: "none",
-                                    }}
-                                  >
-                                    <BlogListTitle>{title}</BlogListTitle>
-                                  </a>
-
-                                  <TotalMoneyVoteContainer>
-                                    <TotalMoneyVoteWrapper>
-                                      <img
-                                        src="/static/logo.svg"
-                                        style={{
-                                          width: "1rem",
-                                          height: "1rem",
-                                        }}
-                                        alt=""
-                                      />
-                                      <span
-                                        style={{
-                                          marginLeft: "0.25rem",
-                                        }}
-                                      >
-                                        {!total_blog_post_money_voters
-                                          ? 0
-                                          : total_blog_post_money_voters}
-                                      </span>
-                                    </TotalMoneyVoteWrapper>
-                                  </TotalMoneyVoteContainer>
-
-                                  <BlogListTagContainer>
-                                    {tags &&
-                                      tags.map((blog_tag: string) => {
-                                        const selected =
-                                          blog_tag === values.tag;
-                                        return (
-                                          <BlogListTag
-                                            key={blog_tag}
-                                            onClick={async (e) => {
-                                              e.preventDefault();
-
-                                              if (!selected) {
-                                                setFieldValue("tag", blog_tag);
-                                                await submitForm();
-                                              }
-                                            }}
-                                          >
-                                            {!selected ? (
-                                              <Chip
-                                                key={blog_tag}
-                                                variant="outlined"
-                                                label={blog_tag}
-                                                style={{
-                                                  cursor: "pointer",
-                                                }}
-                                              />
-                                            ) : (
-                                              <Chip
-                                                key={blog_tag}
-                                                variant="outlined"
-                                                label={blog_tag}
-                                                style={{
-                                                  cursor: "pointer",
-                                                  color: "rgb(17, 160, 245)",
-                                                  border:
-                                                    "1px solid rgb(17, 160, 245)",
-                                                }}
-                                                onClick={async (e) => {
-                                                  // e.preventDefault();
-                                                  setFieldValue("tag", "");
-                                                  await submitForm();
-                                                }}
-                                                onDelete={async (e) => {
-                                                  // e.preventDefault();
-                                                  setFieldValue("tag", "");
-                                                  await submitForm();
-                                                }}
-                                                deleteIcon={
-                                                  <CancelIcon
-                                                    style={{
-                                                      color:
-                                                        "rgb(17, 160, 245)",
-                                                    }}
-                                                  />
-                                                }
-                                              />
-                                            )}
-                                          </BlogListTag>
-                                        );
-                                      })}
-                                  </BlogListTagContainer>
-                                </BlogListSection>
-                              </BlogListContainer>
-                            </BlogSearchListCardContainer>
-                          );
-                        }
-                      )}
+                      {blogList.map((blog) => (
+                        <div
+                          className="flex items-center justify-between gap-4 py-8 pb-16 border-b-2"
+                          key={blog.id}
+                        >
+                          <div className="min-w-1/2 space-y-3">
+                            <PostedBy
+                              username={blog.username}
+                              published_at={blog.published_at}
+                            />
+                            <div className="space-y-3 sm:max-w-2xl">
+                              <h4 className="text-lg font-extrabold text-black">
+                                {blog.title}
+                              </h4>
+                              <div className="flex items-center gap-2">
+                                {/* {blog.tags.map((d) => (
+                                  <p key={d}>{d}</p>
+                                ))} */}
+                                Lorem ipsum dolor sit amet, consectetur
+                                adipisicing elit. Adipisci architecto culpa
+                                cupiditate laboriosam dicta eligendi dolorum?
+                                Necessitatibus neque corporis dicta.
+                              </div>
+                            </div>
+                            <div className="flex items-center text-xs gap-2">
+                              <button className=" bg-[#E6E6E6] text-sm px-4 py-1 rounded-[20px]">
+                                {blog.category || "Custom"}
+                              </button>
+                              <p className="text-black">
+                                Last updated:{" "}
+                                {moment
+                                  .utc(blog.updated_at)
+                                  .format("MMM DD, YY")}
+                              </p>
+                              <p className="text-black">
+                                {blog.tags?.[0] || "Selected for you"}
+                              </p>
+                            </div>
+                          </div>
+                          {blog.cover && (
+                            <div className="">
+                              <img
+                                className="w-[180px] h-[180px] rounded object-cover"
+                                src={blog.cover}
+                                alt=""
+                              />
+                            </div>
+                          )}
+                        </div>
+                      ))}
 
                       {blogList && totalPage > 1 && (
-                        <BlogListPaginationButtonsContainer
-                          style={{
-                            paddingLeft: "2rem",
-                            background: "none",
-                            borderRadius: "0.5rem",
-                            marginBottom: "1rem",
-                            border: "none",
-                            padding: "0.25rem",
-                          }}
-                        >
-                          {page !== 1 && (
-                            <BlogListPaginationPrevButton
-                              onClick={async (e) => {
-                                e.preventDefault();
+                        <div className="w-full border">
+                          <BlogListPaginationButtonsContainer
+                            style={{
+                              paddingLeft: "2rem",
+                              background: "none",
+                              borderRadius: "0.5rem",
+                              marginBottom: "1rem",
+                              border: "none",
+                              padding: "0.25rem",
+                            }}
+                          >
+                            {page !== 1 && (
+                              <BlogListPaginationPrevButton
+                                onClick={async (e) => {
+                                  e.preventDefault();
 
-                                const prevPage = page - 1;
-                                const queries = new URLSearchParams(
-                                  window.location.search
-                                );
-                                queries.set("page", prevPage.toString());
+                                  const prevPage = page - 1;
+                                  const queries = new URLSearchParams(
+                                    window.location.search
+                                  );
+                                  queries.set("page", prevPage.toString());
 
-                                const query = Object.fromEntries(queries);
-                                router.push({
-                                  pathname: window.location.pathname,
-                                  query,
-                                });
-                                scrollToTop();
-                              }}
-                            >
-                              Prev
-                            </BlogListPaginationPrevButton>
-                          )}
-                          {page !== totalPage && (
-                            <BlogListPaginationNextButton
-                              onClick={async (e) => {
-                                e.preventDefault();
+                                  const query = Object.fromEntries(queries);
+                                  router.push({
+                                    pathname: window.location.pathname,
+                                    query,
+                                  });
+                                  scrollToTop();
+                                }}
+                              >
+                                Prev
+                              </BlogListPaginationPrevButton>
+                            )}
+                            {page !== totalPage && (
+                              <BlogListPaginationNextButton
+                                onClick={async (e) => {
+                                  e.preventDefault();
 
-                                const nextPage = page + 1;
-                                const queries = new URLSearchParams(
-                                  window.location.search
-                                );
-                                queries.set("page", nextPage.toString());
+                                  const nextPage = page + 1;
+                                  const queries = new URLSearchParams(
+                                    window.location.search
+                                  );
+                                  queries.set("page", nextPage.toString());
 
-                                const query = Object.fromEntries(queries);
-                                router.push({
-                                  pathname: window.location.pathname,
-                                  query,
-                                });
-                                scrollToTop();
-                              }}
-                            >
-                              Next
-                            </BlogListPaginationNextButton>
-                          )}
-                        </BlogListPaginationButtonsContainer>
+                                  const query = Object.fromEntries(queries);
+                                  router.push({
+                                    pathname: window.location.pathname,
+                                    query,
+                                  });
+                                  scrollToTop();
+                                }}
+                              >
+                                Next
+                              </BlogListPaginationNextButton>
+                            )}
+                          </BlogListPaginationButtonsContainer>
+                        </div>
                       )}
                     </>
                   ) : (
@@ -481,11 +366,13 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                       </CentralizeChildren>
                     </BlogNoSearchListHeader>
                   )}
-                </BlogSearchListPrimaryWrapper>
+                </div>
 
-                <BlogSearchListSecondary />
-              </BlogSearchListContent>
-            </BlogSearchListContainer>
+                <div className="min-w-[300px] flex-[0.4] sm: pl-5">
+                  <BlogSearchListSecondary />
+                </div>
+              </div>
+            </>
           </section>
         </>
       )}
@@ -553,5 +440,47 @@ aria-label="reset form"
 </BlogListInputClearButtonWrapper>
 </BlogSearchListTextInputWrapper>
 </form>
-</BlogSearchListHeader>                */
+</BlogSearchListHeader>               
+
+<BlogCategory
+                                    $isCategorySelected={isCategroySelected}
+                                    onClick={async () => {
+                                      if (isCategroySelected) {
+                                        // // TODO
+                                        // // Improve this
+                                        // const queries = new URLSearchParams(window.location.search);
+                                        // queries.delete("category");
+                                        // queries.delete("page");
+                                        // // // const redirect = `${window.location.pathname}?${queries.toString()}`;
+                                        // const redirect = `/blogs?${queries.toString()}`;
+                                        // // // @ts-ignore
+                                        // // // window.location = redirect;
+                                        // router.push(redirect);
+                                        setFieldValue("category", "");
+
+                                        await submitForm();
+                                      } else {
+                                        // if (blogListCategory === "Else") {
+                                        //   setFieldValue("category", { label: "Not in the list", value: blogListCategory });
+                                        // } else {
+                                        //   setFieldValue("category", { label: blogListCategory, value: blogListCategory });
+                                        // }
+                                        setFieldValue(
+                                          "category",
+                                          blogListCategory
+                                        );
+
+                                        await submitForm();
+                                      }
+                                    }}
+                                  >
+                                    {blogListCategory === "Else"
+                                      ? "Not in the list"
+                                      : blogListCategory}
+                                  </BlogCategory>
+
+*/
 }
+/* const redirect = `${window.location.pathname}${
+        name !== "all" && `?${queries.toString()}`
+      }`; */

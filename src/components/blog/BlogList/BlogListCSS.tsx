@@ -13,7 +13,7 @@ const BlogListContainer = styled("div", {
 
   [MOBILE]: {
     flexFlow: "column-reverse",
-  }
+  },
 });
 
 const BlogListSection = styled("section", {
@@ -37,7 +37,7 @@ const BlogListCoverWrapper = styled("a", {
   [MOBILE]: {
     marginLeft: "0",
     marginBottom: "0.5rem",
-  }
+  },
 });
 
 const BlogListCover = styled("img", {
@@ -54,7 +54,7 @@ const BlogListCover = styled("img", {
     maxHeight: "5rem",
     // marginBottom: "0.25rem",
     // marginBottom: "0.5rem",
-  }
+  },
 });
 
 // Extrac this?
@@ -74,7 +74,7 @@ const BlogListHeader = styled("div", {
   [XS]: {
     flexFlow: "column-reverse",
     alignItems: "flex-start",
-  }
+  },
 });
 
 // Rename later
@@ -85,7 +85,7 @@ const BlogListUsernamerWrapper = styled("div", {
 
   [XS]: {
     flexFlow: "column",
-  }
+  },
 });
 
 const BlogCategory = styled("span", ({ $isCategorySelected }) => {
@@ -119,9 +119,6 @@ const BlogCategory = styled("span", ({ $isCategorySelected }) => {
       },
     };
   }
-
-
-
 });
 
 const BlogListTitle = styled("div", {
@@ -130,7 +127,7 @@ const BlogListTitle = styled("div", {
   lineHeight: "1.5rem",
   // lineHeight: "25px",
   wordBreak: "break-all",
-  
+
   marginTop: "0.75rem",
   // marginTop: "0.5rem",
   // marginTop: "0.5rem",
@@ -143,14 +140,14 @@ const BlogListTitle = styled("div", {
   cursor: "pointer",
   ":hover": {
     opacity: "0.8",
-    color: "rgb(17, 160, 245)"
+    color: "rgb(17, 160, 245)",
   },
 
   [XS]: {
     // marginTop: "0.25rem",
     // marginTop: "0.5rem",
     fontSize: "1.2rem",
-  }
+  },
 });
 
 const TotalMoneyVoteContainer = styled("div", {
@@ -235,11 +232,7 @@ const BlogNoSearchListHeader = styled("div", () => {
   };
 });
 
-const BlogSearchListCardContainer = styled("div", ({ 
-  $first,
-  $last 
-}) => {
-
+const BlogSearchListCardContainer = styled("div", ({ $first, $last }) => {
   // let borderRadius;
   // if ($first && $last) {
   //   borderRadius = "0.5rem";
@@ -268,15 +261,14 @@ const BlogSearchListCardContainer = styled("div", ({
     // borderRadius: $last ? "0 0 0.5rem 0.5rem" : "0",
     // borderRadius,
     // borderRadius: '0.5rem',
-    borderRadius: '0.5rem',
+    borderRadius: "0.5rem",
     marginBottom: "1rem",
 
     [XS]: {
       // padding: "1.5rem",
       padding: "1.25rem",
-    }
+    },
   };
-
 });
 
 const BlogSearchListHeader = styled("div", () => {
@@ -338,7 +330,7 @@ const BlogListInputSearchButtonWrapper = styled("div", {
 
   ":hover": {
     cursor: "pointer",
-  }
+  },
 });
 
 const BlogListInputClearButtonWrapper = styled("div", {
@@ -347,7 +339,7 @@ const BlogListInputClearButtonWrapper = styled("div", {
 
   ":hover": {
     cursor: "pointer",
-  }
+  },
 });
 
 const BlogSearchListTextInput = styled("input", {
@@ -364,7 +356,7 @@ const BlogSearchListTextInput = styled("input", {
 
   ":focus": {
     outline: "none",
-  }
+  },
 });
 
 const BlogListSearchButton = styled("button", {
@@ -388,7 +380,7 @@ const BlogListSearchButton = styled("button", {
 
   [XS]: {
     display: "none",
-  }
+  },
 });
 
 const BlogSearchListContainer = styled("section", () => {
@@ -421,13 +413,12 @@ const BlogSearchListContent = styled("div", () => {
 
     [MOBILE]: {
       flexFlow: "column",
-    }
+    },
   };
 });
 
 const BlogSearchListPrimaryWrapper = styled("div", () => {
   return {
-
     width: "45rem", // 16 x 44 / 704
     minHeight: "0",
 
@@ -448,7 +439,8 @@ const BlogSearchListPrimaryWrapper = styled("div", () => {
 
 const BlogSearchListSecondaryWrapper = styled("div", {
   // width: "270px",
-  width: "18rem",
+  // width: "18rem",
+
   overflow: "hidden",
 
   // [MOBILE]: {
@@ -457,7 +449,7 @@ const BlogSearchListSecondaryWrapper = styled("div", {
   [DESKTOP]: {
     // width: "100%"
     display: "none",
-  }
+  },
 });
 
 const BlogSearchListSkeletonCotainer = styled("div", {
@@ -504,7 +496,6 @@ const BlogListPaginationButtonsContainer = styled("div", {
   //   // padding: "1rem 2.5rem"
   //   padding: "1rem",
   // }
-  
 });
 
 const BlogListPaginationPrevButton = styled("button", {
@@ -549,28 +540,21 @@ const BlogListPaginationNextButton = styled("button", {
 export {
   BlogListContainer,
   BlogListSection,
-  
   BlogListCoverWrapper,
   BlogListCover,
   // ForHireListHeader,
   // ForHireListCardContainer,
-  
   BlogListHeader,
   BlogListUsernamerWrapper,
-
   TotalMoneyVoteContainer,
   TotalMoneyVoteWrapper,
-
   BlogCategory,
   BlogListTitle,
 
   // ForHireListSkillContainer,
   // ForHireSkill,
-
   BlogSearchListCardContainer,
-
   BlogNoSearchListHeader,
-
   BlogSearchListHeader,
   BlogSearchListTextInputWrapper,
   BlogSearchListTextInput,
@@ -578,16 +562,12 @@ export {
   BlogListInputClearButtonWrapper,
 
   // useStyles,
-
   BlogListSearchButton,
-
   BlogSearchListContainer,
   BlogSearchListContent,
   BlogSearchListPrimaryWrapper,
   BlogSearchListSecondaryWrapper,
-
   BlogSearchListSkeletonCotainer,
-
   BlogListPaginationButtonsContainer,
   BlogListPaginationNextButton,
   BlogListPaginationPrevButton,
