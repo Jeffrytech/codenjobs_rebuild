@@ -228,7 +228,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
         <>
           <BlogPageBanner posts={sliderContent} />
           <section className="container mx-auto px-8 sm:px-20 font-manrope">
-            <div className="flex px-5 pb-1.5 border-b-2">
+            <div className="flex px-5 pb-1.5 border-b-2 py-10">
               +
               {sortOptions.map((name) => (
                 <div onClick={() => handleSorting(name)} key={name}>
@@ -244,8 +244,8 @@ const BlogList = ({ title, category, tag, sort, page }) => {
             </div>
 
             <>
-              <div className="py-5 sm:flex justify-between gap-4">
-                <div className="space-y-5 sm:flex-[0.8] text-[#6B6868]">
+              <div className="py-10 sm:flex justify-between gap-4">
+                <div className="space-y-8 sm:flex-[0.8] text-[#6B6868]">
                   {blogList.length !== 0 ? (
                     <>
                       {blogList.map((blog) => (
