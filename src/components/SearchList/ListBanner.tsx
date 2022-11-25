@@ -1,4 +1,5 @@
 import { styled } from "baseui";
+import moment from "moment";
 import { XS } from "../../design/breakpoints";
 import { BlogPostType } from "../../types/blog.type";
 import Carousel from "../Elements/carousel";
@@ -58,60 +59,71 @@ const posts: BlogPostType[] = [
   },
 ];
 
-export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => {
-  return (
-    <div className="z-50 px-10 py-10 list-banner">
-      <Carousel dots>
-        {posts.map(({ id, category, cover, title }) => (
-          <div className="" key={id}>
-            <div className="flex bg-white border-y-4">
-              <div>
-                <h3>{title}</h3>
-                <div>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad
-                  aliquam atque minus sint aliquid consequuntur, neque inventore
-                  quas dolores harum.
+export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
+  <header className="sm:py-10 list-banner pb-10 sm:bg-transparent bg-white container mx-auto sm:px-20">
+    <Carousel
+      autoplay
+      slidesToScroll={1}
+      infinite
+      autoplaySpeed={2500}
+      slidesToShow={1}
+      dots
+      arrows={false}
+    >
+      {posts.map(({ id, cover, title, username, published_at }) => (
+        <div className="bg-white p-8 sm:p-5 text-manrope" key={id}>
+          <div className="sm:flex sm:border-y-[3px] sm:p-5 gap-5 space-y-5">
+            <div className="flex flex-col sm:w-1/2 justify-center gap-4">
+              <h3 className="font-manrope font-extrabold text-[22px] leading-8 sm:text-3xl sm-clamp-2">
+                {title}
+              </h3>
+              <div className="text-base text-[#6B6868]">
+                Tools that you need as a programmer. - Every time i write code
+                across some sound blocks down my workflow sometimes i forget the
+                format need to use to create a cron job, metacharacter i need
+                to......
+              </div>
+              <div className="flex items-center gap-2 text-sm font-manrope text-[#6B6868]">
+                By
+                <div className="sm:block hidden">
+                  <img src="/static/icons/avatar.png" alt="" />
+                </div>
+                <div className="flex flex-col sm:text-xs space-y-1">
+                  <p className="sm:text-black first-letter:capitalize w-fit">
+                    {username}
+                    <span className="sm:pl-0 pl-2  w-fit">
+                      {" "}
+                      . {moment.utc(published_at).format("DD MMM")}
+                    </span>
+                  </p>
+                  <div className="sm:block hidden">Software Developer</div>
                 </div>
               </div>
-              <div>
-                <img className="sm:h-[200px] object-cover" src={cover} alt="" />
-              </div>
+            </div>
+            <div className="sm:w-1/2">
+              <img
+                className="sm:h-[200px] h-[120px] w-full rounded-sm object-cover"
+                src={cover}
+                alt=""
+              />
             </div>
           </div>
-        ))}
-      </Carousel>
-    </div>
-  );
-};
+        </div>
+      ))}
+    </Carousel>
+  </header>
+);
 
-const ListBanner = () => {
-  return (
-    <div>
-      <ListBannerImage
-        // src="https://res.cloudinary.com/codenjobs/image/upload/v1661475067/user/blog/cover/g61lai94xgxvdd1v3xvc.png"
-        // src="https://res.cloudinary.com/codenjobs/image/upload/v1662154257/user/blog/cover/yhphzdxxajc67eyuw33x.jpg"
-        src="/static/design/blockchain_cover.webp"
-        alt="List Banner"
-      />
-      <div>
-        hello world
-        <span>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cumque
-          accusamus voluptas cum. Blanditiis ullam numquam quia sunt molestiae
-          at ducimus illum omnis, error architecto amet itaque accusamus quidem
-          laboriosam doloremque autem vitae tempore enim asperiores porro qui
-          nisi voluptatum aspernatur! Tempora praesentium, rerum voluptates
-          nostrum asperiores, itaque iste voluptas enim maxime quas, voluptatum
-          mollitia dicta doloremque explicabo harum aliquid. Libero possimus
-          ipsa, nesciunt officia hic aut expedita quasi necessitatibus
-          architecto odit odio ad a reprehenderit? Obcaecati alias laboriosam
-          perferendis iste fugit, iure minus itaque debitis officiis vitae
-          corporis. Molestias nisi suscipit nesciunt voluptate quod ipsa dolores
-          quia praesentium saepe facere?
-        </span>
-      </div>
-    </div>
-  );
-};
+const ListBanner = () => (
+  <div>
+    <ListBannerImage
+      src="/static/design/blockchain_cover.webp"
+      alt="List Banner"
+    />
+  </div>
+);
 
 export default ListBanner;
+
+// src="https://res.cloudinary.com/codenjobs/image/upload/v1661475067/user/blog/cover/g61lai94xgxvdd1v3xvc.png"
+// src="https://res.cloudinary.com/codenjobs/image/upload/v1662154257/user/blog/cover/yhphzdxxajc67eyuw33x.jpg"
