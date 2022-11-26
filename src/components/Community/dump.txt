@@ -222,3 +222,137 @@
               </span>
             </a>
           </CommunityList>
+
+          {
+  /* <ListBySortOptionNavbar
+includeTopOption={true}
+setFieldValue={setFieldValue}
+submitForm={submitForm}
+/> */
+}
+
+{
+  /* <IconButton
+type="submit"
+aria-label="search"
+// className={classes.searchButton} 
+> 
+
+
+<BlogSearchListHeader>
+<form
+style={{
+width: "100%",
+}}
+onSubmit={handleSubmit}
+>
+<BlogSearchListTextInputWrapper>
+<BlogListInputSearchButtonWrapper
+aria-label="search"
+click={async (e) => {
+e.preventDefault();
+await submitForm();
+}}
+>
+<SearchIcon />
+</BlogListInputSearchButtonWrapper>
+
+<BlogSearchListTextInput
+id="title"
+name="title"
+type="text"
+placeholder="Type a blog title"
+maxLength={blogPostTitleMaxLength}
+value={values.title}
+onChange={handleChange}
+onBlur={handleBlur}
+/>
+
+<BlogListInputClearButtonWrapper>
+<CancelIcon
+onClick={(e) => {
+e.preventDefault();
+
+router.push("/blogs");
+scrollToTop();
+}}
+type="button"
+aria-label="reset form"
+/>
+</BlogListInputClearButtonWrapper>
+</BlogSearchListTextInputWrapper>
+</form>
+</BlogSearchListHeader>               
+
+<BlogCategory
+$isCategorySelected={isCategroySelected}
+onClick={async () => {
+if (isCategroySelected) {
+// // TODO
+// // Improve this
+// const queries = new URLSearchParams(window.location.search);
+// queries.delete("category");
+// queries.delete("page");
+// // // const redirect = `${window.location.pathname}?${queries.toString()}`;
+// const redirect = `/blogs?${queries.toString()}`;
+// // // @ts-ignore
+// // // window.location = redirect;
+// router.push(redirect);
+setFieldValue("category", "");
+
+await submitForm();
+} else {
+// if (blogListCategory === "Else") {
+//   setFieldValue("category", { label: "Not in the list", value: blogListCategory });
+// } else {
+//   setFieldValue("category", { label: blogListCategory, value: blogListCategory });
+// }
+setFieldValue(
+"category",
+blogListCategory
+);
+
+await submitForm();
+}
+}}
+>
+{blogListCategory === "Else"
+? "Not in the list"
+: blogListCategory}
+</BlogCategory>
+
+*/
+}
+/* const redirect = `${window.location.pathname}${
+        name !== "all" && `?${queries.toString()}`
+      }`; */
+
+
+
+
+/*
+
+check if tag is selected by destructuring from values
+onClick={async (e) => {
+e.preventDefault();
+
+if (!selected) {
+setFieldValue("tag", blog_tag);
+await submitForm();
+}
+
+if (selected) {
+// e.preventDefault();
+setFieldValue("tag", "");
+await submitForm();
+}
+}} */
+
+// alert(totalBlogList);
+// alert(data.length);
+// alert(totalPage);
+// const query = Object.fromEntries(queries);
+
+// url for blogpost /blog?&title=${formatPathTitle(title)}&id=${id}
+
+// {!total_blog_post_money_voters ? 0 : total_blog_post_money_voters}
