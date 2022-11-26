@@ -17,6 +17,7 @@ import { ArrowForwardIosOutlined, Search } from "@material-ui/icons";
 import { BlogSpotlight } from "../../Homepage/Spotlight/Cards";
 import Carousel from "../../Elements/carousel";
 import NavBar from "./Navbar";
+import { BlogArticle } from "./BlogArticle";
 
 type Props = {
   topPosts: BlogPostType[];
@@ -133,28 +134,6 @@ const findBlogs = async ({
 const sortOptions = ["all", "top", "new", "old"] as const;
 
 type SortType = typeof sortOptions[number];
-
-type PostedByProps = {
-  username: string;
-  published_at: string;
-};
-const PostedBy = ({ username, published_at }: PostedByProps) => (
-  <div className="flex items-center gap-1.5 text-sm font-manrope text-[#6B6868]">
-    <div className="sm:block hidden">
-      <img src="/static/icons/avatar.png" alt="" />
-    </div>
-    <div className="flex flex-col sm:text-xs space-y-1">
-      <p className="sm:text-black first-letter:capitalize w-fit">
-        {username}
-        <span className="sm:pl-0 pl-2  w-fit">
-          {" "}
-          . {moment.utc(published_at).format("DD MMM")}
-        </span>
-      </p>
-      <div className="sm:block hidden">Software Developer</div>
-    </div>
-  </div>
-);
 
 const BlogList = ({ title, category, tag, sort, page }) => {
   const router = useRouter();
@@ -284,8 +263,8 @@ const BlogList = ({ title, category, tag, sort, page }) => {
         <>
           <NavBar />
           <BlogPageBanner posts={sliderContent} />
-          <section className="container sm:min-h-screen mx-auto px-8 sm:px-20 font-manrope flex gap-10 justify-between">
-            <div className="py-10 sm:flex-[0.8]">
+          <section className="lg:container sm:min-h-screen mx-auto px-8 sm:px-20 font-manrope flex gap-10 justify-between">
+            <div className="py-10 lg:px-0 sm:px-8 sm:flex-[0.8]">
               {blogList && totalPage > 1 && (
                 <div className="w-fit ml-auto">
                   <div className="flex gap-4 items-center">
@@ -335,52 +314,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                 {blogList.length !== 0 ? (
                   <>
                     {blogList.map((blog) => (
-                      <article
-                        className="flex items-center justify-between gap-4 py-8 pb-16 border-b-2"
-                        key={blog.id}
-                      >
-                        <div className="min-w-1/2 space-y-3">
-                          <PostedBy
-                            username={blog.username}
-                            published_at={blog.published_at}
-                          />
-                          <div className="space-y-3 sm:max-w-2xl">
-                            <h4 className="text-lg font-extrabold text-black">
-                              {blog.title}
-                            </h4>
-                            <div className="flex items-center gap-2">
-                              {/* {blog.tags.map((d) => (
-                                  <p key={d}>{d}</p>
-                                ))} */}
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit. Adipisci architecto culpa
-                              cupiditate laboriosam dicta eligendi dolorum?
-                              Necessitatibus neque corporis dicta.
-                            </div>
-                          </div>
-                          <div className="flex items-center text-xs gap-2">
-                            <button className=" bg-[#E6E6E6] text-sm px-4 py-1 rounded-[20px]">
-                              {blog.category || "Custom"}
-                            </button>
-                            <p className="text-black">
-                              Last updated:{" "}
-                              {moment.utc(blog.updated_at).format("MMM DD, YY")}
-                            </p>
-                            <p className="text-black">
-                              {blog.tags?.[0] || "Selected for you"}
-                            </p>
-                          </div>
-                        </div>
-                        {blog.cover && (
-                          <div className="">
-                            <img
-                              className="w-[180px] h-[180px] rounded object-cover"
-                              src={blog.cover}
-                              alt=""
-                            />
-                          </div>
-                        )}
-                      </article>
+                      <BlogArticle key={blog.id} {...blog} />
                     ))}
                   </>
                 ) : (

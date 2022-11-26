@@ -60,7 +60,7 @@ const posts: BlogPostType[] = [
 ];
 
 export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
-  <header className="sm:py-10 list-banner pb-10 sm:bg-transparent bg-white container mx-auto sm:px-20">
+  <header className="sm:py-10 list-banner pb-10 sm:bg-transparent bg-white lg:container mx-auto sm:px-20">
     <Carousel
       autoplay
       slidesToScroll={1}
