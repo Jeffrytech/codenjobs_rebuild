@@ -53,7 +53,7 @@ const BlogSidebar = ({
   value,
 }: Props) => {
   return (
-    <aside className="w-full p-10 space-y-5 sticky top-0">
+    <aside className="w-full p-5 py-10 xl:p-10 space-y-5 sticky top-0">
       <form onSubmit={handleSubmit}>
         <div className="border border-black p-3 flex items-center overflow-hidden rounded-full">
           <Search />
@@ -261,10 +261,10 @@ const BlogList = ({ title, category, tag, sort, page }) => {
         <div className="h-screen w-screen flex items-center justify-center" />
       ) : (
         <>
-          <NavBar />
           <BlogPageBanner posts={sliderContent} />
-          <section className="lg:container sm:min-h-screen mx-auto px-8 sm:px-20 font-manrope flex gap-10 justify-between">
-            <div className="py-10 lg:px-0 sm:px-8 sm:flex-[0.8]">
+          <section className="sm:min-h-screen font-manrope flex gap-10 justify-between">
+            <NavBar />
+            <div className="pb-10 md:flex-[0.8]">
               {blogList && totalPage > 1 && (
                 <div className="w-fit ml-auto">
                   <div className="flex gap-4 items-center">

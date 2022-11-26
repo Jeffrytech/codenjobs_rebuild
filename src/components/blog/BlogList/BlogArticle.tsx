@@ -50,25 +50,25 @@ export const BlogArticle = ({
         <PostedBy username={username} published_at={published_at} />
         <div className="space-y-3 sm:max-w-2xl">
           <h4 className="text-lg font-extrabold text-black">{title}</h4>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 text-sm lg:text-base py-3">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
             architecto culpa cupiditate laboriosam dicta eligendi dolorum?
             Necessitatibus neque corporis dicta.
           </div>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between flex-wrap gap-y-5">
           <div className="flex items-center text-xs gap-2">
             <button className=" bg-[#E6E6E6] text-sm px-4 py-1 rounded-[20px]">
               {category || "Custom"}
             </button>
-            <p className="text-black">
-              Last updated: {moment.utc(updated_at).format("MMM DD, YY")} -
+            <p className="text-black w-fit h-[16px] overflow-y-hidden">
+              Last updated: {moment.utc(updated_at).format("MMM DD, YY")},
             </p>
             <p className="text-black first-letter:capitalize">
               {tags?.[0] || "Selected for you"}
             </p>
           </div>
-          <div className="gap-3 flex items-center">
+          <div className="gap-3 flex items-center ml-auto">
             <BookmarkAddOutlined className="cursor-pointer" />
             <div ref={ref} className="relative">
               <MoreHorizOutlined
