@@ -9,7 +9,7 @@ const menuItems = [
 ];
 
 const NavBar = () => (
-  <aside className="border-r-[3px] space-y-9 pt-8 h-screen w-[80px] top-0 sticky">
+  <aside className="border-r-[3px] space-y-9 pt-8 lg:h-screen w-[80px] top-0 lg:sticky hidden lg:block">
     {menuItems.map(({ icon, link }) => (
       <Link
         className="navbar-menu mx-auto w-fit block"

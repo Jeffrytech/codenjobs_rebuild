@@ -262,7 +262,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
       ) : (
         <>
           <BlogPageBanner posts={sliderContent} />
-          <section className="sm:min-h-screen font-manrope flex gap-10 justify-between">
+          <section className="sm:min-h-screen sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
             <NavBar />
             <div className="pb-10 md:flex-[0.8]">
               {blogList && totalPage > 1 && (
