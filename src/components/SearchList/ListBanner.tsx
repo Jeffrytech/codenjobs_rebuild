@@ -60,7 +60,7 @@ const posts: BlogPostType[] = [
 ];
 
 export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
-  <header className="sm:py-10 list-banner pb-10 sm:bg-transparent bg-white container mx-auto sm:px-20">
+  <header className="sm:py-10 list-banner pb-10 sm:bg-transparent sm:px-10 bg-white lg:container mx-auto md:px-20">
     <Carousel
       autoplay
       slidesToScroll={1}
@@ -72,9 +72,9 @@ export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
     >
       {posts.map(({ id, cover, title, username, published_at }) => (
         <div className="bg-white p-8 sm:p-5 text-manrope" key={id}>
-          <div className="sm:flex sm:border-y-[3px] sm:p-5 gap-5 space-y-5">
+          <div className="sm:flex md:items-start sm:items-center sm:border-y-[3px] sm:p-5 gap-5 space-y-5">
             <div className="flex flex-col sm:w-1/2 justify-center gap-4">
-              <h3 className="font-manrope font-extrabold text-[22px] leading-8 sm:text-3xl sm-clamp-2">
+              <h3 className="font-manrope font-extrabold text-[22px] sm:text-lg leading-8 md:text-[28px] sm-clamp-2">
                 {title}
               </h3>
               <div className="text-base text-[#6B6868]">
@@ -102,7 +102,7 @@ export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
             </div>
             <div className="sm:w-1/2">
               <img
-                className="sm:h-[200px] h-[120px] w-full rounded-sm object-cover"
+                className="sm:h-[300px] md:h-[200px] h-[120px] w-full rounded-sm object-cover"
                 src={cover}
                 alt=""
               />

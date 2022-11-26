@@ -1,20 +1,9 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BlogPostType } from "../../../types/blog.type";
 
-import {
-  BlogNoSearchListHeader,
-  BlogListPaginationButtonsContainer,
-  BlogListPaginationNextButton,
-  BlogListPaginationPrevButton,
-} from "./BlogListCSS";
-import { Chip, makeStyles, Tooltip } from "@material-ui/core";
+import { BlogNoSearchListHeader } from "./BlogListCSS";
 
 import NoSearchList from "../../SearchList/NoSearchList";
-
-// import { formatPathTitle } from "../../../title/path";
-// import dynamic from "next/dynamic";
-// import { blogPostTitleMaxLength } from "../../../validators";
-
 import CentralizeChildren from "../../CentralizeChildren";
 import { useRouter } from "next/router";
 import Community from "../../Community";
@@ -24,7 +13,11 @@ import { findBlogList, findTotalBlogList } from "../../../api/blog";
 import { scrollToTop } from "../../../browser/scroll";
 import useBlogListForm from "../BlogListForm/useBlogListForm";
 import moment from "moment";
-import { Search } from "@material-ui/icons";
+import { ArrowForwardIosOutlined, Search } from "@material-ui/icons";
+import { BlogSpotlight } from "../../Homepage/Spotlight/Cards";
+import Carousel from "../../Elements/carousel";
+import NavBar from "./Navbar";
+import { BlogArticle } from "./BlogArticle";
 
 type Props = {
   topPosts: BlogPostType[];
@@ -34,7 +27,25 @@ type Props = {
   handleChange: (e) => void;
 };
 
-const BlogSearchListSecondary = ({
+const spotlight = {
+  username: "codenjobs",
+  company_name: "Offchain Labs",
+  company_logo:
+    "https://res.cloudinary.com/codenjobs/image/upload/v1667044158/user/company/logo/brtm3e7jtc79nrkccmit.png",
+  job_id: "8e46c111-bdf5-4afe-846b-b8ada7ad0acc",
+  job_title: "Blockchain Developer",
+  job_location: "Remote",
+  job_type: "Full-Time",
+  job_category: "Blockchain",
+  job_skills: ["Blockchain", "Solidity", "Ethereum"],
+  job_salary: "Not listed",
+  job_pay_in_cryptocurrency: false,
+  job_created_at: "2022-10-29T11:49:18.913013",
+  job_updated_at: null,
+  job_published_at: "2022-10-29T11:53:48.245998",
+};
+
+const BlogSidebar = ({
   topPosts,
   handleSubmit,
   handleChange,
@@ -42,12 +53,12 @@ const BlogSearchListSecondary = ({
   value,
 }: Props) => {
   return (
-    <aside className="bg-white w-full p-10 space-y-10">
-      <form onSubmit={handleSubmit}>
-        <div className="border border-black p-5 rounded-full">
+    <aside className="w-full pb-10 sm:p-5 sm:py-10 xl:p-10 space-y-5 sticky top-0">
+      <form className="sm:block hidden" onSubmit={handleSubmit}>
+        <div className="border border-black p-3 flex items-center overflow-hidden rounded-full">
           <Search />
           <input
-            className="outline-none px-5 text-sm"
+            className="outline-none px-2 text-sm"
             type="text"
             name="title"
             placeholder="Search for blog post..."
@@ -58,12 +69,26 @@ const BlogSearchListSecondary = ({
           />
         </div>
       </form>
-      <div className="px-5 space-y-5">
-        <h3 className="text-sm text-black font-medium">Top Posts</h3>
-        <Community list={topPosts} />
+      <div className="sm:px-5 px-2 space-y-14">
+        <div className="space-y-5">
+          <h3 className="text-sm text-black font-medium">Staff Pick</h3>
+          <Community list={topPosts.slice(0, 5)} />
+        </div>
+        <div className="border-b-2" />
+        <div className="space-y-5">
+          <h3 className="text-sm text-black font-medium">Trending content</h3>
+          <Community list={topPosts.slice(5)} />
+        </div>
+        <article className="list-banner blog-mod">
+          <Carousel dots autoplay autoplaySpeed={2500} arrows={false}>
+            {new Array(4).fill("rehkmansa").map((n, idx) => (
+              <BlogSpotlight key={idx} {...spotlight} />
+            ))}
+          </Carousel>
+        </article>
       </div>
-      <div className="border-b-2 mx-5" />
-      <TopUsersForHire limit={10} list={"blog"} />
+
+      {/* <TopUsersForHire limit={10}  /> */}
     </aside>
   );
 };
@@ -106,58 +131,9 @@ const findBlogs = async ({
   }
 };
 
-/*
-
-check if tag is selected by destructuring from values
-onClick={async (e) => {
-e.preventDefault();
-
-if (!selected) {
-setFieldValue("tag", blog_tag);
-await submitForm();
-}
-
-if (selected) {
-// e.preventDefault();
-setFieldValue("tag", "");
-await submitForm();
-}
-}} */
-
-// alert(totalBlogList);
-// alert(data.length);
-// alert(totalPage);
-// const query = Object.fromEntries(queries);
-
-// url for blogpost /blog?&title=${formatPathTitle(title)}&id=${id}
-
-// {!total_blog_post_money_voters ? 0 : total_blog_post_money_voters}
-
 const sortOptions = ["all", "top", "new", "old"] as const;
 
 type SortType = typeof sortOptions[number];
-
-type PostedByProps = {
-  username: string;
-  published_at: string;
-};
-const PostedBy = ({ username, published_at }: PostedByProps) => (
-  <div className="flex items-center gap-1.5 text-sm font-manrope text-[#6B6868]">
-    <div className="sm:block hidden">
-      <img src="/static/icons/avatar.png" alt="" />
-    </div>
-    <div className="flex flex-col sm:text-xs space-y-1">
-      <p className="sm:text-black first-letter:capitalize w-fit">
-        {username}
-        <span className="sm:pl-0 pl-2  w-fit">
-          {" "}
-          . {moment.utc(published_at).format("DD MMM")}
-        </span>
-      </p>
-      <div className="sm:block hidden">Software Developer</div>
-    </div>
-  </div>
-);
 
 const BlogList = ({ title, category, tag, sort, page }) => {
   const router = useRouter();
@@ -168,7 +144,6 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   const [sliderContent, setSliderContent] = useState([]);
   const [topPosts, setTopPosts] = useState([]);
 
-  console.log(sort);
   const blogsPerPage = 10;
 
   let currentPage: number;
@@ -258,9 +233,17 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     setLoading(false);
   }, [category, currentPage, sort, tag, title]);
 
-  const handleFormSubmit = async (e: React.SyntheticEvent) => {
-    e.preventDefault();
-    await submitForm();
+  const handlePagination = async (target: "prev" | "next") => {
+    const pageNum = target === "prev" ? Number(page) - 1 : Number(page) + 1;
+    const queries = new URLSearchParams(window.location.search);
+    queries.set("page", pageNum.toString());
+
+    const query = Object.fromEntries(queries);
+    router.push({
+      pathname: window.location.pathname,
+      query,
+    });
+    scrollToTop();
   };
 
   useEffect(() => {
@@ -279,158 +262,79 @@ const BlogList = ({ title, category, tag, sort, page }) => {
       ) : (
         <>
           <BlogPageBanner posts={sliderContent} />
-          <section className="container mx-auto px-8 sm:px-20 font-manrope">
-            <div className="flex px-5 pb-1.5 border-b-2 py-10">
-              +
-              {sortOptions.map((name) => (
-                <div onClick={() => handleSorting(name)} key={name}>
-                  <button
-                    className={`first-letter:capitalize pb-1.5 px-3 -mb-2 cursor-pointer ${
-                      name === sortOption && "border-b-[#818181] border-b-2"
-                    }`}
-                  >
-                    {name}
-                  </button>
+          <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
+            <NavBar />
+            <div className="pb-10 md:flex-[0.8]">
+              {blogList && totalPage > 1 && (
+                <div className="w-fit ml-auto">
+                  <div className="flex gap-4 items-center">
+                    {page !== 1 && (
+                      <button
+                        aria-label="previous page"
+                        className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                        onClick={() => handlePagination("prev")}
+                      >
+                        <ArrowForwardIosOutlined
+                          fontSize="small"
+                          className="-scale-x-100"
+                          color="inherit"
+                        />
+                      </button>
+                    )}
+                    {page !== totalPage && (
+                      <button
+                        aria-label="next page"
+                        className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                        onClick={() => handlePagination("next")}
+                      >
+                        <ArrowForwardIosOutlined
+                          fontSize="small"
+                          color="inherit"
+                        />
+                      </button>
+                    )}
+                  </div>
                 </div>
-              ))}
-            </div>
-
-            <>
-              <div className="py-10 sm:flex justify-between gap-4">
-                <div className="space-y-8 sm:flex-[0.8] text-[#6B6868]">
-                  {blogList.length !== 0 ? (
-                    <>
-                      {blogList.map((blog) => (
-                        <article
-                          className="flex items-center justify-between gap-4 py-8 pb-16 border-b-2"
-                          key={blog.id}
-                        >
-                          <div className="min-w-1/2 space-y-3">
-                            <PostedBy
-                              username={blog.username}
-                              published_at={blog.published_at}
-                            />
-                            <div className="space-y-3 sm:max-w-2xl">
-                              <h4 className="text-lg font-extrabold text-black">
-                                {blog.title}
-                              </h4>
-                              <div className="flex items-center gap-2">
-                                {/* {blog.tags.map((d) => (
-                                  <p key={d}>{d}</p>
-                                ))} */}
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Adipisci architecto culpa
-                                cupiditate laboriosam dicta eligendi dolorum?
-                                Necessitatibus neque corporis dicta.
-                              </div>
-                            </div>
-                            <div className="flex items-center text-xs gap-2">
-                              <button className=" bg-[#E6E6E6] text-sm px-4 py-1 rounded-[20px]">
-                                {blog.category || "Custom"}
-                              </button>
-                              <p className="text-black">
-                                Last updated:{" "}
-                                {moment
-                                  .utc(blog.updated_at)
-                                  .format("MMM DD, YY")}
-                              </p>
-                              <p className="text-black">
-                                {blog.tags?.[0] || "Selected for you"}
-                              </p>
-                            </div>
-                          </div>
-                          {blog.cover && (
-                            <div className="">
-                              <img
-                                className="w-[180px] h-[180px] rounded object-cover"
-                                src={blog.cover}
-                                alt=""
-                              />
-                            </div>
-                          )}
-                        </article>
-                      ))}
-
-                      {blogList && totalPage > 1 && (
-                        <div className="w-full border">
-                          <BlogListPaginationButtonsContainer
-                            style={{
-                              paddingLeft: "2rem",
-                              background: "none",
-                              borderRadius: "0.5rem",
-                              marginBottom: "1rem",
-                              border: "none",
-                              padding: "0.25rem",
-                            }}
-                          >
-                            {page !== 1 && (
-                              <BlogListPaginationPrevButton
-                                onClick={async (e) => {
-                                  e.preventDefault();
-
-                                  const prevPage = page - 1;
-                                  const queries = new URLSearchParams(
-                                    window.location.search
-                                  );
-                                  queries.set("page", prevPage.toString());
-
-                                  const query = Object.fromEntries(queries);
-                                  router.push({
-                                    pathname: window.location.pathname,
-                                    query,
-                                  });
-                                  scrollToTop();
-                                }}
-                              >
-                                Prev
-                              </BlogListPaginationPrevButton>
-                            )}
-                            {page !== totalPage && (
-                              <BlogListPaginationNextButton
-                                onClick={async (e) => {
-                                  e.preventDefault();
-
-                                  const nextPage = page + 1;
-                                  const queries = new URLSearchParams(
-                                    window.location.search
-                                  );
-                                  queries.set("page", nextPage.toString());
-
-                                  const query = Object.fromEntries(queries);
-                                  router.push({
-                                    pathname: window.location.pathname,
-                                    query,
-                                  });
-                                  scrollToTop();
-                                }}
-                              >
-                                Next
-                              </BlogListPaginationNextButton>
-                            )}
-                          </BlogListPaginationButtonsContainer>
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    <BlogNoSearchListHeader>
-                      <CentralizeChildren>
-                        <NoSearchList href="/blogs" message="No results" />
-                      </CentralizeChildren>
-                    </BlogNoSearchListHeader>
-                  )}
-                </div>
-
-                <div className="min-w-[300px] flex-[0.4] sm: pl-5">
-                  <BlogSearchListSecondary
-                    handleSubmit={handleSubmit}
-                    topPosts={topPosts}
-                    value={values.title}
-                    handleChange={handleChange}
-                    onBlur={handleBlur}
-                  />
-                </div>
+              )}
+              <div className="flex px-5 pb-1.5 border-b-2 py-5">
+                +
+                {sortOptions.map((name) => (
+                  <div onClick={() => handleSorting(name)} key={name}>
+                    <button
+                      className={`first-letter:capitalize pb-3 px-3 -mb-2 cursor-pointer ${
+                        name === sortOption && "border-b-[#818181] border-b-2"
+                      }`}
+                    >
+                      {name}
+                    </button>
+                  </div>
+                ))}
               </div>
-            </>
+              <div className="space-y-5 sm:space-y-8 text-[#6B6868]">
+                {blogList.length !== 0 ? (
+                  <>
+                    {blogList.map((blog) => (
+                      <BlogArticle key={blog.id} {...blog} />
+                    ))}
+                  </>
+                ) : (
+                  <BlogNoSearchListHeader>
+                    <CentralizeChildren>
+                      <NoSearchList href="/blogs" message="No results" />
+                    </CentralizeChildren>
+                  </BlogNoSearchListHeader>
+                )}
+              </div>
+            </div>
+            <div className="min-w-[300px] sm:flex-[0.4] bg-white ">
+              <BlogSidebar
+                handleSubmit={handleSubmit}
+                topPosts={topPosts}
+                value={values.title}
+                handleChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
           </section>
         </>
       )}
@@ -439,106 +343,3 @@ const BlogList = ({ title, category, tag, sort, page }) => {
 };
 
 export default BlogList;
-{
-  /* <ListBySortOptionNavbar
-includeTopOption={true}
-setFieldValue={setFieldValue}
-submitForm={submitForm}
-/> */
-}
-
-{
-  /* <IconButton
-type="submit"
-aria-label="search"
-// className={classes.searchButton} 
-> 
-
-
-<BlogSearchListHeader>
-<form
-style={{
-width: "100%",
-}}
-onSubmit={handleSubmit}
->
-<BlogSearchListTextInputWrapper>
-<BlogListInputSearchButtonWrapper
-aria-label="search"
-click={async (e) => {
-e.preventDefault();
-await submitForm();
-}}
->
-<SearchIcon />
-</BlogListInputSearchButtonWrapper>
-
-<BlogSearchListTextInput
-id="title"
-name="title"
-type="text"
-placeholder="Type a blog title"
-maxLength={blogPostTitleMaxLength}
-value={values.title}
-onChange={handleChange}
-onBlur={handleBlur}
-/>
-
-<BlogListInputClearButtonWrapper>
-<CancelIcon
-onClick={(e) => {
-e.preventDefault();
-
-router.push("/blogs");
-scrollToTop();
-}}
-type="button"
-aria-label="reset form"
-/>
-</BlogListInputClearButtonWrapper>
-</BlogSearchListTextInputWrapper>
-</form>
-</BlogSearchListHeader>               
-
-<BlogCategory
-$isCategorySelected={isCategroySelected}
-onClick={async () => {
-if (isCategroySelected) {
-// // TODO
-// // Improve this
-// const queries = new URLSearchParams(window.location.search);
-// queries.delete("category");
-// queries.delete("page");
-// // // const redirect = `${window.location.pathname}?${queries.toString()}`;
-// const redirect = `/blogs?${queries.toString()}`;
-// // // @ts-ignore
-// // // window.location = redirect;
-// router.push(redirect);
-setFieldValue("category", "");
-
-await submitForm();
-} else {
-// if (blogListCategory === "Else") {
-//   setFieldValue("category", { label: "Not in the list", value: blogListCategory });
-// } else {
-//   setFieldValue("category", { label: blogListCategory, value: blogListCategory });
-// }
-setFieldValue(
-"category",
-blogListCategory
-);
-
-await submitForm();
-}
-}}
->
-{blogListCategory === "Else"
-? "Not in the list"
-: blogListCategory}
-</BlogCategory>
-
-*/
-}
-/* const redirect = `${window.location.pathname}${
-        name !== "all" && `?${queries.toString()}`
-      }`; */

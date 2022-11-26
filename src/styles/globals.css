@@ -217,6 +217,14 @@ h6 {
   height: 10px;
 }
 
+.contain-content {
+  contain: content;
+}
+
+.blog-mod .slick-dots {
+  transform: translateY(-150%);
+}
+
 @media screen and (max-width: 640px) {
   .sm-clamp-2 {
     -webkit-line-clamp: 2;
@@ -224,4 +232,13 @@ h6 {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+}
+
+.navbar-menu:last-of-type::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #414a5c;
+  margin-bottom: 36px;
+  width: 100%;
 }

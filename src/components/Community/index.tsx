@@ -6,7 +6,7 @@ type Props = {
 };
 
 const Community = ({ list }: Props) => (
-  <div className="space-y-5">
+  <div className="space-y-4">
     {list.map(({ id, title, username }) => (
       <div key={id} className="space-y-1">
         <div className="w-fit flex items-center gap-1">
