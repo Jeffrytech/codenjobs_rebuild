@@ -233,3 +233,12 @@ h6 {
     overflow: hidden;
   }
 }
+
+.navbar-menu:last-of-type::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #414a5c;
+  margin-bottom: 36px;
+  width: 100%;
+}

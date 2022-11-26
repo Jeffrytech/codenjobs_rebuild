@@ -1,12 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BlogPostType } from "../../../types/blog.type";
 
-import {
-  BlogNoSearchListHeader,
-  BlogListPaginationButtonsContainer,
-  BlogListPaginationNextButton,
-  BlogListPaginationPrevButton,
-} from "./BlogListCSS";
+import { BlogNoSearchListHeader } from "./BlogListCSS";
 
 import NoSearchList from "../../SearchList/NoSearchList";
 import CentralizeChildren from "../../CentralizeChildren";
@@ -18,7 +13,7 @@ import { findBlogList, findTotalBlogList } from "../../../api/blog";
 import { scrollToTop } from "../../../browser/scroll";
 import useBlogListForm from "../BlogListForm/useBlogListForm";
 import moment from "moment";
-import { Search } from "@material-ui/icons";
+import { ArrowForwardIosOutlined, Search } from "@material-ui/icons";
 import { BlogSpotlight } from "../../Homepage/Spotlight/Cards";
 import Carousel from "../../Elements/carousel";
 import NavBar from "./Navbar";
@@ -170,7 +165,6 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   const [sliderContent, setSliderContent] = useState([]);
   const [topPosts, setTopPosts] = useState([]);
 
-  console.log(sort);
   const blogsPerPage = 10;
 
   let currentPage: number;
@@ -260,6 +254,19 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     setLoading(false);
   }, [category, currentPage, sort, tag, title]);
 
+  const handlePagination = async (target: "prev" | "next") => {
+    const pageNum = target === "prev" ? Number(page) - 1 : Number(page) + 1;
+    const queries = new URLSearchParams(window.location.search);
+    queries.set("page", pageNum.toString());
+
+    const query = Object.fromEntries(queries);
+    router.push({
+      pathname: window.location.pathname,
+      query,
+    });
+    scrollToTop();
+  };
+
   useEffect(() => {
     fetchSliderContent();
     fetchTopPosts();
@@ -279,12 +286,43 @@ const BlogList = ({ title, category, tag, sort, page }) => {
           <BlogPageBanner posts={sliderContent} />
           <section className="container sm:min-h-screen mx-auto px-8 sm:px-20 font-manrope flex gap-10 justify-between">
             <div className="py-10 sm:flex-[0.8]">
+              {blogList && totalPage > 1 && (
+                <div className="w-fit ml-auto">
+                  <div className="flex gap-4 items-center">
+                    {page !== 1 && (
+                      <button
+                        aria-label="previous page"
+                        className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                        onClick={() => handlePagination("prev")}
+                      >
+                        <ArrowForwardIosOutlined
+                          fontSize="small"
+                          className="-scale-x-100"
+                          color="inherit"
+                        />
+                      </button>
+                    )}
+                    {page !== totalPage && (
+                      <button
+                        aria-label="next page"
+                        className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                        onClick={() => handlePagination("next")}
+                      >
+                        <ArrowForwardIosOutlined
+                          fontSize="small"
+                          color="inherit"
+                        />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
               <div className="flex px-5 pb-1.5 border-b-2 py-5">
                 +
                 {sortOptions.map((name) => (
                   <div onClick={() => handleSorting(name)} key={name}>
                     <button
-                      className={`first-letter:capitalize pb-1.5 px-3 -mb-2 cursor-pointer ${
+                      className={`first-letter:capitalize pb-3 px-3 -mb-2 cursor-pointer ${
                         name === sortOption && "border-b-[#818181] border-b-2"
                       }`}
                     >
@@ -344,66 +382,6 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                         )}
                       </article>
                     ))}
-
-                    {blogList && totalPage > 1 && (
-                      <div className="w-full border">
-                        <BlogListPaginationButtonsContainer
-                          style={{
-                            paddingLeft: "2rem",
-                            background: "none",
-                            borderRadius: "0.5rem",
-                            marginBottom: "1rem",
-                            border: "none",
-                            padding: "0.25rem",
-                          }}
-                        >
-                          {page !== 1 && (
-                            <BlogListPaginationPrevButton
-                              onClick={async (e) => {
-                                e.preventDefault();
-
-                                const prevPage = page - 1;
-                                const queries = new URLSearchParams(
-                                  window.location.search
-                                );
-                                queries.set("page", prevPage.toString());
-
-                                const query = Object.fromEntries(queries);
-                                router.push({
-                                  pathname: window.location.pathname,
-                                  query,
-                                });
-                                scrollToTop();
-                              }}
-                            >
-                              Prev
-                            </BlogListPaginationPrevButton>
-                          )}
-                          {page !== totalPage && (
-                            <BlogListPaginationNextButton
-                              onClick={async (e) => {
-                                e.preventDefault();
-
-                                const nextPage = page + 1;
-                                const queries = new URLSearchParams(
-                                  window.location.search
-                                );
-                                queries.set("page", nextPage.toString());
-
-                                const query = Object.fromEntries(queries);
-                                router.push({
-                                  pathname: window.location.pathname,
-                                  query,
-                                });
-                                scrollToTop();
-                              }}
-                            >
-                              Next
-                            </BlogListPaginationNextButton>
-                          )}
-                        </BlogListPaginationButtonsContainer>
-                      </div>
-                    )}
                   </>
                 ) : (
                   <BlogNoSearchListHeader>

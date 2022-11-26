@@ -11,7 +11,7 @@ const menuItems = [
 const NavBar = () => (
   <aside className="h-screen justify-center gap-9 w-[80px] flex items-center flex-col fixed overflow-hidden">
     {menuItems.map(({ icon, link }) => (
-      <Link passHref href={link} key={icon}>
+      <Link className="navbar-menu" passHref href={link} key={icon}>
         <img src={`/static/icons/${icon}.svg`} alt="" />
       </Link>
     ))}
