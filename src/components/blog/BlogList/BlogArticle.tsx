@@ -43,14 +43,14 @@ export const BlogArticle = ({
 
   return (
     <article
-      className="flex items-center justify-between gap-4 py-8 pb-16 border-b-2"
+      className="flex items-center justify-between gap-4 py-8 sm:pb-16 border-b-2"
       key={id}
     >
       <div className="min-w-1/2 space-y-3">
         <PostedBy username={username} published_at={published_at} />
         <div className="space-y-3 sm:max-w-2xl">
           <h4 className="text-lg font-extrabold text-black">{title}</h4>
-          <div className="flex items-center gap-2 text-sm lg:text-base py-3">
+          <div className="hidden sm:flex items-center gap-2 text-sm lg:text-base py-3">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci
             architecto culpa cupiditate laboriosam dicta eligendi dolorum?
             Necessitatibus neque corporis dicta.
@@ -58,10 +58,10 @@ export const BlogArticle = ({
         </div>
         <div className="flex items-center justify-between flex-wrap gap-y-5">
           <div className="flex items-center text-xs gap-2">
-            <button className=" bg-[#E6E6E6] text-sm px-4 py-1 rounded-[20px]">
+            <button className="bg-[#E6E6E6] text-xs sm:text-sm px-2.5 sm:px-4 py-1 rounded-[20px]">
               {category || "Custom"}
             </button>
-            <p className="text-black w-fit h-[16px] overflow-y-hidden">
+            <p className="text-black w-fit h-[16px] sm:block hidden overflow-y-hidden">
               Last updated: {moment.utc(updated_at).format("MMM DD, YY")},
             </p>
             <p className="text-black first-letter:capitalize">
@@ -86,13 +86,11 @@ export const BlogArticle = ({
         </div>
       </div>
       {cover && (
-        <div className="">
-          <img
-            className="w-[180px] h-[180px] rounded object-cover"
-            src={cover}
-            alt=""
-          />
-        </div>
+        <img
+          className="sm:w-[180px] w-[80px] sm:h-[180px] h-[86px] rounded object-cover"
+          src={cover}
+          alt=""
+        />
       )}
     </article>
   );

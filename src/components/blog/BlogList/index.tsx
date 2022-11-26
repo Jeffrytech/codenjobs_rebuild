@@ -53,8 +53,8 @@ const BlogSidebar = ({
   value,
 }: Props) => {
   return (
-    <aside className="w-full p-5 py-10 xl:p-10 space-y-5 sticky top-0">
-      <form onSubmit={handleSubmit}>
+    <aside className="w-full pb-10 sm:p-5 sm:py-10 xl:p-10 space-y-5 sticky top-0">
+      <form className="sm:block hidden" onSubmit={handleSubmit}>
         <div className="border border-black p-3 flex items-center overflow-hidden rounded-full">
           <Search />
           <input
@@ -69,7 +69,7 @@ const BlogSidebar = ({
           />
         </div>
       </form>
-      <div className="px-5 space-y-14">
+      <div className="sm:px-5 px-2 space-y-14">
         <div className="space-y-5">
           <h3 className="text-sm text-black font-medium">Staff Pick</h3>
           <Community list={topPosts.slice(0, 5)} />
@@ -262,7 +262,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
       ) : (
         <>
           <BlogPageBanner posts={sliderContent} />
-          <section className="sm:min-h-screen sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
+          <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
             <NavBar />
             <div className="pb-10 md:flex-[0.8]">
               {blogList && totalPage > 1 && (
@@ -310,7 +310,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                   </div>
                 ))}
               </div>
-              <div className="space-y-8 text-[#6B6868]">
+              <div className="space-y-5 sm:space-y-8 text-[#6B6868]">
                 {blogList.length !== 0 ? (
                   <>
                     {blogList.map((blog) => (
