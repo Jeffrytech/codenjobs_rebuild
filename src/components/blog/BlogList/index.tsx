@@ -45,6 +45,21 @@ const spotlight = {
   job_published_at: "2022-10-29T11:53:48.245998",
 };
 
+const blogPost = {
+  username: "tokah",
+  id: "963fb028-dc50-49d6-aa40-334896db2217",
+  cover:
+    "https://res.cloudinary.com/codenjobs/image/upload/v1668133437/user/blog/cover/pnslzsk4nn41qo2ojohb.png",
+  title:
+    "Don't miss our World Cup 2022:Qatar NFT launch - November 18th, 3:00 pm UTC",
+  category: "Marketing",
+  tags: ["Blockchain", "Crypto", "NFT", "Solana", "Product"],
+  created_at: "2022-11-11T02:23:01.360743",
+  updated_at: "2022-11-11T02:23:57.734248",
+  published_at: "2022-11-11T02:23:23.031217",
+  total_blog_post_money_voters: 1,
+};
+
 const BlogSidebar = ({
   topPosts,
   handleSubmit,
@@ -139,7 +154,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   const [blogList, setBlogList] = useState<BlogPostType[]>([]);
   const [totalPage, setTotalPage] = useState(0);
   const [topPosts, setTopPosts] = useState([]);
-
+  const [loading, setLoading] = useState(true);
   const blogsPerPage = 10;
 
   let currentPage: number;
@@ -202,19 +217,6 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     });
   };
 
-  const findBlogsMethod = useCallback(async () => {
-    findBlogs({
-      currentPage,
-      blogsPerPage,
-      title,
-      category,
-      tag,
-      sort,
-      setBlogList,
-      setTotalPage,
-    });
-  }, [category, currentPage, sort, tag, title]);
-
   const handlePagination = async (target: "prev" | "next") => {
     const pageNum = target === "prev" ? Number(page) - 1 : Number(page) + 1;
     const queries = new URLSearchParams(window.location.search);
@@ -229,84 +231,103 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   };
 
   useEffect(() => {
-    findBlogsMethod();
+    findBlogs({
+      currentPage,
+      blogsPerPage,
+      title,
+      category,
+      tag,
+      sort,
+      setBlogList,
+      setTotalPage,
+    });
     fetchTopPosts();
-  }, [findBlogsMethod]);
+    setLoading(false);
+  }, [category, currentPage, sort, tag, title]);
 
   return (
     <main className="sm:bg-[#F8F6F3] bg-white">
-      <BlogPageBanner posts={topPosts.slice(0, 5)} />
-      <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
-        <NavBar />
-        <div className="pb-10 md:flex-[0.8]">
-          {blogList && totalPage > 1 && (
-            <div className="w-fit ml-auto">
-              <div className="flex gap-4 items-center">
-                {page !== 1 && (
-                  <button
-                    aria-label="previous page"
-                    className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
-                    onClick={() => handlePagination("prev")}
-                  >
-                    <ArrowForwardIosOutlined
-                      fontSize="small"
-                      className="-scale-x-100"
-                      color="inherit"
-                    />
-                  </button>
-                )}
-                {page !== totalPage && (
-                  <button
-                    aria-label="next page"
-                    className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
-                    onClick={() => handlePagination("next")}
-                  >
-                    <ArrowForwardIosOutlined fontSize="small" color="inherit" />
-                  </button>
+      {loading ? (
+        <div />
+      ) : (
+        <>
+          <BlogPageBanner posts={topPosts.slice(0, 5)} />
+          <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
+            <NavBar />
+            <div className="pb-10 md:flex-[0.8]">
+              {blogList && totalPage > 1 && (
+                <div className="w-fit ml-auto">
+                  <div className="flex gap-4 items-center">
+                    {page !== 1 && (
+                      <button
+                        aria-label="previous page"
+                        className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                        onClick={() => handlePagination("prev")}
+                      >
+                        <ArrowForwardIosOutlined
+                          fontSize="small"
+                          className="-scale-x-100"
+                          color="inherit"
+                        />
+                      </button>
+                    )}
+                    {page !== totalPage && (
+                      <button
+                        aria-label="next page"
+                        className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                        onClick={() => handlePagination("next")}
+                      >
+                        <ArrowForwardIosOutlined
+                          fontSize="small"
+                          color="inherit"
+                        />
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )}
+              <div className="flex px-5 pb-1.5 border-b-2 py-5">
+                +
+                {sortOptions.map((name) => (
+                  <div onClick={() => handleSorting(name)} key={name}>
+                    <button
+                      className={`first-letter:capitalize pb-3 px-3 -mb-2 cursor-pointer ${
+                        name === sortOption && "border-b-[#818181] border-b-2"
+                      }`}
+                    >
+                      {name}
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="space-y-5 sm:space-y-8 text-[#6B6868]">
+                {blogList.length !== 0 ? (
+                  <>
+                    {blogList.map((blog) => (
+                      <BlogArticle key={blog.id} {...blog} />
+                    ))}
+                  </>
+                ) : (
+                  <BlogNoSearchListHeader>
+                    <CentralizeChildren>
+                      <NoSearchList href="/blogs" message="No results" />
+                    </CentralizeChildren>
+                  </BlogNoSearchListHeader>
                 )}
               </div>
             </div>
-          )}
-          <div className="flex px-5 pb-1.5 border-b-2 py-5">
-            +
-            {sortOptions.map((name) => (
-              <div onClick={() => handleSorting(name)} key={name}>
-                <button
-                  className={`first-letter:capitalize pb-3 px-3 -mb-2 cursor-pointer ${
-                    name === sortOption && "border-b-[#818181] border-b-2"
-                  }`}
-                >
-                  {name}
-                </button>
-              </div>
-            ))}
-          </div>
-          <div className="space-y-5 sm:space-y-8 text-[#6B6868]">
-            {blogList.length !== 0 ? (
-              <>
-                {blogList.map((blog) => (
-                  <BlogArticle key={blog.id} {...blog} />
-                ))}
-              </>
-            ) : (
-              <BlogNoSearchListHeader>
-                <CentralizeChildren>
-                  <NoSearchList href="/blogs" message="No results" />
-                </CentralizeChildren>
-              </BlogNoSearchListHeader>
-            )}
-          </div>
-        </div>
-        <div className="min-w-[300px] sm:flex-[0.4] bg-white ">
-          <BlogSidebar
-            handleSubmit={handleSubmit}
-            topPosts={topPosts}
-            value={values.title}
-            handleChange={handleChange}
-            onBlur={handleBlur}
-          />
-        </div>
-      </section>
+            <div className="min-w-[300px] sm:flex-[0.4] bg-white ">
+              <BlogSidebar
+                handleSubmit={handleSubmit}
+                topPosts={topPosts}
+                value={values.title}
+                handleChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
+          </section>
+        </>
+      )}
     </main>
   );
 };
