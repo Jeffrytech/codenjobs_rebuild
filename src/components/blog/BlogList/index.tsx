@@ -77,7 +77,7 @@ const BlogSidebar = ({
         <div className="border-b-2" />
         <div className="space-y-5">
           <h3 className="text-sm text-black font-medium">Trending content</h3>
-          <Community list={topPosts.slice(5)} />
+          <Community list={topPosts.slice(5, 10)} />
         </div>
         <article className="list-banner blog-mod">
           <Carousel dots autoplay autoplaySpeed={2500} arrows={false}>
@@ -139,7 +139,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   const [blogList, setBlogList] = useState<BlogPostType[]>([]);
   const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [topPosts, setTopPosts] = useState([]);
+  // const [topPosts, setTopPosts] = useState([]);
 
   const blogsPerPage = 10;
 
@@ -190,7 +190,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     [values.sort]
   );
 
-  const fetchTopPosts = () => {
+  /* const fetchTopPosts = () => {
     findBlogs({
       currentPage: 1,
       blogsPerPage: 10,
@@ -201,7 +201,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
       setBlogList: setTopPosts,
       setTotalPage: () => {},
     });
-  };
+  }; */
 
   const findBlogsMethod = useCallback(async () => {
     await findBlogs({
@@ -232,7 +232,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
 
   useEffect(() => {
     findBlogsMethod();
-    fetchTopPosts();
+    // fetchTopPosts();
   }, [findBlogsMethod]);
 
   return (
@@ -241,7 +241,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
         <div className="h-screen w-screen flex items-center justify-center" />
       ) : (
         <>
-          <BlogPageBanner posts={topPosts} />
+          <BlogPageBanner posts={blogList} />
           <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
             <NavBar />
             <div className="pb-10 md:flex-[0.8]">
@@ -309,7 +309,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
             <div className="min-w-[300px] sm:flex-[0.4] bg-white ">
               <BlogSidebar
                 handleSubmit={handleSubmit}
-                topPosts={topPosts}
+                topPosts={blogList}
                 value={values.title}
                 handleChange={handleChange}
                 onBlur={handleBlur}
