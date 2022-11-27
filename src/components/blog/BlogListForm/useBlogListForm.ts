@@ -18,17 +18,12 @@ import {
 import { scrollToTop } from "../../../browser/scroll";
 import { findBlogList } from "../../../api/blog";
 
-const useBlogListForm = ({
-  title,
-  category,
-  tag,
-  sort,
-}) => {
+const useBlogListForm = ({ title, category, tag, sort }) => {
   // alert(category);
 
   const router = useRouter();
 
-  // alert(category); // ""
+  // alert(category); // undefined
   // alert(type); // ""
 
   // console.log(findJobCategoryLabelValue(category));
@@ -55,7 +50,7 @@ const useBlogListForm = ({
   } = useFormik({
     // initialValues: setInitialValues(data),
 
-    // This solved the router rerender problem with router. 
+    // This solved the router rerender problem with router.
     enableReinitialize: true,
 
     initialValues: {
@@ -81,49 +76,42 @@ const useBlogListForm = ({
     },
     // validationSchema: blogPostValidationSchema,
     onSubmit: async (
-      values,
+      values
       // actions
     ) => {
       // alert("internet working?");
-      console.log("values");
-      console.log(values);
 
       // These are from the form.
-      const {
-        title,
-        category,
-        tag,
-        sort,
-      } = values;
+      const { title, category, tag, sort } = values;
 
       try {
         const queries = new URLSearchParams(window.location.search);
 
-        if (title !== "") {
+        if (title !== undefined && title !== "") {
           queries.set("title", title);
         } else {
           queries.delete("title");
         }
 
-        if (category !== "") {
+        if (category !== undefined && category !== "") {
           queries.set("category", category);
         } else {
           queries.delete("category");
         }
 
-        if (tag !== "") {
+        if (tag !== undefined && tag !== "") {
           queries.set("tag", tag);
         } else {
           queries.delete("tag");
         }
 
-        if (queries.get("page") !== null) {
+        if (queries.get("page") !== undefined) {
           // alert(page);
           queries.delete("page");
           // queries.set("page", page);
         }
 
-        if (sort !== "") {
+        if (sort !== undefined && sort !== "") {
           queries.set("sort", sort);
         } else {
           queries.delete("sort");
@@ -137,13 +125,12 @@ const useBlogListForm = ({
         });
 
         scrollToTop();
-
       } catch (error) {
         // alert(error);
         console.log("catch error");
         console.error(error);
       }
-    }
+    },
   });
 
   return {
@@ -163,7 +150,6 @@ const useBlogListForm = ({
 
     isSubmitting,
     submitForm,
-
   };
 };
 

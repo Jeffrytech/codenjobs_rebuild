@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { BlogPostType } from "../../../types/blog.type";
 
 import { BlogNoSearchListHeader } from "./BlogListCSS";
@@ -148,8 +148,13 @@ const sortOptions = ["all", "top", "new", "old"] as const;
 
 type SortType = typeof sortOptions[number];
 
-const BlogList = ({ title, category, tag, sort, page }) => {
-  const router = useRouter();
+const serializeValue = (str: any) => str || "";
+
+const BlogList = () => {
+  const {
+    query: { title, category, tag, sort, page },
+    push,
+  } = useRouter();
 
   const [blogList, setBlogList] = useState<BlogPostType[]>([]);
   const [totalPage, setTotalPage] = useState(0);
@@ -158,17 +163,15 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   const blogsPerPage = 10;
 
   let currentPage: number;
-  if (page === null || page === 1) {
+  if (page === undefined || page === "1") {
     currentPage = 1;
   } else {
-    currentPage = page;
+    currentPage = Number(page);
   }
 
   if (currentPage > totalPage) {
     if (currentPage !== 1) {
-      const queries = new URLSearchParams(window.location.search);
-
-      router.push({
+      push({
         pathname: window.location.pathname,
       });
     }
@@ -218,12 +221,14 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   };
 
   const handlePagination = async (target: "prev" | "next") => {
-    const pageNum = target === "prev" ? Number(page) - 1 : Number(page) + 1;
+    const num = page || 1;
+    const pageNum = target === "prev" ? Number(num) - 1 : Number(num) + 1;
     const queries = new URLSearchParams(window.location.search);
-    queries.set("page", pageNum.toString());
 
+    queries.set("page", pageNum.toString());
     const query = Object.fromEntries(queries);
-    router.push({
+
+    push({
       pathname: window.location.pathname,
       query,
     });
@@ -234,10 +239,10 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     findBlogs({
       currentPage,
       blogsPerPage,
-      title,
-      category,
-      tag,
-      sort,
+      title: serializeValue(title),
+      category: serializeValue(category),
+      tag: serializeValue(tag),
+      sort: serializeValue(sort),
       setBlogList,
       setTotalPage,
     });
@@ -258,7 +263,15 @@ const BlogList = ({ title, category, tag, sort, page }) => {
               {blogList && totalPage > 1 && (
                 <div className="w-fit ml-auto">
                   <div className="flex gap-4 items-center">
-                    {page !== 1 && (
+                    {/* page !=== 1 then show button
+
+
+                        
+
+                        page !=== undefined show button too
+                    
+                    */}
+                    {page !== undefined && Number(page) !== 1 && (
                       <button
                         aria-label="previous page"
                         className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
@@ -271,7 +284,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
                         />
                       </button>
                     )}
-                    {page !== totalPage && (
+                    {Number(page) !== totalPage && (
                       <button
                         aria-label="next page"
                         className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
