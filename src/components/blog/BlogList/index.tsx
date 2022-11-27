@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { BlogPostType } from "../../../types/blog.type";
 
 import { BlogNoSearchListHeader } from "./BlogListCSS";
@@ -235,8 +235,8 @@ const BlogList = () => {
     scrollToTop();
   };
 
-  useEffect(() => {
-    findBlogs({
+  const fetchBlogPost = useCallback(async () => {
+    await findBlogs({
       currentPage,
       blogsPerPage,
       title: serializeValue(title),
@@ -246,9 +246,13 @@ const BlogList = () => {
       setBlogList,
       setTotalPage,
     });
-    fetchTopPosts();
     setLoading(false);
   }, [category, currentPage, sort, tag, title]);
+
+  useEffect(() => {
+    fetchBlogPost();
+    fetchTopPosts();
+  }, [fetchBlogPost]);
 
   return (
     <main className="sm:bg-[#F8F6F3] bg-white">
@@ -263,14 +267,6 @@ const BlogList = () => {
               {blogList && totalPage > 1 && (
                 <div className="w-fit ml-auto">
                   <div className="flex gap-4 items-center">
-                    {/* page !=== 1 then show button
-
-
-                        
-
-                        page !=== undefined show button too
-                    
-                    */}
                     {page !== undefined && Number(page) !== 1 && (
                       <button
                         aria-label="previous page"
