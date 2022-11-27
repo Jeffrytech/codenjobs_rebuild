@@ -44,7 +44,7 @@ h6 {
 
 html,
 body {
-  background: #fff;
+  /* background: #f7f8fa; */
 
   height: 100%;
   min-height: 100%;
@@ -195,4 +195,50 @@ h6 {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.list-banner .slick-dots li button::before {
+  width: 10px;
+  height: 10px;
+  opacity: 0.5;
+  padding: 0;
+  margin: 0;
+  background: rgb(97, 97, 97);
+  border-radius: 50%;
+  content: "";
+}
+
+.list-banner .slick-dots li.slick-active button::before {
+  opacity: 1;
+}
+
+.list-banner .slick-dots li {
+  width: 10px;
+  height: 10px;
+}
+
+.contain-content {
+  contain: content;
+}
+
+.blog-mod .slick-dots {
+  transform: translateY(-150%);
+}
+
+@media screen and (max-width: 640px) {
+  .sm-clamp-2 {
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.navbar-menu:last-of-type::before {
+  content: "";
+  display: block;
+  height: 1px;
+  background-color: #414a5c;
+  margin-bottom: 36px;
+  width: 100%;
 }

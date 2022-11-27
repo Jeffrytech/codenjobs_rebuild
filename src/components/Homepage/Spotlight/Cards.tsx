@@ -1,7 +1,7 @@
 import moment from "moment";
 import { JobResponse } from "../../../pages";
 
-export const SpotlightCard = ({
+export const MainCard = ({
   company_logo,
   company_name,
   job_title,
@@ -61,19 +61,61 @@ export const SpotlightCard = ({
   </div>
 );
 
-const Spotlight = ({ jobs }: { jobs: JobResponse[] }) => {
-  return (
-    <section className="bg-cover sm:space-y-16 space-y-10 sm:px-6 sm:py-16 px-5 py-10 sm:bg-[url('/static/spiral-bg.jpg')] bg-[url('/static/sm-spiral-bg.jpg')] bg-no-repeat bg-center sm:bg-fixed">
-      <h3 className="font-semibold text-center  text-[35px] leading-9 tracking-[15px] sm:tracking-[21px]">
-        Spotlight
-      </h3>
-      <div className="grid sm:grid-cols-2 gap-4 md:grid-cols-3 grid-cols-1">
-        {jobs.map((job) => (
-          <SpotlightCard {...job} key={job.job_id} />
+export const BlogSpotlight = ({
+  company_logo,
+  company_name,
+  job_title,
+  job_category,
+  job_location,
+  job_salary,
+  job_skills,
+  job_type,
+  job_published_at,
+}: JobResponse) => (
+  <div className="relative bg-[#F0F6FA] shadow-gg rounded-lg my-2 p-5 py-10">
+    <div className="flex justify-between mb-4">
+      <img
+        className="h-[48px] w-[48px] rounded-full"
+        src={company_logo}
+        alt=""
+      />
+      <p className="ml-auto bg-primary/10 w-[66px] h-[26px] flex items-center justify-center rounded-full text-[10px] leading-[10px] font-medium text-primary ">
+        PREMIER
+      </p>
+    </div>
+
+    <div className=" mt-2  my-4">
+      <span className="text-base  text-[#575757]">{company_name}</span>
+      <p className="text-xl text-black/90  font-bold clamp-2 mb-5">
+        {job_title}
+      </p>
+    </div>
+
+    <div className="space-y-2">
+      <div className="jobs-posting text-sm text-[#575757] flex flex-wrap items-center gap-2">
+        <p>{job_type}</p>
+        <p>{job_category}</p>
+        <p>{job_location}</p>
+        <p>
+          <img src="/static/icons/coin.svg" alt="" />
+          {job_salary}
+        </p>
+      </div>
+      <div className="flex items-center flex-wrap gap-2">
+        {job_skills.map((d) => (
+          <div
+            className="p-2 font-medium text-xs bg-[#4D4D4D1A] text-gray-500 rounded-lg"
+            key={d}
+          >
+            {d}
+          </div>
         ))}
       </div>
-    </section>
-  );
-};
-
-export default Spotlight;
+      <div className="text-[#575757] text-sm capitalize">
+        {job_published_at === null
+          ? moment.utc(new Date()).fromNow()
+          : moment.utc(job_published_at).fromNow()}
+      </div>
+    </div>
+  </div>
+);
