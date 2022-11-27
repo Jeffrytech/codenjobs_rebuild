@@ -115,8 +115,6 @@ const findBlogs = async ({
     limit
   );
 
-  console.log(title, category, tag, sort, skip, limit, "this is something");
-
   if (error) {
     console.log("findBlogList error");
     console.error(error);
@@ -234,11 +232,8 @@ const BlogList = ({ title, category, tag, sort, page }) => {
 
   useEffect(() => {
     findBlogsMethod();
-  }, [findBlogsMethod]);
-
-  useEffect(() => {
     fetchTopPosts();
-  }, []);
+  }, [findBlogsMethod]);
 
   return (
     <main className="sm:bg-[#F8F6F3] bg-white">
