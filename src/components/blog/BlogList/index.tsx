@@ -138,8 +138,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
 
   const [blogList, setBlogList] = useState<BlogPostType[]>([]);
   const [totalPage, setTotalPage] = useState(0);
-  const [loading, setLoading] = useState(true);
-  // const [topPosts, setTopPosts] = useState([]);
+  const [topPosts, setTopPosts] = useState([]);
 
   const blogsPerPage = 10;
 
@@ -190,7 +189,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     [values.sort]
   );
 
-  /* const fetchTopPosts = () => {
+  const fetchTopPosts = () => {
     findBlogs({
       currentPage: 1,
       blogsPerPage: 10,
@@ -201,10 +200,10 @@ const BlogList = ({ title, category, tag, sort, page }) => {
       setBlogList: setTopPosts,
       setTotalPage: () => {},
     });
-  }; */
+  };
 
   const findBlogsMethod = useCallback(async () => {
-    await findBlogs({
+    findBlogs({
       currentPage,
       blogsPerPage,
       title,
@@ -214,7 +213,6 @@ const BlogList = ({ title, category, tag, sort, page }) => {
       setBlogList,
       setTotalPage,
     });
-    setLoading(false);
   }, [category, currentPage, sort, tag, title]);
 
   const handlePagination = async (target: "prev" | "next") => {
@@ -232,92 +230,83 @@ const BlogList = ({ title, category, tag, sort, page }) => {
 
   useEffect(() => {
     findBlogsMethod();
-    // fetchTopPosts();
+    fetchTopPosts();
   }, [findBlogsMethod]);
 
   return (
     <main className="sm:bg-[#F8F6F3] bg-white">
-      {loading ? (
-        <div className="h-screen w-screen flex items-center justify-center" />
-      ) : (
-        <>
-          <BlogPageBanner posts={blogList} />
-          <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
-            <NavBar />
-            <div className="pb-10 md:flex-[0.8]">
-              {blogList && totalPage > 1 && (
-                <div className="w-fit ml-auto">
-                  <div className="flex gap-4 items-center">
-                    {page !== 1 && (
-                      <button
-                        aria-label="previous page"
-                        className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
-                        onClick={() => handlePagination("prev")}
-                      >
-                        <ArrowForwardIosOutlined
-                          fontSize="small"
-                          className="-scale-x-100"
-                          color="inherit"
-                        />
-                      </button>
-                    )}
-                    {page !== totalPage && (
-                      <button
-                        aria-label="next page"
-                        className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
-                        onClick={() => handlePagination("next")}
-                      >
-                        <ArrowForwardIosOutlined
-                          fontSize="small"
-                          color="inherit"
-                        />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              )}
-              <div className="flex px-5 pb-1.5 border-b-2 py-5">
-                +
-                {sortOptions.map((name) => (
-                  <div onClick={() => handleSorting(name)} key={name}>
-                    <button
-                      className={`first-letter:capitalize pb-3 px-3 -mb-2 cursor-pointer ${
-                        name === sortOption && "border-b-[#818181] border-b-2"
-                      }`}
-                    >
-                      {name}
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div className="space-y-5 sm:space-y-8 text-[#6B6868]">
-                {blogList.length !== 0 ? (
-                  <>
-                    {blogList.map((blog) => (
-                      <BlogArticle key={blog.id} {...blog} />
-                    ))}
-                  </>
-                ) : (
-                  <BlogNoSearchListHeader>
-                    <CentralizeChildren>
-                      <NoSearchList href="/blogs" message="No results" />
-                    </CentralizeChildren>
-                  </BlogNoSearchListHeader>
+      <BlogPageBanner posts={topPosts.slice(0, 5)} />
+      <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
+        <NavBar />
+        <div className="pb-10 md:flex-[0.8]">
+          {blogList && totalPage > 1 && (
+            <div className="w-fit ml-auto">
+              <div className="flex gap-4 items-center">
+                {page !== 1 && (
+                  <button
+                    aria-label="previous page"
+                    className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                    onClick={() => handlePagination("prev")}
+                  >
+                    <ArrowForwardIosOutlined
+                      fontSize="small"
+                      className="-scale-x-100"
+                      color="inherit"
+                    />
+                  </button>
+                )}
+                {page !== totalPage && (
+                  <button
+                    aria-label="next page"
+                    className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                    onClick={() => handlePagination("next")}
+                  >
+                    <ArrowForwardIosOutlined fontSize="small" color="inherit" />
+                  </button>
                 )}
               </div>
             </div>
-            <div className="min-w-[300px] sm:flex-[0.4] bg-white ">
-              <BlogSidebar
-                handleSubmit={handleSubmit}
-                topPosts={blogList}
-                value={values.title}
-                handleChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </div>
-          </section>
-        </>
-      )}
+          )}
+          <div className="flex px-5 pb-1.5 border-b-2 py-5">
+            +
+            {sortOptions.map((name) => (
+              <div onClick={() => handleSorting(name)} key={name}>
+                <button
+                  className={`first-letter:capitalize pb-3 px-3 -mb-2 cursor-pointer ${
+                    name === sortOption && "border-b-[#818181] border-b-2"
+                  }`}
+                >
+                  {name}
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-5 sm:space-y-8 text-[#6B6868]">
+            {blogList.length !== 0 ? (
+              <>
+                {blogList.map((blog) => (
+                  <BlogArticle key={blog.id} {...blog} />
+                ))}
+              </>
+            ) : (
+              <BlogNoSearchListHeader>
+                <CentralizeChildren>
+                  <NoSearchList href="/blogs" message="No results" />
+                </CentralizeChildren>
+              </BlogNoSearchListHeader>
+            )}
+          </div>
+        </div>
+        <div className="min-w-[300px] sm:flex-[0.4] bg-white ">
+          <BlogSidebar
+            handleSubmit={handleSubmit}
+            topPosts={topPosts}
+            value={values.title}
+            handleChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </div>
+      </section>
     </main>
   );
 };
