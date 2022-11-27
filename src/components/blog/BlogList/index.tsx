@@ -141,7 +141,6 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   const [blogList, setBlogList] = useState<BlogPostType[]>([]);
   const [totalPage, setTotalPage] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [sliderContent, setSliderContent] = useState([]);
   const [topPosts, setTopPosts] = useState([]);
 
   const blogsPerPage = 10;
@@ -193,19 +192,6 @@ const BlogList = ({ title, category, tag, sort, page }) => {
     [values.sort]
   );
 
-  const fetchSliderContent = () => {
-    findBlogs({
-      currentPage: 1,
-      blogsPerPage: 6,
-      title: "",
-      category: "",
-      tag: "",
-      sort: "new",
-      setBlogList: setSliderContent,
-      setTotalPage: () => {},
-    });
-  };
-
   const fetchTopPosts = () => {
     findBlogs({
       currentPage: 1,
@@ -247,13 +233,12 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   };
 
   useEffect(() => {
-    fetchSliderContent();
-    fetchTopPosts();
-  }, []);
-
-  useEffect(() => {
     findBlogsMethod();
   }, [findBlogsMethod]);
+
+  useEffect(() => {
+    fetchTopPosts();
+  }, []);
 
   return (
     <main className="sm:bg-[#F8F6F3] bg-white">
@@ -261,7 +246,7 @@ const BlogList = ({ title, category, tag, sort, page }) => {
         <div className="h-screen w-screen flex items-center justify-center" />
       ) : (
         <>
-          <BlogPageBanner posts={sliderContent} />
+          <BlogPageBanner posts={topPosts} />
           <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
             <NavBar />
             <div className="pb-10 md:flex-[0.8]">
