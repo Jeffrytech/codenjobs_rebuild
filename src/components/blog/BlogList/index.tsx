@@ -234,19 +234,80 @@ const BlogList = ({ title, category, tag, sort, page }) => {
   }, [findBlogsMethod]);
 
   return (
-    <div>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem iusto
-      nulla hic ratione necessitatibus consectetur unde fugit. Esse porro earum
-      sunt doloremque est. Eum dignissimos rem facere consectetur asperiores
-      voluptatum eveniet totam nobis perspiciatis sit sequi quia eligendi
-      repellat, ullam excepturi neque, eius esse distinctio saepe facilis itaque
-      natus. Totam, deleniti voluptatum! Minima maiores eius delectus? Esse ad
-      provident eum explicabo ex omnis, odit voluptas culpa nihil enim,
-      excepturi sequi dolores aliquam dolorum fugit debitis? Illum sequi unde
-      minima aliquam culpa eos dignissimos placeat quasi nisi. Quo dolorem modi
-      ipsum. Aliquam iusto molestias impedit illo eius. Quos beatae nesciunt
-      error.
-    </div>
+    <main className="sm:bg-[#F8F6F3] bg-white">
+      <BlogPageBanner posts={topPosts.slice(0, 5)} />
+      <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
+        <NavBar />
+        <div className="pb-10 md:flex-[0.8]">
+          {blogList && totalPage > 1 && (
+            <div className="w-fit ml-auto">
+              <div className="flex gap-4 items-center">
+                {page !== 1 && (
+                  <button
+                    aria-label="previous page"
+                    className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                    onClick={() => handlePagination("prev")}
+                  >
+                    <ArrowForwardIosOutlined
+                      fontSize="small"
+                      className="-scale-x-100"
+                      color="inherit"
+                    />
+                  </button>
+                )}
+                {page !== totalPage && (
+                  <button
+                    aria-label="next page"
+                    className="text-[#6b6868] h-[30px] w-[30px] overflow-hidden flex justify-center items-center border-2 p-1.5 rounded-full"
+                    onClick={() => handlePagination("next")}
+                  >
+                    <ArrowForwardIosOutlined fontSize="small" color="inherit" />
+                  </button>
+                )}
+              </div>
+            </div>
+          )}
+          <div className="flex px-5 pb-1.5 border-b-2 py-5">
+            +
+            {sortOptions.map((name) => (
+              <div onClick={() => handleSorting(name)} key={name}>
+                <button
+                  className={`first-letter:capitalize pb-3 px-3 -mb-2 cursor-pointer ${
+                    name === sortOption && "border-b-[#818181] border-b-2"
+                  }`}
+                >
+                  {name}
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="space-y-5 sm:space-y-8 text-[#6B6868]">
+            {blogList.length !== 0 ? (
+              <>
+                {blogList.map((blog) => (
+                  <BlogArticle key={blog.id} {...blog} />
+                ))}
+              </>
+            ) : (
+              <BlogNoSearchListHeader>
+                <CentralizeChildren>
+                  <NoSearchList href="/blogs" message="No results" />
+                </CentralizeChildren>
+              </BlogNoSearchListHeader>
+            )}
+          </div>
+        </div>
+        <div className="min-w-[300px] sm:flex-[0.4] bg-white ">
+          <BlogSidebar
+            handleSubmit={handleSubmit}
+            topPosts={topPosts}
+            value={values.title}
+            handleChange={handleChange}
+            onBlur={handleBlur}
+          />
+        </div>
+      </section>
+    </main>
   );
 };
 
