@@ -232,6 +232,13 @@ h6 {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
+
+  .sm-clamp-4 {
+    -webkit-line-clamp: 4;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
 }
 
 .navbar-menu:last-of-type::before {
