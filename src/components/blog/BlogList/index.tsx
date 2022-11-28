@@ -45,21 +45,6 @@ const spotlight = {
   job_published_at: "2022-10-29T11:53:48.245998",
 };
 
-const blogPost = {
-  username: "tokah",
-  id: "963fb028-dc50-49d6-aa40-334896db2217",
-  cover:
-    "https://res.cloudinary.com/codenjobs/image/upload/v1668133437/user/blog/cover/pnslzsk4nn41qo2ojohb.png",
-  title:
-    "Don't miss our World Cup 2022:Qatar NFT launch - November 18th, 3:00 pm UTC",
-  category: "Marketing",
-  tags: ["Blockchain", "Crypto", "NFT", "Solana", "Product"],
-  created_at: "2022-11-11T02:23:01.360743",
-  updated_at: "2022-11-11T02:23:57.734248",
-  published_at: "2022-11-11T02:23:23.031217",
-  total_blog_post_money_voters: 1,
-};
-
 const BlogSidebar = ({
   topPosts,
   handleSubmit,
@@ -144,7 +129,8 @@ const findBlogs = async ({
   }
 };
 
-const sortOptions = ["all", "top", "new", "old"] as const;
+// const sortOptions = ["all", "top", "new", "old"] as const;
+const sortOptions = ["for you", "following"];
 
 type SortType = typeof sortOptions[number];
 
@@ -264,7 +250,7 @@ const BlogList = () => {
           <section className="sm:min-h-screen px-5 sm:px-10 md:px-20 lg:px-0 font-manrope lg:flex gap-10 justify-between">
             <NavBar />
             <div className="pb-10 md:flex-[0.8]">
-              {blogList && totalPage > 1 && (
+              {false && blogList && totalPage > 1 && (
                 <div className="w-fit ml-auto">
                   <div className="flex gap-4 items-center">
                     {page !== undefined && Number(page) !== 1 && (
@@ -295,12 +281,12 @@ const BlogList = () => {
                   </div>
                 </div>
               )}
-              <div className="flex px-5 pb-1.5 border-b-2 py-5">
+              <div className="flex px-5 pb-1.5 border-b-2 py-5 gap-x-1">
                 +
                 {sortOptions.map((name) => (
-                  <div onClick={() => handleSorting(name)} key={name}>
+                  <div onClick={() => console.log(name)} key={name}>
                     <button
-                      className={`first-letter:capitalize pb-3 px-3 -mb-2 cursor-pointer ${
+                      className={`first-letter:capitalize whitespace-nowrap pb-3 px-3 -mb-2 cursor-pointer ${
                         name === sortOption && "border-b-[#818181] border-b-2"
                       }`}
                     >
