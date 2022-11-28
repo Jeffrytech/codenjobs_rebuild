@@ -85,18 +85,18 @@ export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
               </div>
               <div className="flex items-center gap-2 text-sm font-manrope text-[#6B6868]">
                 By
-                <div className="sm:block hidden">
+                <div className="">
                   <img src="/static/icons/avatar.png" alt="" />
                 </div>
-                <div className="flex flex-col sm:text-xs space-y-1">
-                  <p className="sm:text-black first-letter:capitalize w-fit">
+                <div className="flex flex-col text-xs space-y-1">
+                  <p className="text-black first-letter:capitalize w-fit">
                     {username}
-                    <span className="sm:pl-0 pl-2  w-fit">
+                    <span className="w-fit">
                       {" "}
                       . {moment.utc(published_at).format("DD MMM")}
                     </span>
                   </p>
-                  <div className="sm:block hidden">Software Developer</div>
+                  <div className="text-xs">Software Developer</div>
                 </div>
               </div>
             </div>

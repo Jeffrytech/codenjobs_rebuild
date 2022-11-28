@@ -71,7 +71,7 @@ const BlogSidebar = ({
       </form>
       <div className="sm:px-5 px-2 space-y-14">
         <div className="space-y-5">
-          <h3 className="text-sm text-black font-medium">Staff Pick</h3>
+          <h3 className="text-sm text-black font-medium">Staff Content</h3>
           <Community list={topPosts.slice(0, 5)} />
         </div>
         <div className="border-b-2" />
