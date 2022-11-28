@@ -77,7 +77,7 @@ export const BlogPageBanner = ({ posts }: { posts: BlogPostType[] }) => (
               <h3 className="font-manrope font-extrabold text-[22px] sm:text-lg leading-8 md:text-[28px] sm-clamp-2">
                 {title}
               </h3>
-              <div className="text-base text-[#6B6868]">
+              <div className="text-base text-[#6B6868] sm-clamp-4 sm:my-0 my-3">
                 Tools that you need as a programmer. - Every time i write code
                 across some sound blocks down my workflow sometimes i forget the
                 format need to use to create a cron job, metacharacter i need
